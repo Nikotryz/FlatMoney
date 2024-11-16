@@ -54,39 +54,20 @@ namespace FlatMoney.LocalDataBase
                 await ExecuteQuery(statement);
         }
 
-        public async Task AddInitialData()
-        {
-            var commands = new List<string>()
-            {
-                $"INSERT INTO {Tables.FLATS_TABLE_NAME} (flat_name, is_own) VALUES ('Нахимова 15', false), ('Красноармейская 148', true), ('Лыткина 16/1', false);",
-            };
-
-            foreach (var command in commands)
-            {
-                var op = await ExecuteQuery(command);
-                Debug.WriteLine(op);
-            }
-        }
-
-        private async Task CheckData<T>() where T : BaseTable, new()
-        {
-            var item = await _connection.Table<T>().FirstOrDefaultAsync();
-            Debug.WriteLine(item?.Id);
-        }
-
         public async Task<bool> ExecuteQuery(string query)
         {
-            await Initialization();
-
             var op = await _connection.ExecuteAsync(query);
             return op > 0;
         }
 
         public async Task<List<T>> GetItems<T>() where T : BaseTable, new()
         {
-            await Initialization();
-
             return await _connection.Table<T>().ToListAsync();
+        }
+
+        public async Task<int> GetCountOfItems<T>() where T : BaseTable, new()
+        {
+            return await _connection.Table<T>().CountAsync();
         }
 
         public async Task InsertItem<T>(T item)

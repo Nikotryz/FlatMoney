@@ -3,11 +3,41 @@
     x:Class="FlatMoney.Views.Details.AddFlatPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    Title="AddFlatPage">
-    <VerticalStackLayout>
-        <Label
-            HorizontalOptions="Center"
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" />
-    </VerticalStackLayout>
+    Style="{StaticResource BaseContentPage}">
+
+    <Grid RowDefinitions="*,50">
+        <Label Grid.Row="0" Style="{StaticResource BaseLabel}" Text="ПОЛЯ ДОБАВЬТЕ" />
+        <Grid Grid.Row="1" ColumnDefinitions="*,3.75*,3.75*" Margin="30,0" ColumnSpacing="10">
+            <Button Grid.Column="0" Style="{StaticResource DeleteButton}"/>
+            <Button Grid.Column="1" Style="{StaticResource CancelButton}"/>
+            <Button Grid.Column="2" Style="{StaticResource SaveButton}"/>
+        </Grid>
+    </Grid>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            
+            <Style x:Key="DeleteButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="BorderColor" Value="{StaticResource AccentRed}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="Margin" Value="0,10"/>
+            </Style>
+
+            <Style x:Key="CancelButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="BorderColor" Value="{StaticResource AccentBlue}"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="Margin" Value="0,10"/>
+                <Setter Property="Text" Value="Отмена"/>
+            </Style>
+
+            <Style x:Key="SaveButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="Text" Value="Сохранить"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    
 </ContentPage>

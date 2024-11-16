@@ -3,7 +3,8 @@
     x:Class="FlatMoney.Views.General.FlatPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    BackgroundColor="{StaticResource BackGround}">
+    xmlns:vm="clr-namespace:FlatMoney.ViewModels"
+    Style="{StaticResource BaseContentPage}">
     
 
 
@@ -11,8 +12,8 @@
     <Grid RowDefinitions="60,*">
         
         <Grid Grid.Row="0" ColumnDefinitions="1.8*,*">
-            <Label Grid.Column="0" Text="12 квартир" Style="{StaticResource FlatCounterLabel}"/>
-            <Button Grid.Column="1" Style="{StaticResource AddButton}" Clicked="AddButton"/>
+            <Label Grid.Column="0" Text="{Binding FlatCount}" Style="{StaticResource FlatCounterLabel}"/>
+            <Button Grid.Column="1" Style="{StaticResource AddButton}" Command="{Binding AddFlatCommand}"/>
             <Image Grid.Column="1" Source="add.png" Style="{StaticResource AddImage}"/>
 
             <BoxView Grid.ColumnSpan="2" Style="{StaticResource HeaderDivider}"/>
@@ -24,13 +25,14 @@
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <Frame Style="{StaticResource FlatItemFrame}">
-                        <Grid ColumnDefinitions="*,3.5*">
-                            <Image Grid.Column="0" Source="flat_item.png" Style="{StaticResource FlatItem}"/>
-                            <BoxView Grid.Column="0" Style="{StaticResource FlatItemDivider}"/>
-                            <Grid Grid.Column="1" RowDefinitions="2*,*,*">
-                                <Label Text="{Binding Name}" Style="{StaticResource FlatNameLabel}"/>
-                                <Label Text="{Binding Rent}" Style="{StaticResource Standart}"/>
-                                <Label Text="{Binding Internet}" Style="{StaticResource Standart}"/>
+                        <Grid ColumnDefinitions="*,3.5*" ColumnSpacing="5">
+                            <Image Grid.Column="0" Source="flat_item.png" Style="{StaticResource FlatItemImage}"/>
+                            
+                            <Grid Grid.Column="1" RowDefinitions="*,*,*">
+                                <BoxView Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource FlatItemDivider}"/>
+                                <Label Grid.Row="0" Text="{Binding Name}" Style="{StaticResource FlatNameLabel}"/>
+                                <Label Grid.Row="1" Text="{Binding IsOwn}" Style="{StaticResource FlatRentLabel}"/>
+                                <Label Grid.Row="2" Text="{Binding IsOwn}" Style="{StaticResource FlatInternetLabel}"/>
                             </Grid>
                         </Grid>
                     </Frame>
@@ -56,7 +58,28 @@
                 <Setter Property="FontSize" Value="20" />
                 <Setter Property="HorizontalOptions" Value="StartAndExpand" />
                 <Setter Property="HorizontalTextAlignment" Value="Start" />
-                <Setter Property="Margin" Value="10,5" />
+                <Setter Property="VerticalOptions" Value="StartAndExpand" />
+                <Setter Property="VerticalTextAlignment" Value="Start" />
+                <Setter Property="Margin" Value="10,0" />
+            </Style>
+
+            <Style x:Key="FlatRentLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="FontFamily" Value="ExtraLight" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="10,0" />
+            </Style>
+
+            <Style x:Key="FlatInternetLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="FontSize" Value="14" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="Margin" Value="10,0" />
             </Style>
 
             <Style x:Key="AddButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
@@ -73,13 +96,18 @@
             </Style>
 
             <Style x:Key="FlatItemDivider" TargetType="BoxView" BasedOn="{StaticResource BaseVerticalDivider}">
-                <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
-                <Setter Property="Margin" Value="0,5" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+                <Setter Property="WidthRequest" Value="2" />
             </Style>
 
             <Style x:Key="FlatItemFrame" TargetType="Frame" BasedOn="{StaticResource BaseFrame}">
-                <Setter Property="HeightRequest" Value="90" />
+                <Setter Property="HeightRequest" Value="100" />
+                <Setter Property="Padding" Value="5,10" />
                 <Setter Property="Margin" Value="10,5" />
+            </Style>
+
+            <Style x:Key="FlatItemImage" TargetType="Image" BasedOn="{StaticResource BaseImage}">
+                <Setter Property="Margin" Value="0" />
             </Style>
 
         </ResourceDictionary>

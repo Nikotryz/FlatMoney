@@ -1,5 +1,6 @@
 ﻿using FlatMoney.LocalDataBase;
 using FlatMoney.ViewModels;
+using FlatMoney.Views.Details;
 using FlatMoney.Views.General;
 using Microsoft.Extensions.Logging;
 using UraniumUI;
@@ -26,6 +27,7 @@ namespace FlatMoney
 
             builder.Services.AddTransient<FlatPageViewModel>();
             builder.Services.AddTransient<FlatPage>();
+            builder.Services.AddTransient<AddFlatPage>();
 
 #if DEBUG
             builder.Logging.AddDebug();
