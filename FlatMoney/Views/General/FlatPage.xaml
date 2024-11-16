@@ -4,22 +4,31 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     BackgroundColor="{StaticResource BackGround}">
+    
 
+
+    <!-- Page elements -->
     <Grid RowDefinitions="60,*">
+        
         <Grid Grid.Row="0" ColumnDefinitions="1.8*,*">
-            <Label Grid.Column="0" Text="12 квартир" Style="{StaticResource FlatCounter}"/>
-            <Button Grid.Column="1" Style="{StaticResource BlueButton}" Clicked="AddButton"/>
-            <Image Grid.Column="1" Source="add.png" Style="{StaticResource Add}"/>
+            <Label Grid.Column="0" Text="12 квартир" Style="{StaticResource FlatCounterLabel}"/>
+            <Button Grid.Column="1" Style="{StaticResource AddButton}" Clicked="AddButton"/>
+            <Image Grid.Column="1" Source="add.png" Style="{StaticResource AddImage}"/>
+
+            <BoxView Grid.ColumnSpan="2" Style="{StaticResource HeaderDivider}"/>
         </Grid>
+
+        
+
         <CollectionView Grid.Row="1" ItemsSource="{Binding Items}">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <Frame HeightRequest="90" Margin="10,5" BackgroundColor="{StaticResource Field}" Padding="0">
+                    <Frame Style="{StaticResource FlatItemFrame}">
                         <Grid ColumnDefinitions="*,3.5*">
                             <Image Grid.Column="0" Source="flat_item.png" Style="{StaticResource FlatItem}"/>
-                            <BoxView Grid.Column="0" Style="{StaticResource VerticalDivider}"/>
+                            <BoxView Grid.Column="0" Style="{StaticResource FlatItemDivider}"/>
                             <Grid Grid.Column="1" RowDefinitions="2*,*,*">
-                                <Label Text="{Binding Name}" Style="{StaticResource FlatItemText}"/>
+                                <Label Text="{Binding Name}" Style="{StaticResource FlatNameLabel}"/>
                                 <Label Text="{Binding Rent}" Style="{StaticResource Standart}"/>
                                 <Label Text="{Binding Internet}" Style="{StaticResource Standart}"/>
                             </Grid>
@@ -28,6 +37,54 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
+        
     </Grid>
+
+
+    <!-- Styles for elements -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="FlatCounterLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+                <Setter Property="Margin" Value="10" />
+            </Style>
+
+            <Style x:Key="FlatNameLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="FontSize" Value="20" />
+                <Setter Property="HorizontalOptions" Value="StartAndExpand" />
+                <Setter Property="HorizontalTextAlignment" Value="Start" />
+                <Setter Property="Margin" Value="10,5" />
+            </Style>
+
+            <Style x:Key="AddButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="Margin" Value="10" />
+            </Style>
+
+            <Style x:Key="AddImage" TargetType="Image" BasedOn="{StaticResource BaseImage}">
+                <Setter Property="Margin" Value="15" />
+            </Style>
+
+            <Style x:Key="HeaderDivider" TargetType="BoxView" BasedOn="{StaticResource BaseHorizontalDivider}">
+                <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+                <Setter Property="Margin" Value="0" />
+            </Style>
+
+            <Style x:Key="FlatItemDivider" TargetType="BoxView" BasedOn="{StaticResource BaseVerticalDivider}">
+                <Setter Property="HorizontalOptions" Value="EndAndExpand"/>
+                <Setter Property="Margin" Value="0,5" />
+            </Style>
+
+            <Style x:Key="FlatItemFrame" TargetType="Frame" BasedOn="{StaticResource BaseFrame}">
+                <Setter Property="HeightRequest" Value="90" />
+                <Setter Property="Margin" Value="10,5" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    
 
 </ContentPage>
