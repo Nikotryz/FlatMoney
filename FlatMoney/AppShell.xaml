@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="FlatMoney.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:FlatMoney.Views.General"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="{StaticResource BackGround}"
+    Shell.TabBarForegroundColor="{StaticResource AccentBlue}"
+    Shell.TabBarTitleColor="{StaticResource AccentBlue}"
+    Shell.TabBarUnselectedColor="{StaticResource Item}">
+
+
+    <TabBar>
+        <Tab Title="Квартиры" Icon="flatpage_selected.png">
+            <ShellContent ContentTemplate="{DataTemplate local:FlatPage}" Route="FlatPage" />
+        </Tab>
+        <Tab Title="Заселения" Icon="clientpage_selected.png">
+            <ShellContent ContentTemplate="{DataTemplate local:ClientPage}" Route="ClientPage" />
+        </Tab>
+        <Tab Title="Управление" Icon="moneypage_selected.png">
+            <ShellContent ContentTemplate="{DataTemplate local:MoneyPage}" Route="MoneyPage" />
+        </Tab>
+    </TabBar>
+
+
+
+</Shell>
+
