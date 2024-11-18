@@ -3,37 +3,72 @@
     x:Class="FlatMoney.Views.Details.AddFlatPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     Style="{StaticResource BaseContentPage}">
 
-    <Grid RowDefinitions="*,50">
-        <Label Grid.Row="0" Style="{StaticResource BaseLabel}" Text="ПОЛЯ ДОБАВЬТЕ" />
-        <Grid Grid.Row="1" ColumnDefinitions="*,3.75*,3.75*" Margin="30,0" ColumnSpacing="10">
-            <Button Grid.Column="0" Style="{StaticResource DeleteButton}"/>
-            <Button Grid.Column="1" Style="{StaticResource CancelButton}"/>
-            <Button Grid.Column="2" Style="{StaticResource SaveButton}"/>
+    
+
+    <!-- Page elements -->
+    <Grid RowDefinitions="*,12*,*">
+
+        <Label Grid.Row="0" Style="{StaticResource FlatNameLabel}" Text="{Binding FlatInfo.Name}" />
+
+        <VerticalStackLayout Grid.Row="1" Margin="10" Spacing="10">
+            <uranium:TextField Title="Название" Text="{Binding FlatInfo.Name}" Style="{StaticResource BaseUraniumTextField}"/>
+            <uranium:PickerField Title="Тип" Style="{StaticResource BaseUraniumPickerField}" ItemsSource="{Binding Types}"/>
+
+            <uranium:TextField Title="Аренда" Text="{Binding FlatInfo.RentCost}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
+            <uranium:TextField Title="Интернет и ТВ" Text="{Binding FlatInfo.InternetCost}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
+            <uranium:TextField Title="Число оплаты за аренду" Text="{Binding FlatInfo.RentDate}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
+            <uranium:TextField Title="Число оплаты за интернет и ТВ" Text="{Binding FlatInfo.InternetDate}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
+
+            <uranium:TextField Title="Адрес" Text="{Binding FlatInfo.Address}" Style="{StaticResource BaseUraniumTextField}"/>
+        </VerticalStackLayout>
+        
+        <Grid Grid.Row="2" ColumnDefinitions="*,3.75*,3.75*" Margin="30,0,30,25" ColumnSpacing="10">
+            <Button Grid.Column="0" Style="{StaticResource DeleteButton}" Command="{Binding DeleteCommand}"/>
+            <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}"/>
+            <Button Grid.Column="1" Style="{StaticResource CancelButton}" Command="{Binding CancelCommand}"/>
+            <Button Grid.Column="2" Style="{StaticResource SaveButton}" Command="{Binding SaveCommand}"/>
         </Grid>
+        
     </Grid>
 
+
+
+    <!-- Styles for elements -->
     <ContentPage.Resources>
         <ResourceDictionary>
+
+            <Style x:Key="FlatNameLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="FontSize" Value="28"/>
+                <Setter Property="Margin" Value="10"/>
+            </Style>
+
+            <Style x:Key="UraniumTextField" TargetType="uranium:TextField" BasedOn="{StaticResource BaseUraniumTextField}">
+                
+            </Style>
             
             <Style x:Key="DeleteButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="BorderColor" Value="{StaticResource AccentRed}"/>
                 <Setter Property="BorderWidth" Value="1"/>
-                <Setter Property="Margin" Value="0,10"/>
             </Style>
 
             <Style x:Key="CancelButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
                 <Setter Property="BackgroundColor" Value="Transparent"/>
                 <Setter Property="BorderColor" Value="{StaticResource AccentBlue}"/>
                 <Setter Property="BorderWidth" Value="1"/>
-                <Setter Property="Margin" Value="0,10"/>
                 <Setter Property="Text" Value="Отмена"/>
             </Style>
 
             <Style x:Key="SaveButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
                 <Setter Property="Text" Value="Сохранить"/>
+            </Style>
+
+            <Style x:Key="DeleteImage" TargetType="Image" BasedOn="{StaticResource BaseImage}">
+                <Setter Property="Margin" Value="2"/>
             </Style>
 
         </ResourceDictionary>

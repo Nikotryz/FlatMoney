@@ -83,5 +83,33 @@
         <Setter Property="VerticalOptions" Value="FillAndExpand"/>
     </Style>
 
+    <Style x:Key="BaseBorder" TargetType="Border">
+        <Setter Property="Stroke" Value="{StaticResource Field}"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="StrokeShape">
+            <RoundRectangle CornerRadius="10" />
+        </Setter>
+    </Style>
+
+    <Style x:Key="BaseUraniumTextField" TargetType="uranium:TextField">
+        <Setter Property="InputBackgroundColor" Value="{StaticResource Field}"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="BorderColor" Value="{StaticResource Field}"/>
+        <Setter Property="TitleColor" Value="{StaticResource Gray400}"/>
+        <Setter Property="TextColor" Value="{StaticResource Text}"/>
+        <Setter Property="AccentColor" Value="{StaticResource AccentBlue}"/>
+        <Setter Property="AllowClear" Value="True"/>
+    </Style>
+
+    <Style x:Key="BaseUraniumPickerField" TargetType="uranium:PickerField">
+        <Setter Property="InputBackgroundColor" Value="{StaticResource Field}"/>
+        <Setter Property="CornerRadius" Value="5"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="TitleColor" Value="{StaticResource Gray400}"/>
+        <Setter Property="TextColor" Value="{StaticResource Text}"/>
+        <Setter Property="AccentColor" Value="{StaticResource AccentBlue}"/>
+        <Setter Property="AllowClear" Value="True"/>
+    </Style>
+
 
 </ResourceDictionary>

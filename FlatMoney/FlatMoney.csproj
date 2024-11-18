@@ -55,6 +55,7 @@
 
 		<MauiImage Include="Resources\Images\add.svg" />
 		<MauiImage Include="Resources\Images\flat_item.svg" TintColor="#4D4D4D" />
+		<MauiImage Include="Resources\Images\delete.svg" TintColor="#FF3B29" />
 
 
 		<!-- Custom Fonts -->

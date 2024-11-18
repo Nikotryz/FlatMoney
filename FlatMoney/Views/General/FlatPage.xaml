@@ -3,7 +3,6 @@
     x:Class="FlatMoney.Views.General.FlatPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:FlatMoney.ViewModels"
     Style="{StaticResource BaseContentPage}">
     
 
@@ -19,12 +18,32 @@
             <BoxView Grid.ColumnSpan="2" Style="{StaticResource HeaderDivider}"/>
         </Grid>
 
-        
-
-        <CollectionView Grid.Row="1" ItemsSource="{Binding Items}">
-            <CollectionView.ItemTemplate>
+        <!--
+        <ListView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}" ItemTapped="{Binding ItemTappedCommand}">
+            <ListView.ItemTemplate>
                 <DataTemplate>
                     <Frame Style="{StaticResource FlatItemFrame}">
+                        <Grid ColumnDefinitions="*,3.5*" ColumnSpacing="5">
+                            <Image Grid.Column="0" Source="flat_item.png" Style="{StaticResource FlatItemImage}"/>
+
+                            <Grid Grid.Column="1" RowDefinitions="*,*,*">
+                                <BoxView Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource FlatItemDivider}"/>
+                                <Label Grid.Row="0" Text="{Binding Name}" Style="{StaticResource FlatNameLabel}"/>
+                                <Label Grid.Row="1" Text="{Binding IsOwn}" Style="{StaticResource FlatRentLabel}"/>
+                                <Label Grid.Row="2" Text="{Binding IsOwn}" Style="{StaticResource FlatInternetLabel}"/>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        -->
+
+        
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}" SelectionChangedCommand="{Binding SelectionChangedCommand}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Border Style="{StaticResource FlatItemBorder}">
                         <Grid ColumnDefinitions="*,3.5*" ColumnSpacing="5">
                             <Image Grid.Column="0" Source="flat_item.png" Style="{StaticResource FlatItemImage}"/>
                             
@@ -35,13 +54,14 @@
                                 <Label Grid.Row="2" Text="{Binding IsOwn}" Style="{StaticResource FlatInternetLabel}"/>
                             </Grid>
                         </Grid>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
         
     </Grid>
 
+    
 
     <!-- Styles for elements -->
     <ContentPage.Resources>
@@ -100,10 +120,24 @@
                 <Setter Property="WidthRequest" Value="2" />
             </Style>
 
-            <Style x:Key="FlatItemFrame" TargetType="Frame" BasedOn="{StaticResource BaseFrame}">
+            <Style x:Key="FlatItemBorder" TargetType="Border" BasedOn="{StaticResource BaseBorder}">
+                <Setter Property="BackgroundColor" Value="{StaticResource Field}"/>
+                <Setter Property="StrokeThickness" Value="0"/>
                 <Setter Property="HeightRequest" Value="100" />
                 <Setter Property="Padding" Value="5,10" />
                 <Setter Property="Margin" Value="10,5" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Item}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
             </Style>
 
             <Style x:Key="FlatItemImage" TargetType="Image" BasedOn="{StaticResource BaseImage}">

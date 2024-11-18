@@ -8,10 +8,8 @@ namespace FlatMoney.Views.General;
 
 public partial class FlatPage : ContentPage
 {
-    public FlatPage(FlatPageViewModel viewModel)
+    public FlatPage()
     {
         InitializeComponent();
-
-        BindingContext = viewModel;
     }
 }

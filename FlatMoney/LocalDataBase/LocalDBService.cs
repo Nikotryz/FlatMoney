@@ -70,6 +70,19 @@ namespace FlatMoney.LocalDataBase
             return await _connection.Table<T>().CountAsync();
         }
 
+        public async Task InsertOrUpdateItem<T>(T item) where T : BaseTable, new()
+        {
+            var items = await _connection.Table<T>().ToListAsync();
+
+            foreach (var titem in items)
+            {
+                if (item.Id == titem.Id) await _connection.UpdateAsync(item);
+                return;
+            }
+
+            await _connection.InsertAsync(item);
+        }
+
         public async Task InsertItem<T>(T item)
         {
             await _connection.InsertAsync(item);

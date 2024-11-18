@@ -25,9 +25,17 @@ namespace FlatMoney
 
             builder.Services.AddSingleton<LocalDBService>();
 
-            builder.Services.AddTransient<FlatPageViewModel>();
-            builder.Services.AddTransient<FlatPage>();
-            builder.Services.AddTransient<AddFlatPage>();
+            builder.Services.AddSingleton<FlatPageViewModel>();
+            builder.Services.AddSingleton<FlatPage>(serviceProvider => new FlatPage()
+            {
+                BindingContext = serviceProvider.GetRequiredService<FlatPageViewModel>()
+            });
+
+            builder.Services.AddSingleton<AddFlatPageViewModel>();
+            builder.Services.AddSingleton<AddFlatPage>(serviceProvider => new AddFlatPage()
+            {
+                BindingContext = serviceProvider.GetRequiredService<AddFlatPageViewModel>()
+            });
 
 #if DEBUG
             builder.Logging.AddDebug();

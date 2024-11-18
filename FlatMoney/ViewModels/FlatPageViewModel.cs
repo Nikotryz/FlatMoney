@@ -7,44 +7,69 @@ using System.Collections.ObjectModel;
 
 namespace FlatMoney.ViewModels
 {
-    [ObservableObject]
-    public partial class FlatPageViewModel
+    public partial class FlatPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        public string flatCount = "нет квартир";
+        public string flatCount;
 
         [ObservableProperty]
         public ObservableCollection<FlatModel> items = [];
 
+        [ObservableProperty]
+        public FlatModel selectedItem;
+
+        private AddFlatPage _addFlatPage { get; set; }
+
         private readonly LocalDBService _localDBService;
-        public FlatPageViewModel(LocalDBService localDBService)
+        public FlatPageViewModel(LocalDBService localDBService, AddFlatPage addFlatPage)
         {
             _localDBService = localDBService;
 
+            _addFlatPage = addFlatPage;
+
             Load();
+
+            Shell.Current.Navigation.PushModalAsync(_addFlatPage);
+            Shell.Current.Navigation.PopModalAsync();
         }
 
         [RelayCommand]
         public async Task AddFlat()
         {
-            await Shell.Current.GoToAsync(nameof(AddFlatPage));
+            await Shell.Current.Navigation.PushModalAsync(new AddFlatPage());
 
+            //await AddInitialData();
+        }
 
+        [RelayCommand]
+        public async Task SelectionChanged()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            {
+                {"info", SelectedItem }
+            };
 
-            //var items = await _localDBService.GetItems<FlatModel>();
+            await Shell.Current.GoToAsync(nameof(AddFlatPage), parameters);
 
-            //int maxID = 0;
+            SelectedItem = null;
+        }
 
-            //if (items.Count != 0) maxID = items.Max(v => v.Id);
+        private async Task AddInitialData()
+        {
+            var items = await _localDBService.GetItems<FlatModel>();
 
-            //FlatModel item = new FlatModel
-            //{
-            //    Name = $"Квартира {maxID + 1}"
-            //};
+            int maxID = 0;
 
-            //await _localDBService.InsertItem(item);
+            if (items.Count != 0) maxID = items.Max(v => v.Id);
 
-            //await Load();
+            FlatModel item = new FlatModel
+            {
+                Name = $"Квартира {maxID + 1}"
+            };
+
+            await _localDBService.InsertItem(item);
+
+            await Load();
         }
 
         //private async void AddButton(object sender, EventArgs e)
@@ -85,7 +110,21 @@ namespace FlatMoney.ViewModels
                 Items.Add(item);
             }
 
-            FlatCount = $"{await _localDBService.GetCountOfItems<FlatModel>()} квартир";
+            await CountLoad();
+        }
+
+        private async Task CountLoad()
+        {
+            int count = await _localDBService.GetCountOfItems<FlatModel>();
+            int lastDigit = (int)(count % 10);
+            string wordEnding;
+
+            if (lastDigit == 1) wordEnding = "квартира";
+            else if (lastDigit > 1 && lastDigit < 5) wordEnding = "квартиры";
+            else wordEnding = "квартир";
+
+            if (count == 0) FlatCount = "нет квартир";
+            else FlatCount = $"{count} {wordEnding}";
         }
     }
 }
