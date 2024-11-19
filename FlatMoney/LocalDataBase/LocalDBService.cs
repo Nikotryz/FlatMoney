@@ -6,13 +6,13 @@ namespace FlatMoney.LocalDataBase
 {
     public class LocalDBService
     {
-        private const string DB_NAME = "database_test.db5";
+        private const string DB_NAME = "DataBase1.db";
         private readonly string _dbPath = Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
         private SQLiteAsyncConnection _connection;
 
         public LocalDBService()
         {
-            Initialization();
+            Task.Run(async () => await Initialization());
         }
 
         private async Task Initialization()
@@ -68,19 +68,6 @@ namespace FlatMoney.LocalDataBase
         public async Task<int> GetCountOfItems<T>() where T : BaseTable, new()
         {
             return await _connection.Table<T>().CountAsync();
-        }
-
-        public async Task InsertOrUpdateItem<T>(T item) where T : BaseTable, new()
-        {
-            var items = await _connection.Table<T>().ToListAsync();
-
-            foreach (var titem in items)
-            {
-                if (item.Id == titem.Id) await _connection.UpdateAsync(item);
-                return;
-            }
-
-            await _connection.InsertAsync(item);
         }
 
         public async Task InsertItem<T>(T item)

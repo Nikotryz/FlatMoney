@@ -29,11 +29,11 @@ namespace FlatMoney.Models
 
         [DisplayName("Rent date")]
         [SQLite.Column("rent_date")]
-        public DateTime RentDate { get; set; }
+        public DateTime RentStartDate { get; set; }
 
         [DisplayName("Rent interval")]
         [SQLite.Column("rent_interval")]
-        public string RentInterval { get; set; }
+        public int RentInterval { get; set; }
 
         [DisplayName("Rent autopay")]
         [SQLite.Column("rent_autopay")]
@@ -46,11 +46,11 @@ namespace FlatMoney.Models
 
         [DisplayName("Internet date")]
         [SQLite.Column("internet_date")]
-        public DateTime InternetDate { get; set; }
+        public DateTime InternetStartDate { get; set; }
 
         [DisplayName("Internet interval")]
         [SQLite.Column("internet_interval")]
-        public string InternetInterval { get; set; }
+        public int InternetInterval { get; set; }
 
         [DisplayName("Internet autopay")]
         [SQLite.Column("internet_autopay")]

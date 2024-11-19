@@ -28,11 +28,11 @@
                                                      $"is_own BOOLEAN NOT NULL DEFAULT FALSE, " +
                                                      $"rent_cost FLOAT, " +
                                                      $"rent_date TEXT, " +
-                                                     $"rent_interval TEXT, " +
+                                                     $"rent_interval INTEGER, " +
                                                      $"rent_autopay BOOLEAN, " +
                                                      $"internet_cost FLOAT, " +
                                                      $"internet_date TEXT, " +
-                                                     $"internet_interval TEXT, " +
+                                                     $"internet_interval INTEGER, " +
                                                      $"internet_autopay BOOLEAN, " +
                                                      $"address VARCHAR(250)); ";
 

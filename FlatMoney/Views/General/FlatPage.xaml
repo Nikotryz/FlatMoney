@@ -18,26 +18,6 @@
             <BoxView Grid.ColumnSpan="2" Style="{StaticResource HeaderDivider}"/>
         </Grid>
 
-        <!--
-        <ListView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}" ItemTapped="{Binding ItemTappedCommand}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <Frame Style="{StaticResource FlatItemFrame}">
-                        <Grid ColumnDefinitions="*,3.5*" ColumnSpacing="5">
-                            <Image Grid.Column="0" Source="flat_item.png" Style="{StaticResource FlatItemImage}"/>
-
-                            <Grid Grid.Column="1" RowDefinitions="*,*,*">
-                                <BoxView Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource FlatItemDivider}"/>
-                                <Label Grid.Row="0" Text="{Binding Name}" Style="{StaticResource FlatNameLabel}"/>
-                                <Label Grid.Row="1" Text="{Binding IsOwn}" Style="{StaticResource FlatRentLabel}"/>
-                                <Label Grid.Row="2" Text="{Binding IsOwn}" Style="{StaticResource FlatInternetLabel}"/>
-                            </Grid>
-                        </Grid>
-                    </Frame>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-        -->
 
         
         <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" SelectionMode="Single" SelectedItem="{Binding SelectedItem}" SelectionChangedCommand="{Binding SelectionChangedCommand}">

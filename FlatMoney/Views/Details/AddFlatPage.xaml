@@ -11,18 +11,18 @@
     <!-- Page elements -->
     <Grid RowDefinitions="*,12*,*">
 
-        <Label Grid.Row="0" Style="{StaticResource FlatNameLabel}" Text="{Binding FlatInfo.Name}" />
+        <Label Grid.Row="0" Style="{StaticResource FlatNameLabel}" Text="{Binding NameText}" />
 
         <VerticalStackLayout Grid.Row="1" Margin="10" Spacing="10">
-            <uranium:TextField Title="Название" Text="{Binding FlatInfo.Name}" Style="{StaticResource BaseUraniumTextField}"/>
+            <uranium:TextField Title="Название" Text="{Binding NameText}" Style="{StaticResource BaseUraniumTextField}"/>
             <uranium:PickerField Title="Тип" Style="{StaticResource BaseUraniumPickerField}" ItemsSource="{Binding Types}"/>
 
-            <uranium:TextField Title="Аренда" Text="{Binding FlatInfo.RentCost}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
-            <uranium:TextField Title="Интернет и ТВ" Text="{Binding FlatInfo.InternetCost}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
-            <uranium:TextField Title="Число оплаты за аренду" Text="{Binding FlatInfo.RentDate}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
-            <uranium:TextField Title="Число оплаты за интернет и ТВ" Text="{Binding FlatInfo.InternetDate}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
+            <uranium:TextField Title="Аренда" Text="{Binding RentCostText}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
+            <uranium:TextField Title="Интернет и ТВ" Text="{Binding InternetCostText}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
+            <uranium:TextField Title="Число оплаты за аренду" Text="{Binding RentStartDateText}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
+            <uranium:TextField Title="Число оплаты за интернет и ТВ" Text="{Binding InternetStartDateText}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
 
-            <uranium:TextField Title="Адрес" Text="{Binding FlatInfo.Address}" Style="{StaticResource BaseUraniumTextField}"/>
+            <uranium:TextField Title="Адрес" Text="{Binding AddressText}" Style="{StaticResource BaseUraniumTextField}"/>
         </VerticalStackLayout>
         
         <Grid Grid.Row="2" ColumnDefinitions="*,3.75*,3.75*" Margin="30,0,30,25" ColumnSpacing="10">
