@@ -10,17 +10,22 @@ namespace FlatMoney.ViewModels
     public partial class FlatPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        public string flatCount;
+        private string flatCount;
 
         [ObservableProperty]
-        public ObservableCollection<FlatModel> items = [];
+        private ObservableCollection<FlatModel> items = [];
 
         [ObservableProperty]
-        public FlatModel selectedItem;
+        private FlatModel selectedItem;
+
+        [ObservableProperty]
+        private bool isRefreshing = false;
+
 
         private AddFlatPage _addFlatPage { get; set; }
 
         private readonly LocalDBService _localDBService;
+
         public FlatPageViewModel(LocalDBService localDBService, AddFlatPage addFlatPage)
         {
             _addFlatPage = addFlatPage;
@@ -33,20 +38,46 @@ namespace FlatMoney.ViewModels
             Shell.Current.Navigation.PopModalAsync();
         }
 
+
+
         [RelayCommand]
-        public async Task AddFlat()
+        private async Task Refresh()
         {
-            await Shell.Current.GoToAsync(nameof(AddFlatPage));
+            await Task.Delay(500);
+            await Load();
+            IsRefreshing = false;
         }
 
         [RelayCommand]
-        public async Task SelectionChanged()
+        private async Task Add()
+        {
+            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            {
+                {"info", SelectedItem },
+                {"name", string.Empty },
+                {"type", "Арендная" },
+                {"rentCost", 0 },
+                {"rentStartDate", DateTime.Today },
+                {"rentInterval", 30 },
+                {"rentAutopay", false },
+                {"internetCost", 0 },
+                {"internetStartDate", DateTime.Today },
+                {"internetInterval", 30 },
+                {"internetAutopay", false },
+                {"address", string.Empty }
+            };
+
+            await Shell.Current.GoToAsync(nameof(AddFlatPage), parameters);
+        }
+
+        [RelayCommand]
+        private async Task SelectionChanged()
         {
             Dictionary<string, object> parameters = new Dictionary<string, object>()
             {
                 {"info", SelectedItem },
                 {"name", SelectedItem.Name },
-                {"isOwn", SelectedItem.IsOwn },
+                {"type", SelectedItem.Type },
                 {"rentCost", SelectedItem.RentCost },
                 {"rentStartDate", SelectedItem.RentStartDate },
                 {"rentInterval", SelectedItem.RentInterval },
@@ -54,7 +85,8 @@ namespace FlatMoney.ViewModels
                 {"internetCost", SelectedItem.InternetCost },
                 {"internetStartDate", SelectedItem.InternetStartDate },
                 {"internetInterval", SelectedItem.InternetInterval },
-                {"internetAutopay", SelectedItem.InternetAutopay }
+                {"internetAutopay", SelectedItem.InternetAutopay },
+                {"address", SelectedItem.Address }
             };
 
             await Shell.Current.GoToAsync(nameof(AddFlatPage), parameters);

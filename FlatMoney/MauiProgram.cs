@@ -1,4 +1,5 @@
 ﻿using FlatMoney.LocalDataBase;
+using FlatMoney.Validations;
 using FlatMoney.ViewModels;
 using FlatMoney.Views.Details;
 using FlatMoney.Views.General;

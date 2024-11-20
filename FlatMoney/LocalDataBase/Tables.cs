@@ -12,6 +12,9 @@
         public const string EXPENSE_TYPES_TABLE_NAME = "expense_types";
         public const string EXPENSES_TABLE_NAME = "expenses";
 
+        public const string FlatType1 = "Арендная";
+        public const string FlatType2 = "Своя";
+
         public const string ReservationShortType = "Краткосрочное";
         public const string ReservationLongType = "Долгосрочное";
 
@@ -24,8 +27,8 @@
 
         public const string CREATE_FLATS_STATEMENT = $"CREATE TABLE IF NOT EXISTS {FLATS_TABLE_NAME} ( " +
                                                      $"PK_flat_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                                     $"flat_name VARCHAR(50) NOT NULL UNIQUE, " +
-                                                     $"is_own BOOLEAN NOT NULL DEFAULT FALSE, " +
+                                                     $"flat_name VARCHAR(50) NOT NULL, " +
+                                                     $"flat_type VARCHAR(8) NOT NULL DEFAULT '{FlatType1}', " +
                                                      $"rent_cost FLOAT, " +
                                                      $"rent_date TEXT, " +
                                                      $"rent_interval INTEGER, " +
@@ -34,7 +37,8 @@
                                                      $"internet_date TEXT, " +
                                                      $"internet_interval INTEGER, " +
                                                      $"internet_autopay BOOLEAN, " +
-                                                     $"address VARCHAR(250)); ";
+                                                     $"address VARCHAR(250), " +
+                                                     $"CHECK ( (flat_type = '{FlatType1}') OR (flat_type = '{FlatType2}') ) ); ";
 
         public const string CREATE_CLIENTS_STATEMENT = $"CREATE TABLE IF NOT EXISTS {CLIENTS_TABLE_NAME} (" +
                                                        $"PK_client_id INTEGER PRIMARY KEY AUTOINCREMENT, " +

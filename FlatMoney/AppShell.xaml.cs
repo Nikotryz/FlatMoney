@@ -1,4 +1,5 @@
 ﻿using FlatMoney.Views.Details;
+using FlatMoney.Views.General;
 
 namespace FlatMoney
 {

@@ -6,19 +6,22 @@ namespace FlatMoney.LocalDataBase
 {
     public class LocalDBService
     {
-        private const string DB_NAME = "DataBase1.db";
+        private const string DB_NAME = "DataBase4.db";
         private readonly string _dbPath = Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
         private SQLiteAsyncConnection _connection;
+
+
 
         public LocalDBService()
         {
             Task.Run(async () => await Initialization());
         }
 
+
+
         private async Task Initialization()
         {
-            if (_connection != null)
-                return;
+            if (_connection != null) return;
 
             try
             {

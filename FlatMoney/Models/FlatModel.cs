@@ -16,10 +16,10 @@ namespace FlatMoney.Models
         [SQLite.NotNull, SQLite.Unique]
         public string Name { get; set; }
 
-        [DisplayName("Is own")]
-        [SQLite.Column("is_own")]
+        [DisplayName("Type")]
+        [SQLite.Column("flat_type")]
         [SQLite.NotNull]
-        public bool IsOwn { get; set; }
+        public string Type { get; set; }
 
 
 

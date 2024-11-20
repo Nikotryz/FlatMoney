@@ -8,7 +8,7 @@ namespace FlatMoney.ViewModels
     [QueryProperty(nameof(FlatInfo), "info")]
 
     [QueryProperty(nameof(NameText), "name")]
-    [QueryProperty(nameof(IsOwnText), "isOwn")]
+    [QueryProperty(nameof(TypeText), "type")]
     [QueryProperty(nameof(RentCostText), "rentCost")]
     [QueryProperty(nameof(RentStartDateText), "rentStartDate")]
     [QueryProperty(nameof(RentIntervalText), "rentInterval")]
@@ -21,48 +21,46 @@ namespace FlatMoney.ViewModels
     public partial class AddFlatPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        public List<string> types = new List<string>() {"Арендная", "Своя"};
-
-        [ObservableProperty]
-        public string selectedType;
+        private List<string> types = new List<string>() {"Арендная", "Своя"};
 
 
 
         [ObservableProperty]
-        public FlatModel flatInfo;
+        private FlatModel flatInfo;
 
         [ObservableProperty]
-        public string nameText;
+        private string nameText;
 
         [ObservableProperty]
-        public bool isOwnText;
+        private string typeText;
 
         [ObservableProperty]
-        public float rentCostText;
+        private float rentCostText;
 
         [ObservableProperty]
-        public DateTime rentStartDateText;
+        private DateTime rentStartDateText;
 
         [ObservableProperty]
-        public int rentIntervalText;
+        private int rentIntervalText;
 
         [ObservableProperty]
-        public bool rentAutopayText;
+        private bool rentAutopayText;
 
         [ObservableProperty]
-        public float internetCostText;
+        private float internetCostText;
 
         [ObservableProperty]
-        public DateTime internetStartDateText;
+        private DateTime internetStartDateText;
 
         [ObservableProperty]
-        public int internetIntervalText;
+        private int internetIntervalText;
 
         [ObservableProperty]
-        public bool internetAutopayText;
+        private bool internetAutopayText;
 
         [ObservableProperty]
-        public string addressText;
+        private string addressText;
+
 
 
         private readonly LocalDBService _localDBService;
@@ -70,36 +68,47 @@ namespace FlatMoney.ViewModels
         public AddFlatPageViewModel(LocalDBService localDBService)
         {
             _localDBService = localDBService;
+
+            Task.Run(async () => await SetDefault());
         }
 
+
+
         [RelayCommand]
-        public async Task Delete()
+        private async Task Delete()
         {
             if (FlatInfo is not null) await _localDBService.DeleteItem(FlatInfo);
-            await Shell.Current.GoToAsync("..");
-        }
 
-        [RelayCommand]
-        public async Task Cancel()
-        {
+            await Shell.Current.GoToAsync("..");
+
             await SetDefault();
-
-            await Shell.Current.GoToAsync("..");
         }
 
         [RelayCommand]
-        public async Task Save()
+        private async Task Cancel()
+        {
+            await Shell.Current.GoToAsync("..");
+
+            await SetDefault();
+        }
+
+        [RelayCommand]
+        private async Task Save()
         {
             if (FlatInfo is not null) await Update();
             else await Create();
 
             await Shell.Current.GoToAsync("..");
+
+            await SetDefault();
         }
+
+
 
         private async Task SetDefault()
         {
             NameText = string.Empty;
-            IsOwnText = false;
+            TypeText = "Арендная";
             RentCostText = 0;
             RentStartDateText = DateTime.Today;
             RentIntervalText = 30;
@@ -114,6 +123,7 @@ namespace FlatMoney.ViewModels
         private async Task UpdateInfo()
         {
             FlatInfo.Name = NameText;
+            FlatInfo.Type = TypeText;
             FlatInfo.RentCost = RentCostText;
             FlatInfo.RentStartDate = RentStartDateText;
             FlatInfo.RentInterval = RentIntervalText;
@@ -136,7 +146,7 @@ namespace FlatMoney.ViewModels
             await _localDBService.InsertItem<FlatModel>(new FlatModel()
             {
                 Name = NameText,
-                IsOwn = IsOwnText,
+                Type = TypeText,
                 RentCost = RentCostText,
                 RentStartDate = RentStartDateText,
                 RentInterval = RentIntervalText,

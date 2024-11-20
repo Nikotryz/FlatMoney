@@ -3,76 +3,235 @@
     x:Class="FlatMoney.Views.Details.AddFlatPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:FlatMoney.Converters"
+    xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:validations="clr-namespace:FlatMoney.Validations"
     Style="{StaticResource BaseContentPage}">
 
-    
-
-    <!-- Page elements -->
-    <Grid RowDefinitions="*,12*,*">
-
-        <Label Grid.Row="0" Style="{StaticResource FlatNameLabel}" Text="{Binding NameText}" />
-
-        <VerticalStackLayout Grid.Row="1" Margin="10" Spacing="10">
-            <uranium:TextField Title="Название" Text="{Binding NameText}" Style="{StaticResource BaseUraniumTextField}"/>
-            <uranium:PickerField Title="Тип" Style="{StaticResource BaseUraniumPickerField}" ItemsSource="{Binding Types}"/>
-
-            <uranium:TextField Title="Аренда" Text="{Binding RentCostText}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
-            <uranium:TextField Title="Интернет и ТВ" Text="{Binding InternetCostText}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
-            <uranium:TextField Title="Число оплаты за аренду" Text="{Binding RentStartDateText}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
-            <uranium:TextField Title="Число оплаты за интернет и ТВ" Text="{Binding InternetStartDateText}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric"/>
-
-            <uranium:TextField Title="Адрес" Text="{Binding AddressText}" Style="{StaticResource BaseUraniumTextField}"/>
-        </VerticalStackLayout>
-        
-        <Grid Grid.Row="2" ColumnDefinitions="*,3.75*,3.75*" Margin="30,0,30,25" ColumnSpacing="10">
-            <Button Grid.Column="0" Style="{StaticResource DeleteButton}" Command="{Binding DeleteCommand}"/>
-            <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}"/>
-            <Button Grid.Column="1" Style="{StaticResource CancelButton}" Command="{Binding CancelCommand}"/>
-            <Button Grid.Column="2" Style="{StaticResource SaveButton}" Command="{Binding SaveCommand}"/>
-        </Grid>
-        
-    </Grid>
 
 
+    <!--  Page elements  -->
+    <ScrollView>
+        <input:FormView Margin="20,10,20,25" SubmitCommand="{Binding SaveCommand}">
 
-    <!-- Styles for elements -->
+            <Label Style="{StaticResource FlatNameLabel}" Text="{Binding NameText}" />
+
+            <VerticalStackLayout Spacing="30">
+
+                <VerticalStackLayout Spacing="5">
+                    <uranium:TextField
+                        Title="Название"
+                        Style="{StaticResource BaseUraniumTextField}"
+                        Text="{Binding NameText}">
+                        <validations:RequiredValidation />
+                    </uranium:TextField>
+                    <uranium:PickerField
+                        x:Name="typePicker"
+                        Title="Тип"
+                        ItemsSource="{Binding Types}"
+                        SelectedItem="{Binding TypeText}"
+                        Style="{StaticResource BaseUraniumPickerField}" />
+                </VerticalStackLayout>
+
+                <uranium:TabView Style="{StaticResource UraniumTabView}">
+
+                    <uranium:TabItem Title="Интернет и ТВ">
+
+                        <uranium:TabItem.ContentTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Margin="0,10" Spacing="5">
+                                    <uranium:TextField
+                                        Title="Сумма за интернет и ТВ"
+                                        Style="{StaticResource UraniumTextField}"
+                                        Text="{Binding InternetCostText}" />
+                                    <uranium:DatePickerField
+                                        Title="Начиная с"
+                                        Date="{Binding InternetStartDateText}"
+                                        Style="{StaticResource UraniumDatePickerField}" />
+                                    <uranium:TextField
+                                        Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}"
+                                        Style="{StaticResource UraniumTextField}"
+                                        Text="{Binding InternetIntervalText}" />
+                                    <uranium:CheckBox
+                                        IsChecked="{Binding InternetAutopayText}"
+                                        Style="{StaticResource UraniumCheckBox}"
+                                        Text="Автосписание за интернет и ТВ" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </uranium:TabItem.ContentTemplate>
+
+                    </uranium:TabItem>
+
+                    <uranium:TabItem Title="Аренда" IsVisible="{Binding Source={x:Reference typePicker}, Path=SelectedItem, Converter={StaticResource typeConverter}}">
+
+                        <uranium:TabItem.ContentTemplate>
+                            <DataTemplate>
+                                <VerticalStackLayout Margin="0,10" Spacing="5">
+                                    <uranium:TextField
+                                        Title="Сумма за аренду"
+                                        Style="{StaticResource UraniumTextField}"
+                                        Text="{Binding RentCostText}" />
+                                    <uranium:DatePickerField
+                                        Title="Начиная с"
+                                        Date="{Binding RentStartDateText}"
+                                        Style="{StaticResource UraniumDatePickerField}" />
+                                    <uranium:TextField
+                                        Title="{Binding RentIntervalText, StringFormat='Списывать каждые {0} дней'}"
+                                        Style="{StaticResource UraniumTextField}"
+                                        Text="{Binding RentIntervalText}" />
+                                    <uranium:CheckBox
+                                        IsChecked="{Binding RentAutopayText}"
+                                        Style="{StaticResource UraniumCheckBox}"
+                                        Text="Автосписание за аренду" />
+                                </VerticalStackLayout>
+                            </DataTemplate>
+                        </uranium:TabItem.ContentTemplate>
+
+                    </uranium:TabItem>
+
+                </uranium:TabView>
+
+                <uranium:TextField
+                    Title="Адрес"
+                    Style="{StaticResource BaseUraniumTextField}"
+                    Text="{Binding AddressText}" />
+
+            </VerticalStackLayout>
+
+            <Grid
+                Margin="0,170,0,0"
+                ColumnDefinitions="*,3.75*,3.75*"
+                ColumnSpacing="10">
+                <Button
+                    Grid.Column="0"
+                    Command="{Binding DeleteCommand}"
+                    Style="{StaticResource DeleteButton}" />
+                <Image
+                    Grid.Column="0"
+                    Source="delete.png"
+                    Style="{StaticResource DeleteImage}" />
+                <Button
+                    Grid.Column="1"
+                    Command="{Binding CancelCommand}"
+                    Style="{StaticResource CancelButton}" />
+                <Button
+                    Grid.Column="2"
+                    input:FormView.IsSubmitButton="True"
+                    Style="{StaticResource SaveButton}" />
+            </Grid>
+
+        </input:FormView>
+    </ScrollView>
+
+
+
+    <!--  Styles for elements  -->
     <ContentPage.Resources>
         <ResourceDictionary>
 
-            <Style x:Key="FlatNameLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
-                <Setter Property="VerticalOptions" Value="Start"/>
-                <Setter Property="FontSize" Value="28"/>
-                <Setter Property="Margin" Value="10"/>
+            <converters:FlatTypeConverter x:Key="typeConverter" />
+
+            <Style
+                x:Key="FlatNameLabel"
+                BasedOn="{StaticResource BaseLabel}"
+                TargetType="Label">
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="FontSize" Value="28" />
+                <Setter Property="Margin" Value="10" />
             </Style>
 
-            <Style x:Key="UraniumTextField" TargetType="uranium:TextField" BasedOn="{StaticResource BaseUraniumTextField}">
-                
-            </Style>
-            
-            <Style x:Key="DeleteButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
-                <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="BorderColor" Value="{StaticResource AccentRed}"/>
-                <Setter Property="BorderWidth" Value="1"/>
+            <Style x:Key="UraniumTabView" TargetType="uranium:TabView">
+                <Setter Property="TabHeaderItemColumnWidth" Value="150" />
+                <Setter Property="TabHeaderItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TabBorder}">
+                                <Label Style="{StaticResource BaseLabel}" Text="{Binding Title}" />
+                                <Border.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsSelected}"
+                                        TargetType="Border"
+                                        Value="True">
+                                        <Setter Property="BackgroundColor" Value="{StaticResource Item}" />
+                                    </DataTrigger>
+                                    <DataTrigger
+                                        Binding="{Binding IsSelected}"
+                                        TargetType="Border"
+                                        Value="False">
+                                        <Setter Property="BackgroundColor" Value="Transparent" />
+                                    </DataTrigger>
+                                </Border.Triggers>
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
             </Style>
 
-            <Style x:Key="CancelButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
-                <Setter Property="BackgroundColor" Value="Transparent"/>
-                <Setter Property="BorderColor" Value="{StaticResource AccentBlue}"/>
-                <Setter Property="BorderWidth" Value="1"/>
-                <Setter Property="Text" Value="Отмена"/>
+            <Style
+                x:Key="TabBorder"
+                BasedOn="{StaticResource BaseBorder}"
+                TargetType="Border">
+                <Setter Property="Stroke" Value="{StaticResource Item}" />
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="Margin" Value="0,0,10,0" />
             </Style>
 
-            <Style x:Key="SaveButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
-                <Setter Property="Text" Value="Сохранить"/>
+            <Style
+                x:Key="UraniumTextField"
+                BasedOn="{StaticResource BaseUraniumTextField}"
+                TargetType="uranium:TextField">
+                <Setter Property="Keyboard" Value="Numeric" />
             </Style>
 
-            <Style x:Key="DeleteImage" TargetType="Image" BasedOn="{StaticResource BaseImage}">
-                <Setter Property="Margin" Value="2"/>
+            <Style
+                x:Key="UraniumDatePickerField"
+                BasedOn="{StaticResource BaseUraniumDatePickerField}"
+                TargetType="uranium:DatePickerField" />
+
+            <Style
+                x:Key="UraniumCheckBox"
+                BasedOn="{StaticResource BaseUraniumCheckBox}"
+                TargetType="uranium:CheckBox">
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+            </Style>
+
+            <Style
+                x:Key="DeleteButton"
+                BasedOn="{StaticResource BaseButton}"
+                TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BorderColor" Value="{StaticResource AccentRed}" />
+                <Setter Property="BorderWidth" Value="1" />
+            </Style>
+
+            <Style
+                x:Key="CancelButton"
+                BasedOn="{StaticResource BaseButton}"
+                TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="BorderColor" Value="{StaticResource AccentBlue}" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="Text" Value="Отмена" />
+            </Style>
+
+            <Style
+                x:Key="SaveButton"
+                BasedOn="{StaticResource BaseButton}"
+                TargetType="Button">
+                <Setter Property="Text" Value="Сохранить" />
+            </Style>
+
+            <Style
+                x:Key="DeleteImage"
+                BasedOn="{StaticResource BaseImage}"
+                TargetType="Image">
+                <Setter Property="Margin" Value="2" />
             </Style>
 
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    
+
+
 </ContentPage>
