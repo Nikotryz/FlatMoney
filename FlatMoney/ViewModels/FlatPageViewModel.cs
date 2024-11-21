@@ -10,16 +10,17 @@ namespace FlatMoney.ViewModels
     public partial class FlatPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        private string flatCount;
+        public ObservableCollection<FlatModel> myFlats = [];
 
         [ObservableProperty]
-        private ObservableCollection<FlatModel> items = [];
+        public string myFlatsCount;
 
         [ObservableProperty]
         private FlatModel selectedItem;
 
         [ObservableProperty]
         private bool isRefreshing = false;
+
 
 
         private AddFlatPage _addFlatPage { get; set; }
@@ -96,11 +97,11 @@ namespace FlatMoney.ViewModels
 
         private async Task Load()
         {
-            var items = await _localDBService.GetItems<FlatModel>();
-            Items.Clear();
-            foreach (FlatModel item in items)
+            var flats = await _localDBService.GetItems<FlatModel>();
+            MyFlats.Clear();
+            foreach (FlatModel item in flats)
             {
-                Items.Add(item);
+                MyFlats.Add(item);
             }
 
             await CountLoad();
@@ -116,8 +117,8 @@ namespace FlatMoney.ViewModels
             else if (lastDigit > 1 && lastDigit < 5) wordEnding = "квартиры";
             else wordEnding = "квартир";
 
-            if (count == 0) FlatCount = "нет квартир";
-            else FlatCount = $"{count} {wordEnding}";
+            if (count == 0) MyFlatsCount = "нет квартир";
+            else MyFlatsCount = $"{count} {wordEnding}";
         }
     }
 }

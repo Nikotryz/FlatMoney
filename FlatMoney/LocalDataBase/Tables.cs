@@ -69,7 +69,7 @@
         public const string CREATE_SERVICES_STATEMENT = $"CREATE TABLE IF NOT EXISTS {SERVICES_TABLE_NAME} (" +
                                                         $"PK_service_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                         $"service_name VARCHAR(50) NOT NULL DEFAULT 'Услуга', " +
-                                                        $"service_cost FLOAT NOT NULL DEFAULT 0); ";
+                                                        $"service_cost FLOAT); ";
 
         public const string CREATE_RESERVATION_SERVICES_STATEMENT = $"CREATE TABLE IF NOT EXISTS {RESERVATION_SERVICES_TABLE_NAME} (" +
                                                                     $"PK_reservation_service_id INTEGER PRIMARY KEY AUTOINCREMENT, " +

@@ -38,6 +38,12 @@ namespace FlatMoney
                 BindingContext = serviceProvider.GetRequiredService<AddFlatPageViewModel>()
             });
 
+            builder.Services.AddSingleton<MoneyPageViewModel>();
+            builder.Services.AddSingleton<MoneyPage>(serviceProvider => new MoneyPage()
+            {
+                BindingContext = serviceProvider.GetRequiredService<MoneyPageViewModel>()
+            });
+
 #if DEBUG
             builder.Logging.AddDebug();
 #endif

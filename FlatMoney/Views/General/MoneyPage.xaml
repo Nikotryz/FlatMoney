@@ -3,8 +3,227 @@
     x:Class="FlatMoney.Views.General.MoneyPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     Style="{StaticResource BaseContentPage}">
 
-    <Label Style="{StaticResource BaseLabel}" Text="Деньги" />
+
+
+    <!--  Page elements  -->
+    <Grid>
+        <RefreshView Style="{StaticResource BaseRefreshView}" Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}">
+            <uranium:TabView Style="{StaticResource UraniumTabView}">
+
+                <uranium:TabItem Title="Обзор">
+                    <VerticalStackLayout Margin="10,20" Spacing="10">
+                        
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="Прибыль за период" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+                        </ur:ExpanderView>
+                        
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="Мои услуги" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+
+                            <Grid HeightRequest="40">
+                                <Button Style="{StaticResource ExpanderContentButton}"/>
+                                <Image Source="add.png" Style="{StaticResource ButtonAddImage}"/>
+                            </Grid>
+
+                        </ur:ExpanderView>
+                        
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="Мои расходы" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+
+                            <Grid HeightRequest="40">
+                                <Button Style="{StaticResource ExpanderContentButton}"/>
+                                <Image Source="add.png" Style="{StaticResource ButtonAddImage}"/>
+                            </Grid>
+                            
+                        </ur:ExpanderView>
+                        
+                    </VerticalStackLayout>
+                </uranium:TabItem>
+
+                <uranium:TabItem Title="Доходы">
+                    <VerticalStackLayout Margin="10,20" Spacing="10">
+                        
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="Доходы за период" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+                        </ur:ExpanderView>
+                        
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="История доходов" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+                        </ur:ExpanderView>
+                        
+                    </VerticalStackLayout>
+                </uranium:TabItem>
+
+                <uranium:TabItem Title="Расходы">
+                    <VerticalStackLayout Margin="10,20" Spacing="10">
+
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="Расходы за период" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+                        </ur:ExpanderView>
+
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="История расходов" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+                        </ur:ExpanderView>
+
+                    </VerticalStackLayout>
+                </uranium:TabItem>
+
+                <uranium:TabItem Title="Статистика">
+                    <VerticalStackLayout Margin="10,20" Spacing="10">
+
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="Расходы по категориям" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+                        </ur:ExpanderView>
+
+                        <ur:ExpanderView>
+                            <ur:ExpanderView.Header>
+                                <Label Text="Доходы по квартирам" Style="{StaticResource ExpanderHeaderLabel}"/>
+                            </ur:ExpanderView.Header>
+                        </ur:ExpanderView>
+
+                    </VerticalStackLayout>
+                </uranium:TabItem>
+
+            </uranium:TabView>
+        </RefreshView>
+    </Grid>
+
+
+
+    <!--  Styles for elements  -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="UraniumTabView" TargetType="uranium:TabView">
+                <Setter Property="TabHeaderItemColumnWidth" Value="98"/>
+                <Setter Property="TabHeaderItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TabBorder}">
+                                <Grid>
+                                    <Label Style="{StaticResource BaseLabel}" Text="{Binding Title}">
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding IsSelected}"
+                                                TargetType="Label"
+                                                Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource AccentBlue}" />
+                                            </DataTrigger>
+                                            <DataTrigger
+                                                Binding="{Binding IsSelected}"
+                                                TargetType="Label"
+                                                Value="False">
+                                                <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <BoxView Style="{StaticResource TabDivider}">
+                                        <BoxView.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding IsSelected}"
+                                                TargetType="BoxView"
+                                                Value="True">
+                                                <Setter Property="HeightRequest" Value="2" />
+                                            </DataTrigger>
+                                            <DataTrigger
+                                                Binding="{Binding IsSelected}"
+                                                TargetType="BoxView"
+                                                Value="False">
+                                                <Setter Property="HeightRequest" Value="0" />
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style
+                x:Key="TabBorder"
+                BasedOn="{StaticResource BaseBorder}"
+                TargetType="Border">
+                <Setter Property="StrokeShape">
+                    <RoundRectangle CornerRadius="0" />
+                </Setter>
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="Stroke" Value="{StaticResource AccentBlue}" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+
+            <Style
+                x:Key="TabDivider"
+                BasedOn="{StaticResource BaseHorizontalDivider}"
+                TargetType="BoxView">
+                <Setter Property="Color" Value="{StaticResource AccentBlue}" />
+                <Setter Property="VerticalOptions" Value="EndAndExpand" />
+                <Setter Property="HeightRequest" Value="2" />
+            </Style>
+
+            <!--
+            <Style TargetType="ur:ExpanderView">
+                <Setter Property="ControlTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Border Style="{StaticResource BaseBorder}" HeightRequest="50">
+
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            -->
+
+            <Style TargetType="Layout" Class="ExpanderView.Header" ApplyToDerivedTypes="True">
+                <Setter Property="HeightRequest" Value="40"/>
+                <Setter Property="BackgroundColor" Value="{StaticResource Field}" />
+            </Style>
+
+            <Style TargetType="ContentView" Class="ExpanderView.Content">
+                <Setter Property="Margin" Value="10,5,10,0"/>
+                <Setter Property="BackgroundColor" Value="Transparent" />
+            </Style>
+
+            <Style TargetType="Path" Class="ExpanderView.Arrow">
+                <Setter Property="Fill" Value="{StaticResource AccentBlue}" />
+            </Style>
+
+            <Style x:Key="ExpanderHeaderLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="Margin" Value="10,0,0,0"/>
+            </Style>
+
+            <Style x:Key="ExpanderContentButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="BorderWidth" Value="1"/>
+            </Style>
+
+            <Style x:Key="ButtonAddImage" TargetType="Image" BasedOn="{StaticResource BaseImage}">
+                <Setter Property="Margin" Value="5"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
 </ContentPage>

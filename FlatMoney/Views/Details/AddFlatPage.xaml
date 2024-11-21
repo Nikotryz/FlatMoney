@@ -6,123 +6,125 @@
     xmlns:converters="clr-namespace:FlatMoney.Converters"
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-    xmlns:validations="clr-namespace:FlatMoney.Validations"
+    xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
     Style="{StaticResource BaseContentPage}">
 
 
 
     <!--  Page elements  -->
-    <ScrollView>
-        <input:FormView Margin="20,10,20,25" SubmitCommand="{Binding SaveCommand}">
+    <input:FormView Style="{StaticResource UraniumFormView}" SubmitCommand="{Binding SaveCommand}">
 
-            <Label Style="{StaticResource FlatNameLabel}" Text="{Binding NameText}" />
+        <Label Style="{StaticResource FlatNameLabel}" Text="{Binding NameText}" />
 
-            <VerticalStackLayout Spacing="30">
+        <VerticalStackLayout Spacing="30">
 
-                <VerticalStackLayout Spacing="5">
-                    <uranium:TextField
-                        Title="Название"
-                        Style="{StaticResource BaseUraniumTextField}"
-                        Text="{Binding NameText}">
-                        <validations:RequiredValidation />
-                    </uranium:TextField>
-                    <uranium:PickerField
-                        x:Name="typePicker"
-                        Title="Тип"
-                        ItemsSource="{Binding Types}"
-                        SelectedItem="{Binding TypeText}"
-                        Style="{StaticResource BaseUraniumPickerField}" />
-                </VerticalStackLayout>
-
-                <uranium:TabView Style="{StaticResource UraniumTabView}">
-
-                    <uranium:TabItem Title="Интернет и ТВ">
-
-                        <uranium:TabItem.ContentTemplate>
-                            <DataTemplate>
-                                <VerticalStackLayout Margin="0,10" Spacing="5">
-                                    <uranium:TextField
-                                        Title="Сумма за интернет и ТВ"
-                                        Style="{StaticResource UraniumTextField}"
-                                        Text="{Binding InternetCostText}" />
-                                    <uranium:DatePickerField
-                                        Title="Начиная с"
-                                        Date="{Binding InternetStartDateText}"
-                                        Style="{StaticResource UraniumDatePickerField}" />
-                                    <uranium:TextField
-                                        Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}"
-                                        Style="{StaticResource UraniumTextField}"
-                                        Text="{Binding InternetIntervalText}" />
-                                    <uranium:CheckBox
-                                        IsChecked="{Binding InternetAutopayText}"
-                                        Style="{StaticResource UraniumCheckBox}"
-                                        Text="Автосписание за интернет и ТВ" />
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </uranium:TabItem.ContentTemplate>
-
-                    </uranium:TabItem>
-
-                    <uranium:TabItem Title="Аренда" IsVisible="{Binding Source={x:Reference typePicker}, Path=SelectedItem, Converter={StaticResource typeConverter}}">
-
-                        <uranium:TabItem.ContentTemplate>
-                            <DataTemplate>
-                                <VerticalStackLayout Margin="0,10" Spacing="5">
-                                    <uranium:TextField
-                                        Title="Сумма за аренду"
-                                        Style="{StaticResource UraniumTextField}"
-                                        Text="{Binding RentCostText}" />
-                                    <uranium:DatePickerField
-                                        Title="Начиная с"
-                                        Date="{Binding RentStartDateText}"
-                                        Style="{StaticResource UraniumDatePickerField}" />
-                                    <uranium:TextField
-                                        Title="{Binding RentIntervalText, StringFormat='Списывать каждые {0} дней'}"
-                                        Style="{StaticResource UraniumTextField}"
-                                        Text="{Binding RentIntervalText}" />
-                                    <uranium:CheckBox
-                                        IsChecked="{Binding RentAutopayText}"
-                                        Style="{StaticResource UraniumCheckBox}"
-                                        Text="Автосписание за аренду" />
-                                </VerticalStackLayout>
-                            </DataTemplate>
-                        </uranium:TabItem.ContentTemplate>
-
-                    </uranium:TabItem>
-
-                </uranium:TabView>
-
+            <VerticalStackLayout Spacing="5">
                 <uranium:TextField
-                    Title="Адрес"
+                    Title="Название"
                     Style="{StaticResource BaseUraniumTextField}"
-                    Text="{Binding AddressText}" />
-
+                    Text="{Binding NameText}">
+                    <validations:RequiredValidation Message="Поле обязательно для ввода" />
+                </uranium:TextField>
+                <uranium:PickerField
+                    x:Name="typePicker"
+                    Title="Тип"
+                    ItemsSource="{Binding Types}"
+                    SelectedItem="{Binding TypeText}"
+                    Style="{StaticResource BaseUraniumPickerField}" />
             </VerticalStackLayout>
 
-            <Grid
-                Margin="0,170,0,0"
-                ColumnDefinitions="*,3.75*,3.75*"
-                ColumnSpacing="10">
-                <Button
-                    Grid.Column="0"
-                    Command="{Binding DeleteCommand}"
-                    Style="{StaticResource DeleteButton}" />
-                <Image
-                    Grid.Column="0"
-                    Source="delete.png"
-                    Style="{StaticResource DeleteImage}" />
-                <Button
-                    Grid.Column="1"
-                    Command="{Binding CancelCommand}"
-                    Style="{StaticResource CancelButton}" />
-                <Button
-                    Grid.Column="2"
-                    input:FormView.IsSubmitButton="True"
-                    Style="{StaticResource SaveButton}" />
-            </Grid>
+            <uranium:TabView Style="{StaticResource UraniumTabView}">
 
-        </input:FormView>
-    </ScrollView>
+                <uranium:TabItem Title="Интернет и ТВ">
+
+                    <uranium:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout Margin="0,10" Spacing="5">
+                                <uranium:TextField
+                                    Title="Сумма за интернет и ТВ"
+                                    Style="{StaticResource UraniumTextField}"
+                                    Text="{Binding InternetCostText}" />
+                                <uranium:DatePickerField
+                                    Title="Начиная с"
+                                    Date="{Binding InternetStartDateText}"
+                                    Style="{StaticResource UraniumDatePickerField}" />
+                                <uranium:TextField
+                                    Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}"
+                                    Style="{StaticResource UraniumTextField}"
+                                    Text="{Binding InternetIntervalText}">
+                                    <validations:DigitsOnlyValidation Message="В поле могут быть только целые числа" />
+                                </uranium:TextField>
+                                <uranium:CheckBox
+                                    IsChecked="{Binding InternetAutopayText}"
+                                    Style="{StaticResource UraniumCheckBox}"
+                                    Text="Автосписание за интернет и ТВ" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </uranium:TabItem.ContentTemplate>
+
+                </uranium:TabItem>
+
+                <uranium:TabItem Title="Аренда" IsVisible="{Binding Source={x:Reference typePicker}, Path=SelectedItem, Converter={StaticResource typeConverter}}">
+
+                    <uranium:TabItem.ContentTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout Margin="0,10" Spacing="5">
+                                <uranium:TextField
+                                    Title="Сумма за аренду"
+                                    Style="{StaticResource UraniumTextField}"
+                                    Text="{Binding RentCostText}" />
+                                <uranium:DatePickerField
+                                    Title="Начиная с"
+                                    Date="{Binding RentStartDateText}"
+                                    Style="{StaticResource UraniumDatePickerField}" />
+                                <uranium:TextField
+                                    Title="{Binding RentIntervalText, StringFormat='Списывать каждые {0} дней'}"
+                                    Style="{StaticResource UraniumTextField}"
+                                    Text="{Binding RentIntervalText}">
+                                    <validations:DigitsOnlyValidation Message="В поле могут быть только целые числа" />
+                                </uranium:TextField>
+                                <uranium:CheckBox
+                                    IsChecked="{Binding RentAutopayText}"
+                                    Style="{StaticResource UraniumCheckBox}"
+                                    Text="Автосписание за аренду" />
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </uranium:TabItem.ContentTemplate>
+
+                </uranium:TabItem>
+
+            </uranium:TabView>
+
+            <uranium:TextField
+                Title="Адрес"
+                Style="{StaticResource BaseUraniumTextField}"
+                Text="{Binding AddressText}" />
+
+        </VerticalStackLayout>
+
+        <Grid
+            ColumnDefinitions="*,3.75*,3.75*"
+            ColumnSpacing="10"
+            VerticalOptions="EndAndExpand">
+            <Button
+                Grid.Column="0"
+                Command="{Binding DeleteCommand}"
+                Style="{StaticResource DeleteButton}" />
+            <Image
+                Grid.Column="0"
+                Source="delete.png"
+                Style="{StaticResource DeleteImage}" />
+            <Button
+                Grid.Column="1"
+                Command="{Binding CancelCommand}"
+                Style="{StaticResource CancelButton}" />
+            <Button
+                Grid.Column="2"
+                input:FormView.IsSubmitButton="True"
+                Style="{StaticResource SaveButton}" />
+        </Grid>
+
+    </input:FormView>
 
 
 
@@ -131,6 +133,11 @@
         <ResourceDictionary>
 
             <converters:FlatTypeConverter x:Key="typeConverter" />
+
+            <Style x:Key="UraniumFormView" TargetType="input:FormView">
+                <Setter Property="Margin" Value="20,10,20,25" />
+                <Setter Property="VerticalOptions" Value="Fill" />
+            </Style>
 
             <Style
                 x:Key="FlatNameLabel"

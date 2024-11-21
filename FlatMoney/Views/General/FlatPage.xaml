@@ -14,7 +14,7 @@
             <Label
                 Grid.Column="0"
                 Style="{StaticResource FlatCounterLabel}"
-                Text="{Binding FlatCount}" />
+                Text="{Binding MyFlatsCount}" />
             <Button
                 Grid.Column="1"
                 Command="{Binding AddCommand}"
@@ -31,9 +31,9 @@
             Grid.Row="1"
             Command="{Binding RefreshCommand}"
             IsRefreshing="{Binding IsRefreshing}"
-            RefreshColor="{StaticResource AccentBlue}">
+            Style="{StaticResource BaseRefreshView}">
             <CollectionView
-                ItemsSource="{Binding Items}"
+                ItemsSource="{Binding MyFlats}"
                 SelectedItem="{Binding SelectedItem}"
                 SelectionChangedCommand="{Binding SelectionChangedCommand}"
                 SelectionMode="Single">
