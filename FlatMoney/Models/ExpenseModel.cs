@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using FlatMoney.LocalDataBase;
+﻿using FlatMoney.LocalDataBase;
 
 namespace FlatMoney.Models
 {

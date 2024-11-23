@@ -41,10 +41,16 @@ namespace FlatMoney.ViewModels
 
 
 
+        //[RelayCommand]
+        //private async Task NavigatedTo()
+        //{
+        //    await Load();
+        //}
+
         [RelayCommand]
         private async Task Refresh()
         {
-            await Task.Delay(500);
+            await Task.Delay(300);
             await Load();
             IsRefreshing = false;
         }

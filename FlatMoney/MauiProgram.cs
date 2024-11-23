@@ -1,5 +1,4 @@
 ﻿using FlatMoney.LocalDataBase;
-using FlatMoney.Validations;
 using FlatMoney.ViewModels;
 using FlatMoney.Views.Details;
 using FlatMoney.Views.General;
@@ -42,6 +41,24 @@ namespace FlatMoney
             builder.Services.AddSingleton<MoneyPage>(serviceProvider => new MoneyPage()
             {
                 BindingContext = serviceProvider.GetRequiredService<MoneyPageViewModel>()
+            });
+
+            builder.Services.AddSingleton<AddServicePageViewModel>();
+            builder.Services.AddSingleton<AddServicePage>(serviceProvider => new AddServicePage()
+            {
+                BindingContext = serviceProvider.GetRequiredService<AddServicePageViewModel>()
+            });
+
+            builder.Services.AddSingleton<AddExpenseTypePageViewModel>();
+            builder.Services.AddSingleton<AddExpenseTypePage>(serviceProvider => new AddExpenseTypePage()
+            {
+                BindingContext = serviceProvider.GetRequiredService<AddExpenseTypePageViewModel>()
+            });
+
+            builder.Services.AddSingleton<AddExpensePageViewModel>();
+            builder.Services.AddSingleton<AddExpensePage>(serviceProvider => new AddExpensePage()
+            {
+                BindingContext = serviceProvider.GetRequiredService<AddExpensePageViewModel>()
             });
 
 #if DEBUG

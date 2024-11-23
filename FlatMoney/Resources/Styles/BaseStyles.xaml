@@ -3,8 +3,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
-    xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui">
+    xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
 
 
 
@@ -34,7 +34,7 @@
     <Style x:Key="BaseButton" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{StaticResource AccentBlue}" />
         <Setter Property="CornerRadius" Value="5" />
-        <Setter Property="BorderColor" Value="{StaticResource AccentBlue}"/>
+        <Setter Property="BorderColor" Value="{StaticResource AccentBlue}" />
         <Setter Property="BorderWidth" Value="0" />
         <Setter Property="HorizontalOptions" Value="FillAndExpand" />
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
@@ -85,9 +85,7 @@
 
 
 
-    <Style x:Key="BaseUraniumExpander" TargetType="ur:ExpanderView">
-        
-    </Style>
+    <Style x:Key="BaseUraniumExpander" TargetType="ur:ExpanderView" />
 
     <Style x:Key="BaseUraniumTextField" TargetType="uranium:TextField">
         <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />

@@ -1,5 +1,4 @@
 ﻿using FlatMoney.Views.Details;
-using FlatMoney.Views.General;
 
 namespace FlatMoney
 {
@@ -10,6 +9,9 @@ namespace FlatMoney
             InitializeComponent();
 
             Routing.RegisterRoute(nameof(AddFlatPage), typeof(AddFlatPage));
+            Routing.RegisterRoute(nameof(AddServicePage), typeof(AddServicePage));
+            Routing.RegisterRoute(nameof(AddExpenseTypePage), typeof(AddExpenseTypePage));
+            Routing.RegisterRoute(nameof(AddExpensePage), typeof(AddExpensePage));
         }
     }
 }
