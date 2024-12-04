@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FlatMoney.Views.Details.AddReservationPage"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             Style="{StaticResource BaseContentPage}">
+    
+    
+    
+    <!-- Page elements -->
+    <input:FormView>
+        <uranium:TabView Style="{StaticResource UraniumTabView}" SelectedTab="{Binding SelectedTab}" SelectedTabChangedCommand="{Binding TabChangedCommand}">
+
+            <uranium:TabItem Title="Основное">
+                <VerticalStackLayout Margin="20" Spacing="5">
+                    <Border Style="{StaticResource BaseBorder}" HeightRequest="40" Margin="0,10,0,30" BackgroundColor="{StaticResource Field}"/>
+                    <Label Text="Заказчик" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontFamily="ExtraLight"/>
+                    <Label Text="Никита Харламов" Style="{StaticResource BaseLabel}" FontSize="24" HorizontalOptions="Start"/>
+                    <HorizontalStackLayout HorizontalOptions="Start" Spacing="5">
+                        <Ellipse Fill="{StaticResource Book}" HeightRequest="10" WidthRequest="10"/>
+                        <Label Text="+7 (952) 756-29-10" Style="{StaticResource BaseLabel}" TextColor="{StaticResource Book}"/>
+                    </HorizontalStackLayout>
+                    <Grid RowDefinitions="*,*,*" ColumnDefinitions="*,2*,2*" RowSpacing="3" ColumnSpacing="10" Margin="0,30,50,0">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Заезд" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                        <uranium:DatePickerField Grid.Row="0" Grid.Column="1" Date="{Binding InDate}" Style="{StaticResource BaseUraniumDatePickerField}" Icon="clientpage_selected.png"/>
+                        <uranium:TimePickerField Grid.Row="0" Grid.Column="2" Time="{Binding InTime}" Style="{StaticResource BaseUraniumTimePickerField}"/>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Выезд" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                        <uranium:DatePickerField Grid.Row="1" Grid.Column="1" Date="{Binding OutDate}" Style="{StaticResource BaseUraniumDatePickerField}" Icon="clientpage_selected.png"/>
+                        <uranium:TimePickerField Grid.Row="1" Grid.Column="2" Time="{Binding OutTime}" Style="{StaticResource BaseUraniumTimePickerField}"/>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Ночи" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                        <uranium:TextField Grid.Row="2" Grid.Column="1" Text="{Binding DaysCount}" Style="{StaticResource BaseUraniumTextField}"/>
+                        <uranium:TextField Grid.Row="2" Grid.Column="2" Text="{Binding SumPerDay}" Style="{StaticResource BaseUraniumTextField}"/>
+                    </Grid>
+                    <Label Text="Квартира" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="0,30,0,10"/>
+                    <Grid ColumnDefinitions="2*,*" ColumnSpacing="10" HeightRequest="40">
+                        <Border Grid.Column="0" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}">
+                            <uranium:PickerField ItemsSource="{Binding FlatsList}" Style="{StaticResource BaseUraniumPickerField}"/>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}">
+                            <Label Text="{Binding TotalSum}" Style="{StaticResource BaseLabel}"/>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+            </uranium:TabItem>
+
+            <uranium:TabItem Title="Гости">
+                <VerticalStackLayout Margin="20" Spacing="10">
+                    <Label Text="Количество гостей" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20"/>
+                    <Grid ColumnDefinitions="*,*,1.5*" ColumnSpacing="10" HeightRequest="40">
+                        <uranium:TextField Grid.Column="0" Title="Взрослые" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+
+                        </uranium:TextField>
+                        <uranium:TextField Grid.Column="1" Title="Дети" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+
+                        </uranium:TextField>
+                    </Grid>
+                    <Grid ColumnDefinitions="2*,*" Margin="0,30,0,0" HeightRequest="40">
+                        <Label Text="Данные гостей" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20"/>
+                        <Button Grid.Column="1" Text="Добавить" Style="{StaticResource BaseButton}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </uranium:TabItem>
+
+            <uranium:TabItem Title="Услуги">
+                <Grid ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10">
+                    <Border Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}"/>
+                    <Label Grid.Column="0" Text="Услуги" Style="{StaticResource BaseLabel}" FontSize="20" FontFamily="ExtraLight"/>
+                    <Label Grid.Column="1" Text="{Binding PaymentsSum}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight"/>
+                    <Button Grid.Column="2" Text="Добавить" Command="{Binding AddServiceCommand}" Style="{StaticResource PaSButton}"/>
+                </Grid>
+            </uranium:TabItem>
+
+            <uranium:TabItem Title="Счет">
+                <Grid ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10">
+                    <Border Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}"/>
+                    <Label Grid.Column="0" Text="Платежи" Style="{StaticResource BaseLabel}" FontSize="20" FontFamily="ExtraLight"/>
+                    <Label Grid.Column="1" Text="{Binding PaymentsSum}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight"/>
+                    <Button Grid.Column="2" Text="Добавить" Command="{Binding AddPaymentCommand}" Style="{StaticResource PaSButton}"/>
+                </Grid>
+            </uranium:TabItem>
+
+        </uranium:TabView>
+
+        <Grid ColumnDefinitions="*,3.75*,3.75*" ColumnSpacing="10" VerticalOptions="EndAndExpand" Margin="20,0,20,20">
+            <Button Grid.Column="0" Command="{Binding DeleteCommand}" Style="{StaticResource DeleteButton}" />
+            <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}" />
+            <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
+            <Button Grid.Column="2" input:FormView.IsSubmitButton="True" Style="{StaticResource SaveButton}" />
+        </Grid>
+    </input:FormView>
+
+
+
+    <!-- Styles for elements -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="UraniumTabView" TargetType="uranium:TabView">
+                <Setter Property="TabHeaderItemColumnWidth" Value="{Binding ColumnWidth}" />
+                <Setter Property="TabHeaderItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TabBorder}">
+                                <Grid>
+                                    <Label Style="{StaticResource BaseLabel}" Text="{Binding Title}">
+                                        <Label.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" TargetType="Label" Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource AccentBlue}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsSelected}" TargetType="Label" Value="False">
+                                                <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <BoxView Style="{StaticResource TabDivider}">
+                                        <BoxView.Triggers>
+                                            <DataTrigger Binding="{Binding IsSelected}" TargetType="BoxView" Value="True">
+                                                <Setter Property="HeightRequest" Value="2" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding IsSelected}" TargetType="BoxView" Value="False">
+                                                <Setter Property="HeightRequest" Value="0" />
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TabBorder" BasedOn="{StaticResource BaseBorder}" TargetType="Border">
+                <Setter Property="StrokeShape">
+                    <RoundRectangle CornerRadius="0" />
+                </Setter>
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="Stroke" Value="{StaticResource AccentBlue}" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+
+            <Style x:Key="TabDivider" BasedOn="{StaticResource BaseHorizontalDivider}" TargetType="BoxView">
+                <Setter Property="Color" Value="{StaticResource AccentBlue}" />
+                <Setter Property="VerticalOptions" Value="EndAndExpand" />
+                <Setter Property="HeightRequest" Value="2" />
+            </Style>
+
+            <Style x:Key="PaSButton" TargetType="Button" BasedOn="{StaticResource BaseButton}">
+                <Setter Property="HeightRequest" Value="36"/>
+                <Setter Property="Margin" Value="0,0,2,0"/>
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    
+
+</ContentPage>

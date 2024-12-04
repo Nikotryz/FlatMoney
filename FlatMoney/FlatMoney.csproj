@@ -46,7 +46,7 @@
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
 		<!-- Images -->
-		<MauiImage Include="Resources\Images\clientpage_selected.svg" />
+		<MauiImage Include="Resources\Images\clientpage_selected.svg" TintColor="#2879FE" />
 		<MauiImage Include="Resources\Images\clientpage_unselected.svg" />
 		<MauiImage Include="Resources\Images\flatpage_selected.svg" />
 		<MauiImage Include="Resources\Images\flatpage_unselected.svg" />
@@ -67,12 +67,19 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
+		<PackageReference Include="DevExpress.Maui.Controls" Version="24.1.7" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.1" />
 		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
 		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
 		<PackageReference Include="UraniumUI.Material" Version="2.10.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Views\Details\AddReservationPage.xaml.cs">
+	    <DependentUpon>AddReservationPage.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -89,6 +96,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Details\AddServicePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Details\AddReservationPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\General\ClientPage.xaml">

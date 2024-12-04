@@ -47,7 +47,7 @@
                                 <uranium:DatePickerField
                                     Title="Начиная с"
                                     Date="{Binding InternetStartDateText}"
-                                    Style="{StaticResource UraniumDatePickerField}" />
+                                    Style="{StaticResource BaseUraniumDatePickerField}" />
                                 <uranium:TextField
                                     Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}"
                                     Style="{StaticResource UraniumTextField}"
@@ -56,7 +56,8 @@
                                 </uranium:TextField>
                                 <uranium:CheckBox
                                     IsChecked="{Binding InternetAutopayText}"
-                                    Style="{StaticResource UraniumCheckBox}"
+                                    Style="{StaticResource BaseUraniumCheckBox}"
+                                    Margin="0,10,0,0"
                                     Text="Автосписание за интернет и ТВ" />
                             </VerticalStackLayout>
                         </DataTemplate>
@@ -76,7 +77,7 @@
                                 <uranium:DatePickerField
                                     Title="Начиная с"
                                     Date="{Binding RentStartDateText}"
-                                    Style="{StaticResource UraniumDatePickerField}" />
+                                    Style="{StaticResource BaseUraniumDatePickerField}" />
                                 <uranium:TextField
                                     Title="{Binding RentIntervalText, StringFormat='Списывать каждые {0} дней'}"
                                     Style="{StaticResource UraniumTextField}"
@@ -85,7 +86,8 @@
                                 </uranium:TextField>
                                 <uranium:CheckBox
                                     IsChecked="{Binding RentAutopayText}"
-                                    Style="{StaticResource UraniumCheckBox}"
+                                    Style="{StaticResource BaseUraniumCheckBox}"
+                                    Margin="0,10,0,0"
                                     Text="Автосписание за аренду" />
                             </VerticalStackLayout>
                         </DataTemplate>
@@ -139,10 +141,7 @@
                 <Setter Property="VerticalOptions" Value="Fill" />
             </Style>
 
-            <Style
-                x:Key="FlatNameLabel"
-                BasedOn="{StaticResource BaseLabel}"
-                TargetType="Label">
+            <Style x:Key="FlatNameLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
                 <Setter Property="VerticalOptions" Value="Start" />
                 <Setter Property="FontSize" Value="28" />
                 <Setter Property="Margin" Value="10" />
@@ -175,66 +174,14 @@
                 </Setter>
             </Style>
 
-            <Style
-                x:Key="TabBorder"
-                BasedOn="{StaticResource BaseBorder}"
-                TargetType="Border">
+            <Style x:Key="TabBorder" TargetType="Border" BasedOn="{StaticResource BaseBorder}">
                 <Setter Property="Stroke" Value="{StaticResource Item}" />
                 <Setter Property="HeightRequest" Value="40" />
                 <Setter Property="Margin" Value="0,0,10,0" />
             </Style>
 
-            <Style
-                x:Key="UraniumTextField"
-                BasedOn="{StaticResource BaseUraniumTextField}"
-                TargetType="uranium:TextField">
+            <Style x:Key="UraniumTextField"  TargetType="uranium:TextField" BasedOn="{StaticResource BaseUraniumTextField}">
                 <Setter Property="Keyboard" Value="Numeric" />
-            </Style>
-
-            <Style
-                x:Key="UraniumDatePickerField"
-                BasedOn="{StaticResource BaseUraniumDatePickerField}"
-                TargetType="uranium:DatePickerField" />
-
-            <Style
-                x:Key="UraniumCheckBox"
-                BasedOn="{StaticResource BaseUraniumCheckBox}"
-                TargetType="uranium:CheckBox">
-                <Setter Property="HeightRequest" Value="40" />
-                <Setter Property="TextColor" Value="{StaticResource Gray400}" />
-            </Style>
-
-            <Style
-                x:Key="DeleteButton"
-                BasedOn="{StaticResource BaseButton}"
-                TargetType="Button">
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="BorderColor" Value="{StaticResource AccentRed}" />
-                <Setter Property="BorderWidth" Value="1" />
-            </Style>
-
-            <Style
-                x:Key="CancelButton"
-                BasedOn="{StaticResource BaseButton}"
-                TargetType="Button">
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="BorderColor" Value="{StaticResource AccentBlue}" />
-                <Setter Property="BorderWidth" Value="1" />
-                <Setter Property="Text" Value="Отмена" />
-            </Style>
-
-            <Style
-                x:Key="SaveButton"
-                BasedOn="{StaticResource BaseButton}"
-                TargetType="Button">
-                <Setter Property="Text" Value="Сохранить" />
-            </Style>
-
-            <Style
-                x:Key="DeleteImage"
-                BasedOn="{StaticResource BaseImage}"
-                TargetType="Image">
-                <Setter Property="Margin" Value="2" />
             </Style>
 
         </ResourceDictionary>

@@ -47,9 +47,30 @@
         <Setter Property="MinimumWidthRequest" Value="40" />
     </Style>
 
+    <Style x:Key="DeleteButton" BasedOn="{StaticResource BaseButton}" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource AccentRed}" />
+        <Setter Property="BorderWidth" Value="1" />
+    </Style>
+
+    <Style x:Key="CancelButton" BasedOn="{StaticResource BaseButton}" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="BorderColor" Value="{StaticResource AccentBlue}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="Text" Value="Отмена" />
+    </Style>
+
+    <Style x:Key="SaveButton" BasedOn="{StaticResource BaseButton}" TargetType="Button">
+        <Setter Property="Text" Value="Сохранить" />
+    </Style>
+
     <Style x:Key="BaseImage" TargetType="Image">
         <Setter Property="HorizontalOptions" Value="FillAndExpand" />
         <Setter Property="VerticalOptions" Value="FillAndExpand" />
+    </Style>
+
+    <Style x:Key="DeleteImage" BasedOn="{StaticResource BaseImage}" TargetType="Image">
+        <Setter Property="Margin" Value="5" />
     </Style>
 
     <Style x:Key="BaseHorizontalDivider" TargetType="BoxView">
@@ -85,9 +106,17 @@
 
 
 
-    <Style x:Key="BaseUraniumExpander" TargetType="ur:ExpanderView" />
+    <Style x:Key="BasePicker" TargetType="Picker">
+        <Setter Property="TitleColor" Value="{StaticResource AccentBlue}"/>
+        <Setter Property="BackgroundColor" Value="{StaticResource Field}"/>
+        <Setter Property="Background" Value="{StaticResource Field}"/>
+        <Setter Property="MinimumHeightRequest" Value="40"/>
+    </Style>
+
+
 
     <Style x:Key="BaseUraniumTextField" TargetType="uranium:TextField">
+        <Setter Property="MinimumHeightRequest" Value="40"/>
         <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="BorderColor" Value="{StaticResource Field}" />
@@ -98,23 +127,43 @@
     </Style>
 
     <Style x:Key="BaseUraniumPickerField" TargetType="uranium:PickerField">
+        <Setter Property="MinimumHeightRequest" Value="40"/>
+        <Setter Property="HorizontalOptions" Value="Fill"/>
+        <Setter Property="VerticalOptions" Value="Center"/>
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
         <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
-        <Setter Property="AllowClear" Value="True" />
+        <Setter Property="AllowClear" Value="False" />
     </Style>
 
     <Style x:Key="BaseUraniumDatePickerField" TargetType="uranium:DatePickerField">
+        <Setter Property="MinimumHeightRequest" Value="40"/>
         <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />
+        <Setter Property="Padding" Value="0"/>
         <Setter Property="CornerRadius" Value="5" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
         <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
-        <Setter Property="AllowClear" Value="True" />
+        <Setter Property="AllowClear" Value="False" />
+        <Setter Property="Format" Value="dd.MM.yyyy"/>
+    </Style>
+
+    <Style x:Key="BaseUraniumTimePickerField" TargetType="uranium:TimePickerField">
+        <Setter Property="MinimumHeightRequest" Value="40"/>
+        <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
+        <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
+        <Setter Property="AllowClear" Value="False" />
+        <Setter Property="Format" Value=""/>
     </Style>
 
     <Style x:Key="BaseUraniumCheckBox" TargetType="uranium:CheckBox">

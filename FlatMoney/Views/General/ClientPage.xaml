@@ -3,8 +3,126 @@
     x:Class="FlatMoney.Views.General.ClientPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     Style="{StaticResource BaseContentPage}">
 
-    <Label Style="{StaticResource BaseLabel}" Text="Клиенты" />
+    
+    
+    <!-- Page elements -->
+    <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" Style="{StaticResource BaseRefreshView}">
+        <uranium:TabView Style="{StaticResource UraniumTabView}">
+            
+            <uranium:TabItem Title="Краткосрочные">
+                <Grid RowDefinitions="*,80">
+                    
+                    
+                    <Grid Grid.Row="1" Style="{StaticResource AddReservationGrid}">
+                        <Button Command="{Binding AddShortReservationCommand}" Style="{StaticResource AddReservationButton}"/>
+                        <Image Source="add.png" Style="{StaticResource ButtonAddReservationImage}" />
+                    </Grid>
+                </Grid>
+            </uranium:TabItem>
+            
+            <uranium:TabItem Title="Долгосрочные">
+                <Grid RowDefinitions="*,80">
+                    
+                    
+                    <Grid Grid.Row="1" Style="{StaticResource AddReservationGrid}">
+                        <Button Command="{Binding AddShortReservationCommand}" Style="{StaticResource AddReservationButton}" />
+                        <Image Source="add.png" Style="{StaticResource ButtonAddReservationImage}" />
+                    </Grid>
+                </Grid>
+            </uranium:TabItem>
+            
+        </uranium:TabView>
+    </RefreshView>
+    
+    
+    
+    <!-- Styles for elements -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            
+            <Style x:Key="UraniumTabView" TargetType="uranium:TabView">
+                <Setter Property="TabHeaderItemColumnWidth" Value="{Binding ColumnWidth}" />
+                <Setter Property="TabHeaderItemTemplate">
+                    <Setter.Value>
+                        <DataTemplate>
+                            <Border Style="{StaticResource TabBorder}">
+                                <Grid>
+                                    <Label Style="{StaticResource BaseLabel}" Text="{Binding Title}">
+                                        <Label.Triggers>
+                                            <DataTrigger
+                                    Binding="{Binding IsSelected}"
+                                    TargetType="Label"
+                                    Value="True">
+                                                <Setter Property="TextColor" Value="{StaticResource AccentBlue}" />
+                                            </DataTrigger>
+                                            <DataTrigger
+                                    Binding="{Binding IsSelected}"
+                                    TargetType="Label"
+                                    Value="False">
+                                                <Setter Property="TextColor" Value="{StaticResource Gray400}" />
+                                            </DataTrigger>
+                                        </Label.Triggers>
+                                    </Label>
+                                    <BoxView Style="{StaticResource TabDivider}">
+                                        <BoxView.Triggers>
+                                            <DataTrigger
+                                    Binding="{Binding IsSelected}"
+                                    TargetType="BoxView"
+                                    Value="True">
+                                                <Setter Property="HeightRequest" Value="2" />
+                                            </DataTrigger>
+                                            <DataTrigger
+                                    Binding="{Binding IsSelected}"
+                                    TargetType="BoxView"
+                                    Value="False">
+                                                <Setter Property="HeightRequest" Value="0" />
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TabBorder" BasedOn="{StaticResource BaseBorder}" TargetType="Border">
+                <Setter Property="StrokeShape">
+                    <RoundRectangle CornerRadius="0" />
+                </Setter>
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="Stroke" Value="{StaticResource AccentBlue}" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+
+            <Style x:Key="TabDivider" BasedOn="{StaticResource BaseHorizontalDivider}" TargetType="BoxView">
+                <Setter Property="Color" Value="{StaticResource AccentBlue}" />
+                <Setter Property="VerticalOptions" Value="EndAndExpand" />
+                <Setter Property="HeightRequest" Value="2" />
+            </Style>
+
+            <Style x:Key="AddReservationGrid" TargetType="Grid">
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="WidthRequest" Value="60" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="Margin" Value="20,0,20,20" />
+            </Style>
+
+            <Style x:Key="AddReservationButton" BasedOn="{StaticResource BaseButton}" TargetType="Button">
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="WidthRequest" Value="60" />
+                <Setter Property="CornerRadius" Value="10" />
+            </Style>
+
+            <Style x:Key="ButtonAddReservationImage" BasedOn="{StaticResource BaseImage}" TargetType="Image">
+                <Setter Property="Margin" Value="5" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
 
 </ContentPage>

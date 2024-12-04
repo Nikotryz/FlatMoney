@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using FlatMoney.DisplayHelper;
 using FlatMoney.LocalDataBase;
 using FlatMoney.Models;
 using FlatMoney.Views.Details;
@@ -9,6 +10,9 @@ namespace FlatMoney.ViewModels
 {
     public partial class MoneyPageViewModel : ObservableObject
     {
+        [ObservableProperty]
+        public double columnWidth = MauiDisplayHelper.UnitWidth / 4;
+
         [ObservableProperty]
         public ObservableCollection<ServiceModel> myServices = [];
 
@@ -24,10 +28,10 @@ namespace FlatMoney.ViewModels
 
 
         [ObservableProperty]
-        public ObservableCollection<ExpenseWithTypeNameModel> myExpenses = [];
+        public ObservableCollection<ExpenseModel> myExpenses = [];
 
         [ObservableProperty]
-        public ExpenseWithTypeNameModel selectedExpense;
+        public ExpenseModel selectedExpense;
 
 
 
@@ -107,17 +111,24 @@ namespace FlatMoney.ViewModels
             Dictionary<string, object> parameters = new()
             {
                 {"info", SelectedExpense },
-                {"type", SelectedExpense.TypeId.ToString() },
+                {"type", SelectedExpense.TypeName },
                 {"date", SelectedExpense.Date },
                 {"cost", SelectedExpense.Cost }
             };
 
-            await Shell.Current.GoToAsync(nameof(AddExpenseTypePage), parameters);
+            await Shell.Current.GoToAsync(nameof(AddExpensePage), parameters);
 
             SelectedExpense = null;
         }
 
         private async Task Load()
+        {
+            await LoadMyServices();
+            await LoadMyExpenseTypes();
+            await LoadExpenseHistory();
+        }
+
+        private async Task LoadMyServices()
         {
             var services = await _localDBService.GetItems<ServiceModel>();
             MyServices.Clear();
@@ -125,20 +136,26 @@ namespace FlatMoney.ViewModels
             {
                 MyServices.Add(item);
             }
+        }
 
+        private async Task LoadMyExpenseTypes()
+        {
             var expenseTypes = await _localDBService.GetItems<ExpenseTypeModel>();
             MyExpenseTypes.Clear();
             foreach (var item in expenseTypes)
             {
                 MyExpenseTypes.Add(item);
             }
+        }
 
-            MyExpenses.Add(new ExpenseWithTypeNameModel
+        private async Task LoadExpenseHistory()
+        {
+            var expenses = await _localDBService.GetItems<ExpenseModel>();
+            MyExpenses.Clear();
+            foreach (var item in expenses)
             {
-                TypeName = "Прачка",
-                Date = DateTime.Now,
-                Cost = 340
-            });
+                MyExpenses.Add(item);
+            }
         }
     }
 }

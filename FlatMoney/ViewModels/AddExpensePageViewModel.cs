@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 namespace FlatMoney.ViewModels
 {
     [QueryProperty(nameof(ExpenseInfo), "info")]
-    [QueryProperty(nameof(ExpenseType), "type")]
+    [QueryProperty(nameof(SelectedType), "type")]
     [QueryProperty(nameof(ExpenseDate), "date")]
     [QueryProperty(nameof(ExpenseCost), "cost")]
     public partial class AddExpensePageViewModel : ObservableObject
@@ -15,14 +15,13 @@ namespace FlatMoney.ViewModels
         [ObservableProperty]
         public ObservableCollection<string> expenseTypes = [];
 
-        [ObservableProperty]
-        public string selectedType;
+
 
         [ObservableProperty]
         public ExpenseModel expenseInfo;
 
         [ObservableProperty]
-        public ExpenseTypeModel expenseType;
+        public string selectedType;
 
         [ObservableProperty]
         public DateTime expenseDate;
@@ -32,6 +31,11 @@ namespace FlatMoney.ViewModels
 
 
 
+        [ObservableProperty]
+        private bool isRefreshing = false;
+
+        
+
         private readonly LocalDBService _localDBService;
         public AddExpensePageViewModel(LocalDBService localDBService)
         {
@@ -39,15 +43,17 @@ namespace FlatMoney.ViewModels
 
             SetDefault();
 
-            Load();
+            Task.Run(async () => await Load());
         }
 
 
 
         [RelayCommand]
-        private async Task SelectionChanged()
+        private async Task Refresh()
         {
+            await Task.Delay(300);
             await Load();
+            IsRefreshing = false;
         }
 
         [RelayCommand]
@@ -93,14 +99,13 @@ namespace FlatMoney.ViewModels
 
         private void SetDefault()
         {
-            ExpenseType = null;
             ExpenseDate = DateTime.Today;
             ExpenseCost = 0;
         }
 
         private void UpdateInfo()
         {
-            ExpenseInfo.TypeId = ExpenseType.Id;
+            ExpenseInfo.TypeName = SelectedType;
             ExpenseInfo.Date = ExpenseDate;
             ExpenseInfo.Cost = ExpenseCost;
         }
@@ -115,7 +120,7 @@ namespace FlatMoney.ViewModels
         {
             await _localDBService.InsertItem<ExpenseModel>(new ExpenseModel()
             {
-                TypeId = ExpenseType.Id,
+                TypeName = SelectedType,
                 Date = ExpenseDate,
                 Cost = ExpenseCost,
             });

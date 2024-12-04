@@ -62,14 +62,14 @@ namespace FlatMoney.ViewModels
         private string addressText;
 
 
-
+        
         private readonly LocalDBService _localDBService;
 
         public AddFlatPageViewModel(LocalDBService localDBService)
         {
             _localDBService = localDBService;
 
-            Task.Run(async () => await SetDefault());
+            SetDefault();
         }
 
 
@@ -81,7 +81,7 @@ namespace FlatMoney.ViewModels
 
             await Shell.Current.GoToAsync("..");
 
-            await SetDefault();
+            SetDefault();
         }
 
         [RelayCommand]
@@ -89,7 +89,7 @@ namespace FlatMoney.ViewModels
         {
             await Shell.Current.GoToAsync("..");
 
-            await SetDefault();
+            SetDefault();
         }
 
         [RelayCommand]
@@ -100,12 +100,12 @@ namespace FlatMoney.ViewModels
 
             await Shell.Current.GoToAsync("..");
 
-            await SetDefault();
+            SetDefault();
         }
 
 
 
-        private async Task SetDefault()
+        private void SetDefault()
         {
             NameText = string.Empty;
             TypeText = "Арендная";
@@ -120,7 +120,7 @@ namespace FlatMoney.ViewModels
             AddressText = string.Empty;
         }
 
-        private async Task UpdateInfo()
+        private void UpdateInfo()
         {
             FlatInfo.Name = NameText;
             FlatInfo.Type = TypeText;
@@ -137,7 +137,7 @@ namespace FlatMoney.ViewModels
 
         private async Task Update()
         {
-            await UpdateInfo();
+            UpdateInfo();
             await _localDBService.UpdateItem<FlatModel>(FlatInfo);
         }
 

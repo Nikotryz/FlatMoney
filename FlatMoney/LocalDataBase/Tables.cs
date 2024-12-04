@@ -104,9 +104,8 @@
 
         public const string CREATE_EXPENSES_STATEMENT = $"CREATE TABLE IF NOT EXISTS {EXPENSES_TABLE_NAME} (" +
                                                         $"PK_expense_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                                        $"FK_expense_type_id INT, " +
+                                                        $"expense_type_name VARCHAR(50), " +
                                                         $"expense_date TEXT NOT NULL, " +
-                                                        $"expense_cost FLOAT NOT NULL DEFAULT 0, " +
-                                                        $"FOREIGN KEY (FK_expense_type_id) REFERENCES expense_types (PK_expense_type_id) ON DELETE SET NULL); ";
+                                                        $"expense_cost FLOAT NOT NULL DEFAULT 0 );";
     }
 }

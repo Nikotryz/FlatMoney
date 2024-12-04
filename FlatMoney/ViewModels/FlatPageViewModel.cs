@@ -101,7 +101,7 @@ namespace FlatMoney.ViewModels
             SelectedItem = null;
         }
 
-        private async Task Load()
+        public async Task Load()
         {
             var flats = await _localDBService.GetItems<FlatModel>();
             MyFlats.Clear();

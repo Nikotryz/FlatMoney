@@ -3,6 +3,7 @@ using FlatMoney.ViewModels;
 using FlatMoney.Views.Details;
 using FlatMoney.Views.General;
 using Microsoft.Extensions.Logging;
+using DevExpress.Maui;
 using UraniumUI;
 
 namespace FlatMoney
@@ -11,9 +12,12 @@ namespace FlatMoney
     {
         public static MauiApp CreateMauiApp()
         {
+            //
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseDevExpress()
+                .UseDevExpressControls()
                 .UseUraniumUI()
                 .UseUraniumUIMaterial()
                 .ConfigureFonts(fonts =>
@@ -59,6 +63,18 @@ namespace FlatMoney
             builder.Services.AddSingleton<AddExpensePage>(serviceProvider => new AddExpensePage()
             {
                 BindingContext = serviceProvider.GetRequiredService<AddExpensePageViewModel>()
+            });
+
+            builder.Services.AddSingleton<ClientPageViewModel>();
+            builder.Services.AddSingleton<ClientPage>(serviceProvider => new ClientPage()
+            {
+                BindingContext = serviceProvider.GetRequiredService<ClientPageViewModel>()
+            });
+
+            builder.Services.AddSingleton<AddReservationPageViewModel>();
+            builder.Services.AddSingleton<AddReservationPage>(serviceProvider => new AddReservationPage()
+            {
+                BindingContext = serviceProvider.GetRequiredService<AddReservationPageViewModel>()
             });
 
 #if DEBUG

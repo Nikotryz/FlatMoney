@@ -53,39 +53,6 @@
                 <Setter Property="VerticalOptions" Value="Fill" />
             </Style>
 
-            <Style
-                x:Key="DeleteButton"
-                BasedOn="{StaticResource BaseButton}"
-                TargetType="Button">
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="BorderColor" Value="{StaticResource AccentRed}" />
-                <Setter Property="BorderWidth" Value="1" />
-            </Style>
-
-            <Style
-                x:Key="CancelButton"
-                BasedOn="{StaticResource BaseButton}"
-                TargetType="Button">
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="BorderColor" Value="{StaticResource AccentBlue}" />
-                <Setter Property="BorderWidth" Value="1" />
-                <Setter Property="Text" Value="Отмена" />
-            </Style>
-
-            <Style
-                x:Key="SaveButton"
-                BasedOn="{StaticResource BaseButton}"
-                TargetType="Button">
-                <Setter Property="Text" Value="Сохранить" />
-            </Style>
-
-            <Style
-                x:Key="DeleteImage"
-                BasedOn="{StaticResource BaseImage}"
-                TargetType="Image">
-                <Setter Property="Margin" Value="2" />
-            </Style>
-
         </ResourceDictionary>
     </ContentPage.Resources>
 

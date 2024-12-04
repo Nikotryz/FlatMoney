@@ -11,7 +11,10 @@
 
     <!--  Page elements  -->
     <Grid>
-        <RefreshView Command="{Binding RefreshCommand}" IsRefreshing="{Binding IsRefreshing}" Style="{StaticResource BaseRefreshView}">
+        <RefreshView
+            Command="{Binding RefreshCommand}"
+            IsRefreshing="{Binding IsRefreshing}"
+            Style="{StaticResource BaseRefreshView}">
             <uranium:TabView Style="{StaticResource UraniumTabView}">
 
                 <uranium:TabItem Title="Обзор">
@@ -116,7 +119,7 @@
                 </uranium:TabItem>
 
                 <uranium:TabItem Title="Расходы">
-                    <Grid Margin="10,20" RowDefinitions="*,80">
+                    <Grid Margin="10,20,10,10" RowDefinitions="*,80">
                         <VerticalStackLayout Spacing="10">
 
                             <ur:ExpanderView>
@@ -130,26 +133,47 @@
                                     <Label Style="{StaticResource ExpanderHeaderLabel}" Text="История расходов" />
                                 </ur:ExpanderView.Header>
 
-                                <CollectionView ItemsSource="{Binding MyExpenses}"
-                                                SelectedItem="{Binding SelectedExpense}"
-                                                SelectionChangedCommand="{Binding ExpenseTappedCommand}"
-                                                SelectionMode="Single">
+                                <CollectionView
+                                    ItemsSource="{Binding MyExpenses}"
+                                    MaximumHeightRequest="580"
+                                    SelectedItem="{Binding SelectedExpense}"
+                                    SelectionChangedCommand="{Binding ExpenseTappedCommand}"
+                                    SelectionMode="Single">
                                     <CollectionView.ItemTemplate>
                                         <DataTemplate>
-                                            <Border Style="{StaticResource ExpanderItemBorder}" HeightRequest="80">
+                                            <Border HeightRequest="80" Style="{StaticResource ExpanderItemBorder}">
                                                 <Grid ColumnDefinitions="*,*">
                                                     <Grid Grid.Column="0">
-                                                        <BoxView Style="{StaticResource BaseVerticalDivider}" HorizontalOptions="Start"/>
-                                                        <Label Text="{Binding TypeName}" Style="{StaticResource BaseLabel}" VerticalOptions="Start" HorizontalOptions="Start" Margin="10,0,0,0"/>
+                                                        <BoxView HorizontalOptions="Start" Style="{StaticResource BaseVerticalDivider}" />
+                                                        <Label
+                                                            Margin="10,0,0,0"
+                                                            HorizontalOptions="Start"
+                                                            Style="{StaticResource BaseLabel}"
+                                                            Text="{Binding TypeName}"
+                                                            VerticalOptions="Start" />
                                                     </Grid>
                                                     <Grid Grid.Column="1" RowDefinitions="*,*">
                                                         <Grid Grid.Row="0">
-                                                            <BoxView Style="{StaticResource BaseVerticalDivider}" HorizontalOptions="Start" Margin="0,3,0,3"/>
-                                                            <Label Text="{Binding Date}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="10,0,0,0"/>
+                                                            <BoxView
+                                                                Margin="0,3,0,3"
+                                                                HorizontalOptions="Start"
+                                                                Style="{StaticResource BaseVerticalDivider}" />
+                                                            <Label
+                                                                Margin="10,0,0,0"
+                                                                HorizontalOptions="Start"
+                                                                Style="{StaticResource BaseLabel}"
+                                                                Text="{Binding Date}" />
                                                         </Grid>
                                                         <Grid Grid.Row="1">
-                                                            <BoxView Style="{StaticResource BaseVerticalDivider}" HorizontalOptions="Start" Margin="0,3,0,3"/>
-                                                            <Label Text="{Binding Cost}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="10,0,0,0"/>
+                                                            <BoxView
+                                                                Margin="0,3,0,3"
+                                                                HorizontalOptions="Start"
+                                                                Style="{StaticResource BaseVerticalDivider}" />
+                                                            <Label
+                                                                Margin="10,0,0,0"
+                                                                HorizontalOptions="Start"
+                                                                Style="{StaticResource BaseLabel}"
+                                                                Text="{Binding Cost}" />
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>
@@ -157,7 +181,7 @@
                                         </DataTemplate>
                                     </CollectionView.ItemTemplate>
                                 </CollectionView>
-                                
+
                             </ur:ExpanderView>
 
                         </VerticalStackLayout>
@@ -197,7 +221,7 @@
         <ResourceDictionary>
 
             <Style x:Key="UraniumTabView" TargetType="uranium:TabView">
-                <Setter Property="TabHeaderItemColumnWidth" Value="98" />
+                <Setter Property="TabHeaderItemColumnWidth" Value="{Binding ColumnWidth}" />
                 <Setter Property="TabHeaderItemTemplate">
                     <Setter.Value>
                         <DataTemplate>

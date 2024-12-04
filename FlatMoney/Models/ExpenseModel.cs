@@ -9,8 +9,8 @@ namespace FlatMoney.Models
         [SQLite.PrimaryKey, SQLite.AutoIncrement]
         public new int Id { get; set; }
 
-        [SQLite.Column("FK_expense_type_id")]
-        public int TypeId { get; set; }
+        [SQLite.Column("expense_type_name")]
+        public string TypeName { get; set; }
 
         [SQLite.Column("expense_date")]
         [SQLite.NotNull]

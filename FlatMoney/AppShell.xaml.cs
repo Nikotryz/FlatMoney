@@ -12,6 +12,7 @@ namespace FlatMoney
             Routing.RegisterRoute(nameof(AddServicePage), typeof(AddServicePage));
             Routing.RegisterRoute(nameof(AddExpenseTypePage), typeof(AddExpenseTypePage));
             Routing.RegisterRoute(nameof(AddExpensePage), typeof(AddExpensePage));
+            Routing.RegisterRoute(nameof(AddReservationPage), typeof(AddReservationPage));
         }
     }
 }
