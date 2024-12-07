@@ -3,7 +3,6 @@
     x:Class="FlatMoney.Views.Details.AddExpensePage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:converters="clr-namespace:FlatMoney.Converters"
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
@@ -12,65 +11,33 @@
 
 
     <!--  Page elements  -->
-    <RefreshView
-        Margin="20,20,20,25"
-        Command="{Binding RefreshCommand}"
-        IsRefreshing="{Binding IsRefreshing}"
-        Style="{StaticResource BaseRefreshView}"
-        VerticalOptions="Fill">
-        <input:FormView Style="{StaticResource UraniumFormView}" SubmitCommand="{Binding SaveCommand}">
+    <input:FormView Style="{StaticResource UraniumFormView}" SubmitCommand="{Binding SaveCommand}">
 
-            <VerticalStackLayout Spacing="10">
-                <uranium:PickerField
-                    Title="Категория расходов"
-                    ItemsSource="{Binding ExpenseTypes}"
-                    SelectedItem="{Binding SelectedType}"
-                    Style="{StaticResource BaseUraniumPickerField}" />
-                <uranium:DatePickerField
-                    Title="Дата расхода"
-                    Date="{Binding ExpenseDate}"
-                    Style="{StaticResource BaseUraniumDatePickerField}" />
-                <uranium:TextField
-                    Title="Сумма расхода"
-                    Style="{StaticResource BaseUraniumTextField}"
-                    Text="{Binding ExpenseCost}">
-                    <validations:NumericValidation Message="Поле должно содержать только числовые значения" />
-                    <validations:RequiredValidation Message="Поле обязательно для ввода" />
-                </uranium:TextField>
-            </VerticalStackLayout>
+        <!-- Content -->
+        <VerticalStackLayout Spacing="10">
+            <uranium:PickerField Title="Категория расходов" ItemsSource="{Binding ExpenseTypes}" SelectedItem="{Binding SelectedType}" Style="{StaticResource BaseUraniumPickerField}" />
+            <uranium:DatePickerField Title="Дата расхода" Date="{Binding ExpenseDate}" Style="{StaticResource BaseUraniumDatePickerField}" />
+            <uranium:TextField Title="Сумма расхода" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ExpenseCost}">
+                <validations:NumericValidation Message="Введите число" />
+                <validations:RequiredValidation Message="Поле обязательно" />
+            </uranium:TextField>
+        </VerticalStackLayout>
 
-            <Grid
-                ColumnDefinitions="*,3.75*,3.75*"
-                ColumnSpacing="10"
-                VerticalOptions="EndAndExpand">
-                <Button
-                    Grid.Column="0"
-                    Command="{Binding DeleteCommand}"
-                    Style="{StaticResource DeleteButton}" />
-                <Image
-                    Grid.Column="0"
-                    Source="delete.png"
-                    Style="{StaticResource DeleteImage}" />
-                <Button
-                    Grid.Column="1"
-                    Command="{Binding CancelCommand}"
-                    Style="{StaticResource CancelButton}" />
-                <Button
-                    Grid.Column="2"
-                    input:FormView.IsSubmitButton="True"
-                    Style="{StaticResource SaveButton}" />
-            </Grid>
+        <!-- Control Buttons -->
+        <Grid ColumnDefinitions="*,3.75*,3.75*" ColumnSpacing="10" VerticalOptions="EndAndExpand">
+            <Button Grid.Column="0" Command="{Binding DeleteCommand}" Style="{StaticResource DeleteButton}" />
+            <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}" />
+            <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
+            <Button Grid.Column="2" input:FormView.IsSubmitButton="True" Style="{StaticResource SaveButton}" />
+        </Grid>
 
-        </input:FormView>
-    </RefreshView>
+    </input:FormView>
 
 
 
     <!--  Styles for elements  -->
     <ContentPage.Resources>
         <ResourceDictionary>
-
-            <converters:ExpenseTypeConverter x:Key="expenseTypeConverter" />
 
             <Style x:Key="UraniumFormView" TargetType="input:FormView">
                 <Setter Property="Margin" Value="20,20,20,25" />

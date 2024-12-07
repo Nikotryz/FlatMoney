@@ -5,6 +5,7 @@ using FlatMoney.Views.General;
 using Microsoft.Extensions.Logging;
 using DevExpress.Maui;
 using UraniumUI;
+using Plugin.SegmentedControl.Maui;
 
 namespace FlatMoney
 {
@@ -20,6 +21,7 @@ namespace FlatMoney
                 .UseDevExpressControls()
                 .UseUraniumUI()
                 .UseUraniumUIMaterial()
+                .UseSegmentedControl()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("SeroPro.ttf", "Regular");

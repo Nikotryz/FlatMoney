@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using FlatMoney.DisplayHelper;
 using FlatMoney.LocalDataBase;
 using FlatMoney.Models;
 using FlatMoney.Views.Details;
@@ -11,60 +10,69 @@ namespace FlatMoney.ViewModels
     public partial class MoneyPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        public double columnWidth = MauiDisplayHelper.UnitWidth / 4;
-
-        [ObservableProperty]
         public ObservableCollection<ServiceModel> myServices = [];
-
         [ObservableProperty]
         public ServiceModel selectedService;
 
-
         [ObservableProperty]
         public ObservableCollection<ExpenseTypeModel> myExpenseTypes = [];
-
         [ObservableProperty]
         public ExpenseTypeModel selectedExpenseType;
 
-
         [ObservableProperty]
         public ObservableCollection<ExpenseModel> myExpenses = [];
-
         [ObservableProperty]
         public ExpenseModel selectedExpense;
 
 
 
-        [ObservableProperty]
-        private bool isRefreshing = false;
-
-
+        private AddServicePage _addServicePage { get; set; }
+        private AddExpenseTypePage _addExpenseTypePage { get; set; }    
+        private AddExpensePage _addExpensePage { get; set; }
 
         private readonly LocalDBService _localDBService;
-
-        public MoneyPageViewModel(LocalDBService localDBService, AddServicePage addServicePage, AddExpenseTypePage addExpenseTypePage)
+        public MoneyPageViewModel(LocalDBService localDBService, AddServicePage addServicePage, AddExpenseTypePage addExpenseTypePage, AddExpensePage addExpensePage)
         {
             _localDBService = localDBService;
+            _addServicePage = addServicePage;
+            _addExpenseTypePage = addExpenseTypePage;
+            _addExpensePage = addExpensePage;
+
+            SetPagesModal();
 
             Task.Run(async () => await Load());
         }
 
-        [RelayCommand]
-        private async Task Refresh()
+        private void SetPagesModal()
         {
-            await Task.Delay(300);
-            await Load();
-            IsRefreshing = false;
+            SetServicePageModal();
+            SetExpenseTypePageModal();
+            SetExpensePageModal();
+        }
+        private void SetServicePageModal()
+        {
+            Shell.Current.Navigation.PushModalAsync(_addServicePage);
+            Shell.Current.Navigation.PopModalAsync();
+        }
+        private void SetExpenseTypePageModal()
+        {
+            Shell.Current.Navigation.PushModalAsync(_addExpenseTypePage);
+            Shell.Current.Navigation.PopModalAsync();
+        }
+        private void SetExpensePageModal()
+        {
+            Shell.Current.Navigation.PushModalAsync(_addExpensePage);
+            Shell.Current.Navigation.PopModalAsync();
         }
 
         [RelayCommand]
-        private async Task AddService()
+        public async Task AddService()
         {
             await Shell.Current.GoToAsync(nameof(AddServicePage));
         }
 
         [RelayCommand]
-        private async Task ServiceTapped()
+        public async Task ServiceTapped()
         {
             Dictionary<string, object> parameters = new()
             {
@@ -79,14 +87,14 @@ namespace FlatMoney.ViewModels
         }
 
         [RelayCommand]
-        private async Task AddExpenseType()
+        public async Task AddExpenseType()
         {
 
             await Shell.Current.GoToAsync(nameof(AddExpenseTypePage));
         }
 
         [RelayCommand]
-        private async Task ExpenseTypeTapped()
+        public async Task ExpenseTypeTapped()
         {
             Dictionary<string, object> parameters = new()
             {
@@ -100,13 +108,13 @@ namespace FlatMoney.ViewModels
         }
 
         [RelayCommand]
-        private async Task AddExpense()
+        public async Task AddExpense()
         {
             await Shell.Current.GoToAsync(nameof(AddExpensePage));
         }
 
         [RelayCommand]
-        private async Task ExpenseTapped()
+        public async Task ExpenseTapped()
         {
             Dictionary<string, object> parameters = new()
             {

@@ -4,7 +4,8 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
-    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material">
+    xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:sgcontrol="http://plugin.segmentedControl.maui">
 
 
 
@@ -119,11 +120,23 @@
         <Setter Property="MinimumHeightRequest" Value="40"/>
         <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />
         <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="BorderColor" Value="{StaticResource Field}" />
         <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
         <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
         <Setter Property="AllowClear" Value="True" />
+    </Style>
+
+    <Style x:Key="BaseUraniumEditorField" TargetType="uranium:EditorField">
+        <Setter Property="MinimumHeightRequest" Value="40"/>
+        <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderColor" Value="{StaticResource Field}" />
+        <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
+        <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
     </Style>
 
     <Style x:Key="BaseUraniumPickerField" TargetType="uranium:PickerField">
@@ -173,6 +186,19 @@
         <Setter Property="Color" Value="{StaticResource AccentBlue}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
         <Setter Property="CornerRadius" Value="5" />
+    </Style>
+
+
+
+    <Style x:Key="BaseSegmentedControl" TargetType="sgcontrol:SegmentedControl">
+        <Setter Property="VerticalOptions" Value="Start"/>
+        <Setter Property="HorizontalOptions" Value="Fill"/>
+        <Setter Property="TintColor" Value="Transparent"/>
+        <Setter Property="DisabledTintColor" Value="Transparent"/>
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Regular"/>
+        <Setter Property="TextColor" Value="{StaticResource Text}"/>
+        <Setter Property="SelectedTextColor" Value="{StaticResource BlackText}"/>
     </Style>
 
 

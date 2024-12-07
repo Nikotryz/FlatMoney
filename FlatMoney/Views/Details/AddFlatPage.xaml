@@ -3,10 +3,11 @@
     x:Class="FlatMoney.Views.Details.AddFlatPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:converters="clr-namespace:FlatMoney.Converters"
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+    xmlns:sgcontrol="http://plugin.segmentedControl.maui"
     xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+    xmlns:actions="clr-namespace:FlatMoney.TriggerActions"
     Style="{StaticResource BaseContentPage}">
 
 
@@ -14,116 +15,89 @@
     <!--  Page elements  -->
     <input:FormView Style="{StaticResource UraniumFormView}" SubmitCommand="{Binding SaveCommand}">
 
+        <!-- Content -->
         <Label Style="{StaticResource FlatNameLabel}" Text="{Binding NameText}" />
 
         <VerticalStackLayout Spacing="30">
 
             <VerticalStackLayout Spacing="5">
-                <uranium:TextField
-                    Title="Название"
-                    Style="{StaticResource BaseUraniumTextField}"
-                    Text="{Binding NameText}">
-                    <validations:RequiredValidation Message="Поле обязательно для ввода" />
+                <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding NameText}">
+                    <validations:RequiredValidation Message="Поле обязательно" />
                 </uranium:TextField>
-                <uranium:PickerField
-                    x:Name="typePicker"
-                    Title="Тип"
-                    ItemsSource="{Binding Types}"
-                    SelectedItem="{Binding TypeText}"
-                    Style="{StaticResource BaseUraniumPickerField}" />
+                <uranium:PickerField x:Name="typePicker" Title="Тип" ItemsSource="{Binding Types}" SelectedItem="{Binding TypeText}" Style="{StaticResource BaseUraniumPickerField}" />
             </VerticalStackLayout>
 
-            <uranium:TabView Style="{StaticResource UraniumTabView}">
+            <!-- Segmented Control -->
+            <sgcontrol:SegmentedControl x:Name="sgcontrol" Style="{StaticResource SegmentedControl}">
+                <sgcontrol:SegmentedControlOption Text="Аренда"/>
+                <sgcontrol:SegmentedControlOption Text="Интернет и ТВ"/>
+            </sgcontrol:SegmentedControl>
 
-                <uranium:TabItem Title="Интернет и ТВ">
+            <!-- Tab 1 -->
+            <VerticalStackLayout Spacing="5">
+                
+                <uranium:TextField Title="Сумма за аренду" Style="{StaticResource UraniumTextField}" Text="{Binding RentCostText}" />
+                <uranium:DatePickerField Title="Начиная с" Date="{Binding RentStartDateText}" Style="{StaticResource BaseUraniumDatePickerField}" />
+                <uranium:TextField Title="{Binding RentIntervalText, StringFormat='Списывать каждые {0} дней'}" Style="{StaticResource UraniumTextField}" Text="{Binding RentIntervalText}">
+                    <validations:DigitsOnlyValidation Message="Введите целое число" />
+                </uranium:TextField>
+                <uranium:CheckBox IsChecked="{Binding RentAutopayText}" Style="{StaticResource BaseUraniumCheckBox}" Margin="0,10,0,0" Text="Автосписание за аренду" />
+                
+                <VerticalStackLayout.Triggers>
+                    
+                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
+                        <DataTrigger.EnterActions>
+                            <actions:FadeShowTrigger/>
+                        </DataTrigger.EnterActions>
+                    </DataTrigger>
+                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
+                        <DataTrigger.EnterActions>
+                            <actions:FadeHideTrigger/>
+                        </DataTrigger.EnterActions>
+                    </DataTrigger>
+                    
+                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference typePicker}, Path=SelectedItem}" Value="Своя">
+                        <Setter Property="IsEnabled" Value="False"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference typePicker}, Path=SelectedItem}" Value="Арендная">
+                        <Setter Property="IsEnabled" Value="True"/>
+                    </DataTrigger>
+                </VerticalStackLayout.Triggers>
+                
+            </VerticalStackLayout>
 
-                    <uranium:TabItem.ContentTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout Margin="0,10" Spacing="5">
-                                <uranium:TextField
-                                    Title="Сумма за интернет и ТВ"
-                                    Style="{StaticResource UraniumTextField}"
-                                    Text="{Binding InternetCostText}" />
-                                <uranium:DatePickerField
-                                    Title="Начиная с"
-                                    Date="{Binding InternetStartDateText}"
-                                    Style="{StaticResource BaseUraniumDatePickerField}" />
-                                <uranium:TextField
-                                    Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}"
-                                    Style="{StaticResource UraniumTextField}"
-                                    Text="{Binding InternetIntervalText}">
-                                    <validations:DigitsOnlyValidation Message="В поле могут быть только целые числа" />
-                                </uranium:TextField>
-                                <uranium:CheckBox
-                                    IsChecked="{Binding InternetAutopayText}"
-                                    Style="{StaticResource BaseUraniumCheckBox}"
-                                    Margin="0,10,0,0"
-                                    Text="Автосписание за интернет и ТВ" />
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </uranium:TabItem.ContentTemplate>
+            <!-- Tab 2 -->
+            <VerticalStackLayout Spacing="5">
+                <uranium:TextField Title="Сумма за интернет и ТВ" Style="{StaticResource UraniumTextField}" Text="{Binding InternetCostText}" />
+                <uranium:DatePickerField Title="Начиная с" Date="{Binding InternetStartDateText}" Style="{StaticResource BaseUraniumDatePickerField}" />
+                <uranium:TextField Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}" Style="{StaticResource UraniumTextField}" Text="{Binding InternetIntervalText}">
+                    <validations:DigitsOnlyValidation Message="Введите целое число" />
+                </uranium:TextField>
+                <uranium:CheckBox IsChecked="{Binding InternetAutopayText}" Style="{StaticResource BaseUraniumCheckBox}" Margin="0,10,0,0" Text="Автосписание за интернет и ТВ" />
+                <VerticalStackLayout.Triggers>
+                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
+                        <DataTrigger.EnterActions>
+                            <actions:FadeHideTrigger/>
+                        </DataTrigger.EnterActions>
+                    </DataTrigger>
+                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
+                        <DataTrigger.EnterActions>
+                            <actions:FadeShowTrigger/>
+                        </DataTrigger.EnterActions>
+                    </DataTrigger>
+                </VerticalStackLayout.Triggers>
+            </VerticalStackLayout>
 
-                </uranium:TabItem>
-
-                <uranium:TabItem Title="Аренда" IsVisible="{Binding Source={x:Reference typePicker}, Path=SelectedItem, Converter={StaticResource typeConverter}}">
-
-                    <uranium:TabItem.ContentTemplate>
-                        <DataTemplate>
-                            <VerticalStackLayout Margin="0,10" Spacing="5">
-                                <uranium:TextField
-                                    Title="Сумма за аренду"
-                                    Style="{StaticResource UraniumTextField}"
-                                    Text="{Binding RentCostText}" />
-                                <uranium:DatePickerField
-                                    Title="Начиная с"
-                                    Date="{Binding RentStartDateText}"
-                                    Style="{StaticResource BaseUraniumDatePickerField}" />
-                                <uranium:TextField
-                                    Title="{Binding RentIntervalText, StringFormat='Списывать каждые {0} дней'}"
-                                    Style="{StaticResource UraniumTextField}"
-                                    Text="{Binding RentIntervalText}">
-                                    <validations:DigitsOnlyValidation Message="В поле могут быть только целые числа" />
-                                </uranium:TextField>
-                                <uranium:CheckBox
-                                    IsChecked="{Binding RentAutopayText}"
-                                    Style="{StaticResource BaseUraniumCheckBox}"
-                                    Margin="0,10,0,0"
-                                    Text="Автосписание за аренду" />
-                            </VerticalStackLayout>
-                        </DataTemplate>
-                    </uranium:TabItem.ContentTemplate>
-
-                </uranium:TabItem>
-
-            </uranium:TabView>
-
-            <uranium:TextField
-                Title="Адрес"
-                Style="{StaticResource BaseUraniumTextField}"
-                Text="{Binding AddressText}" />
+            <uranium:TextField Title="Адрес" Style="{StaticResource BaseUraniumTextField}" Text="{Binding AddressText}" />
 
         </VerticalStackLayout>
 
-        <Grid
-            ColumnDefinitions="*,3.75*,3.75*"
-            ColumnSpacing="10"
-            VerticalOptions="EndAndExpand">
-            <Button
-                Grid.Column="0"
-                Command="{Binding DeleteCommand}"
-                Style="{StaticResource DeleteButton}" />
-            <Image
-                Grid.Column="0"
-                Source="delete.png"
-                Style="{StaticResource DeleteImage}" />
-            <Button
-                Grid.Column="1"
-                Command="{Binding CancelCommand}"
-                Style="{StaticResource CancelButton}" />
-            <Button
-                Grid.Column="2"
-                input:FormView.IsSubmitButton="True"
-                Style="{StaticResource SaveButton}" />
+        <!-- Control Buttons -->
+        <Grid ColumnDefinitions="*,3.75*,3.75*" ColumnSpacing="10" VerticalOptions="EndAndExpand">
+            <Button Grid.Column="0" Command="{Binding DeleteCommand}" Style="{StaticResource DeleteButton}" />
+            <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}" />
+            <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
+            <Button Grid.Column="2" input:FormView.IsSubmitButton="True" Style="{StaticResource SaveButton}" />
         </Grid>
 
     </input:FormView>
@@ -134,50 +108,22 @@
     <ContentPage.Resources>
         <ResourceDictionary>
 
-            <converters:FlatTypeConverter x:Key="typeConverter" />
-
             <Style x:Key="UraniumFormView" TargetType="input:FormView">
                 <Setter Property="Margin" Value="20,10,20,25" />
                 <Setter Property="VerticalOptions" Value="Fill" />
+            </Style>
+
+            <Style x:Key="SegmentedControl" TargetType="sgcontrol:SegmentedControl">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="FontFamily" Value="Light"/>
+                <Setter Property="TintColor" Value="{StaticResource Item}"/>
+                <Setter Property="TextColor" Value="{StaticResource Text}"/>
             </Style>
 
             <Style x:Key="FlatNameLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
                 <Setter Property="VerticalOptions" Value="Start" />
                 <Setter Property="FontSize" Value="28" />
                 <Setter Property="Margin" Value="10" />
-            </Style>
-
-            <Style x:Key="UraniumTabView" TargetType="uranium:TabView">
-                <Setter Property="TabHeaderItemColumnWidth" Value="150" />
-                <Setter Property="TabHeaderItemTemplate">
-                    <Setter.Value>
-                        <DataTemplate>
-                            <Border Style="{StaticResource TabBorder}">
-                                <Label Style="{StaticResource BaseLabel}" Text="{Binding Title}" />
-                                <Border.Triggers>
-                                    <DataTrigger
-                                        Binding="{Binding IsSelected}"
-                                        TargetType="Border"
-                                        Value="True">
-                                        <Setter Property="BackgroundColor" Value="{StaticResource Item}" />
-                                    </DataTrigger>
-                                    <DataTrigger
-                                        Binding="{Binding IsSelected}"
-                                        TargetType="Border"
-                                        Value="False">
-                                        <Setter Property="BackgroundColor" Value="Transparent" />
-                                    </DataTrigger>
-                                </Border.Triggers>
-                            </Border>
-                        </DataTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
-
-            <Style x:Key="TabBorder" TargetType="Border" BasedOn="{StaticResource BaseBorder}">
-                <Setter Property="Stroke" Value="{StaticResource Item}" />
-                <Setter Property="HeightRequest" Value="40" />
-                <Setter Property="Margin" Value="0,0,10,0" />
             </Style>
 
             <Style x:Key="UraniumTextField"  TargetType="uranium:TextField" BasedOn="{StaticResource BaseUraniumTextField}">

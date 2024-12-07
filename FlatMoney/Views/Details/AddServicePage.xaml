@@ -13,43 +13,23 @@
     <!--  Page elements  -->
     <input:FormView Style="{StaticResource UraniumFormView}" SubmitCommand="{Binding SaveCommand}">
 
+        <!-- Content -->
         <VerticalStackLayout Spacing="10">
-            <uranium:TextField
-                Title="Название"
-                Style="{StaticResource BaseUraniumTextField}"
-                Text="{Binding ServiceName}">
-                <validations:RequiredValidation Message="Поле обязательно для ввода" />
+            <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ServiceName}">
+                <validations:RequiredValidation Message="Поле обязательно" />
             </uranium:TextField>
-            <uranium:TextField
-                Title="Стоимость"
-                Keyboard="Numeric"
-                Style="{StaticResource BaseUraniumTextField}"
-                Text="{Binding ServiceCost}">
-                <validations:RequiredValidation Message="Поле обязательно для ввода" />
-                <validations:NumericValidation Message="Поле должно содержать только числовые значения" />
+            <uranium:TextField Title="Стоимость" Keyboard="Numeric" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ServiceCost}">
+                <validations:RequiredValidation Message="Поле обязательно" />
+                <validations:NumericValidation Message="Введите число" />
             </uranium:TextField>
         </VerticalStackLayout>
 
-        <Grid
-            ColumnDefinitions="*,3.75*,3.75*"
-            ColumnSpacing="10"
-            VerticalOptions="EndAndExpand">
-            <Button
-                Grid.Column="0"
-                Command="{Binding DeleteCommand}"
-                Style="{StaticResource DeleteButton}" />
-            <Image
-                Grid.Column="0"
-                Source="delete.png"
-                Style="{StaticResource DeleteImage}" />
-            <Button
-                Grid.Column="1"
-                Command="{Binding CancelCommand}"
-                Style="{StaticResource CancelButton}" />
-            <Button
-                Grid.Column="2"
-                input:FormView.IsSubmitButton="True"
-                Style="{StaticResource SaveButton}" />
+        <!-- Control Buttons -->
+        <Grid ColumnDefinitions="*,3.75*,3.75*" ColumnSpacing="10" VerticalOptions="EndAndExpand">
+            <Button Grid.Column="0" Command="{Binding DeleteCommand}" Style="{StaticResource DeleteButton}" />
+            <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}" />
+            <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
+            <Button Grid.Column="2" input:FormView.IsSubmitButton="True" Style="{StaticResource SaveButton}" />
         </Grid>
 
     </input:FormView>

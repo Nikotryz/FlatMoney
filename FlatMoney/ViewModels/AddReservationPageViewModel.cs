@@ -2,67 +2,69 @@
 using CommunityToolkit.Mvvm.Input;
 using FlatMoney.LocalDataBase;
 using FlatMoney.Models;
-using FlatMoney.DisplayHelper;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using UraniumUI;
-using UraniumUI.Material.Controls;
 
 namespace FlatMoney.ViewModels
 {
     public partial class AddReservationPageViewModel : ObservableObject
     {
+        //Page 1
         [ObservableProperty]
-        public ObservableCollection<string> flatsList = [];
+        public int selectedSegmentIndex;
 
         [ObservableProperty]
-        public double columnWidth = MauiDisplayHelper.UnitWidth / 4;
-
-
+        public string? clientName;
+        [ObservableProperty]
+        public string? clientPhone;
 
         [ObservableProperty]
         public DateTime inDate;
-
         [ObservableProperty]
         public DateTime outDate;
-
         [ObservableProperty]
         public TimeSpan inTime;
-
         [ObservableProperty]
         public TimeSpan outTime;
 
         [ObservableProperty]
         public int daysCount;
-
         [ObservableProperty]
         public double sumPerDay;
-
         [ObservableProperty]
         public double totalSum;
 
-
-        private LocalDBService _localDBService;
-        public AddReservationPageViewModel(LocalDBService localDBService)
-        {
-            _localDBService = localDBService;
-            SetDefault();
-            Load();
-        }
+        [ObservableProperty]
+        public ObservableCollection<string> flatsList = [];
+        [ObservableProperty]
+        public FlatModel? selectedFlat;
 
         [ObservableProperty]
-        private bool isRefreshing = false;
+        public string comment;
+
+
+        //Page 2
+        [ObservableProperty]
+        public int peopleAmount;
+        [ObservableProperty]
+        public int childAmount;
+
+        [ObservableProperty]
+        public ObservableCollection<string> clientsList = [];
+
+
+        //Page 3
+        [ObservableProperty]
+        public ObservableCollection<string> servicesList = [];
+
+
+        //Page 4
+        [ObservableProperty]
+        public ObservableCollection<string> paymentsList = [];
+
+
 
         [RelayCommand]
-        private async Task Refresh()
-        {
-            await Task.Delay(300);
-            await Load();
-            IsRefreshing = false;
-        }
-
-        [RelayCommand]
-        private async Task Delete()
+        public async Task Delete()
         {
             //if (FlatInfo is not null) await _localDBService.DeleteItem(FlatInfo);
 
@@ -72,15 +74,15 @@ namespace FlatMoney.ViewModels
         }
 
         [RelayCommand]
-        private async Task Cancel()
+        public async Task Cancel()
         {
             await Shell.Current.GoToAsync("..");
 
-            //await SetDefault();
+            SetDefault();
         }
 
         [RelayCommand]
-        private async Task Save()
+        public async Task Save()
         {
             //if (FlatInfo is not null) await Update();
             //else await Create();
@@ -89,6 +91,8 @@ namespace FlatMoney.ViewModels
 
             //await SetDefault();
         }
+
+
 
         private async Task Load()
         {
@@ -102,6 +106,9 @@ namespace FlatMoney.ViewModels
 
         private void SetDefault()
         {
+            SelectedSegmentIndex = 0;
+            ClientName = string.Empty;
+            ClientPhone = string.Empty;
             InDate = DateTime.Today;
             OutDate = DateTime.Today.AddDays(1);
             InTime = TimeSpan.Parse("13:00");
@@ -109,6 +116,10 @@ namespace FlatMoney.ViewModels
             DaysCount = 1;
             SumPerDay = 2000.00;
             TotalSum = DaysCount * SumPerDay;
+            Comment = string.Empty;
+
+            PeopleAmount = 1;
+            ChildAmount = 0;
         }
 
         partial void OnInDateChanged(DateTime value)
@@ -127,6 +138,8 @@ namespace FlatMoney.ViewModels
 
         partial void OnDaysCountChanged(int value)
         {
+            if (value == 0) DaysCount = 1;
+
             OutDate = InDate.AddDays(DaysCount);
 
             TotalSum = DaysCount * SumPerDay;
@@ -135,6 +148,16 @@ namespace FlatMoney.ViewModels
         partial void OnSumPerDayChanged(double value)
         {
             TotalSum = DaysCount * SumPerDay;
+        }
+
+
+
+        private readonly LocalDBService _localDBService;
+        public AddReservationPageViewModel(LocalDBService localDBService)
+        {
+            _localDBService = localDBService;
+            SetDefault();
+            Load();
         }
     }
 }

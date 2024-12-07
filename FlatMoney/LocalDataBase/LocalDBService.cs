@@ -1,6 +1,7 @@
 ﻿using SQLite;
 using FlatMoney.Models;
 using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace FlatMoney.LocalDataBase
 {
