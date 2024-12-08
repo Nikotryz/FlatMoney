@@ -74,7 +74,7 @@ namespace FlatMoney.ViewModels
                 {"address", string.Empty }
             };
 
-            await Shell.Current.GoToAsync(nameof(AddFlatPage), parameters);
+            await Shell.Current.GoToAsync(nameof(AddFlatPage), true, parameters);
         }
 
         [RelayCommand]

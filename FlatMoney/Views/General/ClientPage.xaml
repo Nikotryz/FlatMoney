@@ -6,6 +6,7 @@
     xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:sgcontrol="http://plugin.segmentedControl.maui"
+    xmlns:actions="clr-namespace:FlatMoney.TriggerActions"
     Style="{StaticResource BaseContentPage}">
 
     
@@ -33,18 +34,44 @@
 
         <!-- Page 1 -->
         <Grid Grid.Row="1" RowDefinitions="*,80">
+
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
+                    <DataTrigger.EnterActions>
+                        <actions:FadeShowTrigger/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <actions:FadeHideTrigger/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Grid.Triggers>
+            
             <Grid Grid.Row="1" Style="{StaticResource AddReservationGrid}">
                 <Button Command="{Binding AddShortReservationCommand}" Style="{StaticResource AddReservationButton}"/>
                 <Image Source="add.png" Style="{StaticResource ButtonAddReservationImage}" />
             </Grid>
+            
         </Grid>
 
         <!-- Page 2 -->
         <Grid Grid.Row="1" RowDefinitions="*,80">
+
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
+                    <DataTrigger.EnterActions>
+                        <actions:FadeShowTrigger/>
+                    </DataTrigger.EnterActions>
+                    <DataTrigger.ExitActions>
+                        <actions:FadeHideTrigger/>
+                    </DataTrigger.ExitActions>
+                </DataTrigger>
+            </Grid.Triggers>
+
             <Grid Grid.Row="1" Style="{StaticResource AddReservationGrid}">
                 <Button Command="{Binding AddShortReservationCommand}" Style="{StaticResource AddReservationButton}" />
                 <Image Source="add.png" Style="{StaticResource ButtonAddReservationImage}" />
             </Grid>
+            
         </Grid>
         
     </Grid>

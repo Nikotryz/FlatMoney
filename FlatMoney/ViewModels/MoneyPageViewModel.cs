@@ -68,7 +68,7 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         public async Task AddService()
         {
-            await Shell.Current.GoToAsync(nameof(AddServicePage));
+            await Shell.Current.GoToAsync(nameof(AddServicePage), true);
         }
 
         [RelayCommand]
@@ -81,7 +81,7 @@ namespace FlatMoney.ViewModels
                 {"cost", SelectedService.Cost }
             };
 
-            await Shell.Current.GoToAsync(nameof(AddServicePage), parameters);
+            await Shell.Current.GoToAsync(nameof(AddServicePage), true, parameters);
 
             SelectedService = null;
         }
@@ -90,7 +90,7 @@ namespace FlatMoney.ViewModels
         public async Task AddExpenseType()
         {
 
-            await Shell.Current.GoToAsync(nameof(AddExpenseTypePage));
+            await Shell.Current.GoToAsync(nameof(AddExpenseTypePage), true);
         }
 
         [RelayCommand]
@@ -102,7 +102,7 @@ namespace FlatMoney.ViewModels
                 {"name", SelectedExpenseType.Name }
             };
 
-            await Shell.Current.GoToAsync(nameof(AddExpenseTypePage), parameters);
+            await Shell.Current.GoToAsync(nameof(AddExpenseTypePage), true, parameters);
 
             SelectedExpenseType = null;
         }
@@ -110,7 +110,7 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         public async Task AddExpense()
         {
-            await Shell.Current.GoToAsync(nameof(AddExpensePage));
+            await Shell.Current.GoToAsync(nameof(AddExpensePage), true);
         }
 
         [RelayCommand]
@@ -124,12 +124,12 @@ namespace FlatMoney.ViewModels
                 {"cost", SelectedExpense.Cost }
             };
 
-            await Shell.Current.GoToAsync(nameof(AddExpensePage), parameters);
+            await Shell.Current.GoToAsync(nameof(AddExpensePage), true, parameters);
 
             SelectedExpense = null;
         }
 
-        private async Task Load()
+        public async Task Load()
         {
             await LoadMyServices();
             await LoadMyExpenseTypes();

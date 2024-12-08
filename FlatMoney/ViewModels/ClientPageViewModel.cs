@@ -27,10 +27,10 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         private async Task AddShortReservation()
         {
-            await Shell.Current.GoToAsync(nameof(AddReservationPage));
+            await Shell.Current.GoToAsync(nameof(AddReservationPage), true);
         }
 
-        private async Task Load()
+        public async Task Load()
         {
             await Task.Delay(1);
         }

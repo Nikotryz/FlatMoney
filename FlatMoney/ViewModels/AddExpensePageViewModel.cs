@@ -87,7 +87,7 @@ namespace FlatMoney.ViewModels
 
 
 
-        private async Task Load()
+        public async Task Load()
         {
             var types = await _localDBService.GetItems<ExpenseTypeModel>();
             ExpenseTypes.Clear();

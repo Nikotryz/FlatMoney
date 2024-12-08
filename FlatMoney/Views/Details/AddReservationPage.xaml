@@ -45,28 +45,16 @@
             </Grid>
 
             <!-- Page 1 -->
-            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="5">
+            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="5" IsVisible="True">
 
                 <VerticalStackLayout.Triggers>
                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
                         <DataTrigger.EnterActions>
                             <actions:FadeShowTrigger/>
                         </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
-                        <DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
                             <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
+                        </DataTrigger.ExitActions>
                     </DataTrigger>
                 </VerticalStackLayout.Triggers>
 
@@ -137,28 +125,16 @@
             </VerticalStackLayout>
 
             <!-- Page 2 -->
-            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="10">
+            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="10" IsVisible="False">
 
                 <VerticalStackLayout.Triggers>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
                         <DataTrigger.EnterActions>
                             <actions:FadeShowTrigger/>
                         </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
-                        <DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
                             <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
+                        </DataTrigger.ExitActions>
                     </DataTrigger>
                 </VerticalStackLayout.Triggers>
 
@@ -179,28 +155,16 @@
             </VerticalStackLayout>
 
             <!-- Page 3 -->
-            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10">
+            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10" IsVisible="False">
 
                 <Grid.Triggers>
-                    <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
                     <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
                         <DataTrigger.EnterActions>
                             <actions:FadeShowTrigger/>
                         </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
-                        <DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
                             <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
+                        </DataTrigger.ExitActions>
                     </DataTrigger>
                 </Grid.Triggers>
 
@@ -212,28 +176,16 @@
             </Grid>
 
             <!-- Page 4 -->
-            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10">
+            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10" IsVisible="False">
 
                 <Grid.Triggers>
-                    <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
                     <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
                         <DataTrigger.EnterActions>
                             <actions:FadeShowTrigger/>
                         </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <actions:FadeHideTrigger/>
+                        </DataTrigger.ExitActions>
                     </DataTrigger>
                 </Grid.Triggers>
 

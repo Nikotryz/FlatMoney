@@ -1,3 +1,5 @@
+using FlatMoney.ViewModels;
+
 namespace FlatMoney.Views.General;
 
 public partial class ClientPage : ContentPage
@@ -6,4 +8,12 @@ public partial class ClientPage : ContentPage
 	{
 		InitializeComponent();
 	}
+
+    protected async override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        var vm = BindingContext as ClientPageViewModel;
+        await vm!.Load();
+    }
 }
