@@ -15,26 +15,15 @@ namespace FlatMoney.ViewModels
         [ObservableProperty]
         public ObservableCollection<string> expenseTypes = [];
 
-
-
         [ObservableProperty]
         public ExpenseModel expenseInfo;
-
         [ObservableProperty]
         public string selectedType;
-
         [ObservableProperty]
         public DateTime expenseDate;
-
         [ObservableProperty]
         public float expenseCost;
 
-
-
-        [ObservableProperty]
-        private bool isRefreshing = false;
-
-        
 
         private readonly LocalDBService _localDBService;
         public AddExpensePageViewModel(LocalDBService localDBService)
@@ -49,27 +38,29 @@ namespace FlatMoney.ViewModels
 
 
         [RelayCommand]
-        private async Task Refresh()
-        {
-            await Task.Delay(300);
-            await Load();
-            IsRefreshing = false;
-        }
-
-        [RelayCommand]
         private async Task Delete()
         {
-            if (ExpenseInfo != null) await _localDBService.DeleteItem(ExpenseInfo);
+            if (ExpenseInfo is null)
+            {
+                await Shell.Current.GoToAsync("..", true);
+                SetDefault();
+                return;
+            }
 
-            await Shell.Current.GoToAsync("..");
+            var confirm = await Shell.Current.DisplayAlert("Вы точно хотите удалить расход?", null, "Да", "Нет");
 
-            SetDefault();
+            if (confirm)
+            {
+                await _localDBService.DeleteItem(ExpenseInfo);
+                await Shell.Current.GoToAsync("..", true);
+                SetDefault();
+            }
         }
 
         [RelayCommand]
         private async Task Cancel()
         {
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("..", true);
 
             SetDefault();
         }
@@ -80,7 +71,7 @@ namespace FlatMoney.ViewModels
             if (ExpenseInfo != null) await Update();
             else await Create();
 
-            await Shell.Current.GoToAsync("..");
+            await Shell.Current.GoToAsync("..", true);
 
             SetDefault();
         }
@@ -99,7 +90,7 @@ namespace FlatMoney.ViewModels
 
         private void SetDefault()
         {
-            ExpenseDate = DateTime.Today;
+            ExpenseDate = DateTime.Now;
             ExpenseCost = 0;
         }
 

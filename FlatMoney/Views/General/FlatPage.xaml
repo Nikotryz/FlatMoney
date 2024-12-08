@@ -25,7 +25,6 @@
                     <Border Style="{StaticResource FlatItemBorder}">
                         <Grid ColumnDefinitions="*,3.5*" ColumnSpacing="5">
                             <Image Grid.Column="0" Source="flat_item.png" Style="{StaticResource FlatItemImage}" />
-
                             <Grid Grid.Column="1" RowDefinitions="*,*,*">
                                 <BoxView Grid.Row="0" Grid.RowSpan="3" Style="{StaticResource FlatItemDivider}" />
                                 <Label Grid.Row="0" Style="{StaticResource FlatNameLabel}" Text="{Binding Name}" />

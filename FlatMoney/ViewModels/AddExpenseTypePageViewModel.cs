@@ -29,25 +29,35 @@ namespace FlatMoney.ViewModels
 
 
         [RelayCommand]
-        private async Task Delete()
+        public async Task Delete()
         {
-            if (ExpenseTypeInfo != null) await _localDBService.DeleteItem(ExpenseTypeInfo);
+            if (ExpenseTypeInfo is null)
+            {
+                await Shell.Current.GoToAsync("..", true);
+                SetDefault();
+                return;
+            }
 
+            var confirm = await Shell.Current.DisplayAlert("Вы точно хотите удалить категорию?", null, "Да", "Нет");
+
+            if (confirm)
+            {
+                await _localDBService.DeleteItem(ExpenseTypeInfo);
+                await Shell.Current.GoToAsync("..", true);
+                SetDefault();
+            }
+        }
+
+        [RelayCommand]
+        public async Task Cancel()
+        {
             await Shell.Current.GoToAsync("..");
 
             SetDefault();
         }
 
         [RelayCommand]
-        private async Task Cancel()
-        {
-            await Shell.Current.GoToAsync("..");
-
-            SetDefault();
-        }
-
-        [RelayCommand]
-        private async Task Save()
+        public async Task Save()
         {
             if (ExpenseTypeInfo != null) await Update();
             else await Create();

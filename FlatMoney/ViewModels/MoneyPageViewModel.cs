@@ -26,43 +26,12 @@ namespace FlatMoney.ViewModels
 
 
 
-        private AddServicePage _addServicePage { get; set; }
-        private AddExpenseTypePage _addExpenseTypePage { get; set; }    
-        private AddExpensePage _addExpensePage { get; set; }
-
         private readonly LocalDBService _localDBService;
         public MoneyPageViewModel(LocalDBService localDBService, AddServicePage addServicePage, AddExpenseTypePage addExpenseTypePage, AddExpensePage addExpensePage)
         {
             _localDBService = localDBService;
-            _addServicePage = addServicePage;
-            _addExpenseTypePage = addExpenseTypePage;
-            _addExpensePage = addExpensePage;
-
-            SetPagesModal();
 
             Task.Run(async () => await Load());
-        }
-
-        private void SetPagesModal()
-        {
-            SetServicePageModal();
-            SetExpenseTypePageModal();
-            SetExpensePageModal();
-        }
-        private void SetServicePageModal()
-        {
-            Shell.Current.Navigation.PushModalAsync(_addServicePage);
-            Shell.Current.Navigation.PopModalAsync();
-        }
-        private void SetExpenseTypePageModal()
-        {
-            Shell.Current.Navigation.PushModalAsync(_addExpenseTypePage);
-            Shell.Current.Navigation.PopModalAsync();
-        }
-        private void SetExpensePageModal()
-        {
-            Shell.Current.Navigation.PushModalAsync(_addExpensePage);
-            Shell.Current.Navigation.PopModalAsync();
         }
 
         [RelayCommand]

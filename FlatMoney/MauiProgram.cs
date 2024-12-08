@@ -32,49 +32,49 @@ namespace FlatMoney
             builder.Services.AddSingleton<LocalDBService>();
 
             builder.Services.AddTransient<FlatPageViewModel>();
-            builder.Services.AddTransient<FlatPage>(serviceProvider => new FlatPage()
+            builder.Services.AddSingleton<FlatPage>(serviceProvider => new FlatPage()
             {
                 BindingContext = serviceProvider.GetRequiredService<FlatPageViewModel>()
             });
 
             builder.Services.AddTransient<AddFlatPageViewModel>();
-            builder.Services.AddTransient<AddFlatPage>(serviceProvider => new AddFlatPage()
+            builder.Services.AddSingleton<AddFlatPage>(serviceProvider => new AddFlatPage()
             {
                 BindingContext = serviceProvider.GetRequiredService<AddFlatPageViewModel>()
             });
 
             builder.Services.AddTransient<MoneyPageViewModel>();
-            builder.Services.AddTransient<MoneyPage>(serviceProvider => new MoneyPage()
+            builder.Services.AddSingleton<MoneyPage>(serviceProvider => new MoneyPage()
             {
                 BindingContext = serviceProvider.GetRequiredService<MoneyPageViewModel>()
             });
 
             builder.Services.AddTransient<AddServicePageViewModel>();
-            builder.Services.AddTransient<AddServicePage>(serviceProvider => new AddServicePage()
+            builder.Services.AddSingleton<AddServicePage>(serviceProvider => new AddServicePage()
             {
                 BindingContext = serviceProvider.GetRequiredService<AddServicePageViewModel>()
             });
 
             builder.Services.AddTransient<AddExpenseTypePageViewModel>();
-            builder.Services.AddTransient<AddExpenseTypePage>(serviceProvider => new AddExpenseTypePage()
+            builder.Services.AddSingleton<AddExpenseTypePage>(serviceProvider => new AddExpenseTypePage()
             {
                 BindingContext = serviceProvider.GetRequiredService<AddExpenseTypePageViewModel>()
             });
 
             builder.Services.AddTransient<AddExpensePageViewModel>();
-            builder.Services.AddTransient<AddExpensePage>(serviceProvider => new AddExpensePage()
+            builder.Services.AddSingleton<AddExpensePage>(serviceProvider => new AddExpensePage()
             {
                 BindingContext = serviceProvider.GetRequiredService<AddExpensePageViewModel>()
             });
 
             builder.Services.AddTransient<ClientPageViewModel>();
-            builder.Services.AddTransient<ClientPage>(serviceProvider => new ClientPage()
+            builder.Services.AddSingleton<ClientPage>(serviceProvider => new ClientPage()
             {
                 BindingContext = serviceProvider.GetRequiredService<ClientPageViewModel>()
             });
 
             builder.Services.AddTransient<AddReservationPageViewModel>();
-            builder.Services.AddTransient<AddReservationPage>(serviceProvider => new AddReservationPage()
+            builder.Services.AddSingleton<AddReservationPage>(serviceProvider => new AddReservationPage()
             {
                 BindingContext = serviceProvider.GetRequiredService<AddReservationPageViewModel>()
             });

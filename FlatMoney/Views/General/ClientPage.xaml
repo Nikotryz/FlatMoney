@@ -68,7 +68,7 @@
             </Grid.Triggers>
 
             <Grid Grid.Row="1" Style="{StaticResource AddReservationGrid}">
-                <Button Command="{Binding AddShortReservationCommand}" Style="{StaticResource AddReservationButton}" />
+                <Button Command="{Binding AddLongReservationCommand}" Style="{StaticResource AddReservationButton}" />
                 <Image Source="add.png" Style="{StaticResource ButtonAddReservationImage}" />
             </Grid>
             

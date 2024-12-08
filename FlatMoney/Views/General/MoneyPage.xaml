@@ -164,7 +164,7 @@
                         <Label Style="{StaticResource ExpanderHeaderLabel}" Text="История расходов" />
                     </ur:ExpanderView.Header>
 
-                    <CollectionView ItemsSource="{Binding MyExpenses}" MaximumHeightRequest="580" SelectedItem="{Binding SelectedExpense}" SelectionChangedCommand="{Binding ExpenseTappedCommand}" SelectionMode="Single">
+                    <CollectionView ItemsSource="{Binding MyExpenses}" MaximumHeightRequest="640" SelectedItem="{Binding SelectedExpense}" SelectionChangedCommand="{Binding ExpenseTappedCommand}" SelectionMode="Single">
                         <CollectionView.ItemTemplate>
                             <DataTemplate>
                                 <Border HeightRequest="80" Style="{StaticResource ExpanderItemBorder}">

@@ -77,11 +77,21 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         private async Task Delete()
         {
-            if (FlatInfo is not null) await _localDBService.DeleteItem(FlatInfo);
+            if (FlatInfo is null)
+            {
+                await Shell.Current.GoToAsync("..", true);
+                SetDefault();
+                return;
+            }
 
-            await Shell.Current.GoToAsync("..");
+            var confirm = await Shell.Current.DisplayAlert("Вы точно хотите удалить квартиру?", null, "Да", "Нет");
 
-            SetDefault();
+            if (confirm)
+            {
+                await _localDBService.DeleteItem(FlatInfo);
+                await Shell.Current.GoToAsync("..", true);
+                SetDefault();
+            }
         }
 
         [RelayCommand]
