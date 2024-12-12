@@ -10,50 +10,15 @@ namespace FlatMoney.ViewModels
     public partial class FlatPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        public ObservableCollection<FlatModel> myFlats = [];
+        public string myFlatsCount;
 
         [ObservableProperty]
-        public string myFlatsCount;
+        public ObservableCollection<FlatModel> myFlats = [];
 
         [ObservableProperty]
         private FlatModel selectedItem;
 
-        [ObservableProperty]
-        private bool isRefreshing = false;
 
-
-
-        private AddFlatPage _addFlatPage { get; set; }
-
-        private readonly LocalDBService _localDBService;
-
-        public FlatPageViewModel(LocalDBService localDBService, AddFlatPage addFlatPage)
-        {
-            _addFlatPage = addFlatPage;
-
-            _localDBService = localDBService;
-
-            Task.Run(async () => await Load());
-
-            Shell.Current.Navigation.PushModalAsync(_addFlatPage);
-            Shell.Current.Navigation.PopModalAsync();
-        }
-
-
-
-        //[RelayCommand]
-        //private async Task NavigatedTo()
-        //{
-        //    await Load();
-        //}
-
-        [RelayCommand]
-        private async Task Refresh()
-        {
-            await Task.Delay(300);
-            await Load();
-            IsRefreshing = false;
-        }
 
         [RelayCommand]
         private async Task Add()
@@ -96,7 +61,7 @@ namespace FlatMoney.ViewModels
                 {"address", SelectedItem.Address }
             };
 
-            await Shell.Current.GoToAsync(nameof(AddFlatPage), parameters);
+            await Shell.Current.GoToAsync(nameof(AddFlatPage), true, parameters);
 
             SelectedItem = null;
         }
@@ -125,6 +90,27 @@ namespace FlatMoney.ViewModels
 
             if (count == 0) MyFlatsCount = "нет квартир";
             else MyFlatsCount = $"{count} {wordEnding}";
+        }
+
+        private void SetPageModal()
+        {
+            Shell.Current.Navigation.PushModalAsync(_addFlatPage);
+            Shell.Current.Navigation.PopModalAsync();
+        }
+
+
+
+        private AddFlatPage _addFlatPage { get; set; }
+        private readonly LocalDBService _localDBService;
+        public FlatPageViewModel(LocalDBService localDBService, AddFlatPage addFlatPage)
+        {
+            _addFlatPage = addFlatPage;
+
+            _localDBService = localDBService;
+
+            SetPageModal();
+
+            Task.Run(async () => await Load());
         }
     }
 }

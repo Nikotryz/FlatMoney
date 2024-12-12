@@ -5,7 +5,7 @@
         protected override void Invoke(VisualElement sender)
         {
             sender.IsVisible = true;
-            sender.FadeTo(1, 200);
+            sender.FadeTo(1, 300);
         }
     }
 }

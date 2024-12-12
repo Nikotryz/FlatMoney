@@ -45,7 +45,7 @@
             </Grid>
 
             <!-- Page 1 -->
-            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="5" IsVisible="True">
+            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="5">
 
                 <VerticalStackLayout.Triggers>
                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
@@ -125,7 +125,7 @@
             </VerticalStackLayout>
 
             <!-- Page 2 -->
-            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="10" IsVisible="False">
+            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="10" IsVisible="False" Opacity="0">
 
                 <VerticalStackLayout.Triggers>
                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
@@ -155,7 +155,7 @@
             </VerticalStackLayout>
 
             <!-- Page 3 -->
-            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10" IsVisible="False">
+            <Grid Grid.Row="1" RowDefinitions="40,*" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10" IsVisible="False" Opacity="0">
 
                 <Grid.Triggers>
                     <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
@@ -173,10 +173,23 @@
                 <Label Grid.Column="1" Text="{Binding PaymentsSum}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight"/>
                 <Button Grid.Column="2" Text="Добавить" Command="{Binding AddServiceCommand}" Style="{StaticResource PaSButton}"/>
 
+                <CollectionView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding ServicesList}" SelectionMode="Single" SelectedItem="{Binding SelectedReservationService}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border BackgroundColor="{StaticResource Field}" HeightRequest="40">
+                                <Grid ColumnDefinitions="*,*">
+                                    <Label Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
+                                    <Label Grid.Column="1" HorizontalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Cost}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
             </Grid>
 
             <!-- Page 4 -->
-            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10" IsVisible="False">
+            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10" IsVisible="False" Opacity="0">
 
                 <Grid.Triggers>
                     <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">

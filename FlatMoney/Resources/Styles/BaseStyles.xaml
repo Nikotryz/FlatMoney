@@ -16,6 +16,10 @@
         <Setter Property="Padding" Value="0" />
     </Style>
 
+    <Style x:Key="BaseScrollView" TargetType="ScrollView">
+        <Setter Property="VerticalScrollBarVisibility" Value="Never"/>
+    </Style>
+
     <Style x:Key="BaseRefreshView" TargetType="RefreshView">
         <Setter Property="RefreshColor" Value="{StaticResource AccentBlue}" />
     </Style>

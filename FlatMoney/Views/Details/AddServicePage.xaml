@@ -15,7 +15,7 @@
 
         <!-- Content -->
         <VerticalStackLayout Spacing="10">
-            <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ServiceName}">
+            <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ServiceName}" MaxLength="50">
                 <validations:RequiredValidation Message="Поле обязательно" />
             </uranium:TextField>
             <uranium:TextField Title="Стоимость" Keyboard="Numeric" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ServiceCost}">

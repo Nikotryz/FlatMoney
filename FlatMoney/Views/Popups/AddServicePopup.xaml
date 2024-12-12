@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="FlatMoney.Views.Popups.AddServicePopup"
+           xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+           xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+           xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+           xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+           Color="Transparent">
+    
+    
+    <!-- Popup Elements -->
+    <Border Style="{StaticResource PopupBorder}">
+        <input:FormView Style="{StaticResource PopupFormView}">
+            
+            <material:PickerField Title="Услуга" ItemsSource="{Binding Services}" SelectedItem="{Binding SelectedService}" Style="{StaticResource BaseUraniumPickerField}">
+                <validations:RequiredValidation Message="Поле обязательно"/>
+            </material:PickerField>
+            
+            <material:TextField Title="Стоимость" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+                <validations:RequiredValidation Message="Поле обязательно"/>
+                <validations:NumericValidation Message="Введите число"/>
+            </material:TextField>
+            
+            <Grid ColumnDefinitions="40,*,*" Style="{StaticResource ControlGrid}">
+                <Button Grid.Column="0" Command="{Binding DeleteCommand}" Style="{StaticResource DeleteButton}"/>
+                <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}" />
+                <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
+                <Button Grid.Column="2" input:FormView.IsSubmitButton="True" Command="{Binding SaveCommand}" Style="{StaticResource SaveButton}" />
+            </Grid>
+            
+        </input:FormView>
+    </Border>
+    
+    
+    
+    <!-- Styles For Elements -->
+    <mct:Popup.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="PopupBorder" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource BackGround}"/>
+                <Setter Property="StrokeThickness" Value="0"/>
+                <Setter Property="MinimumWidthRequest" Value="320"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
+            </Style>
+
+            <Style x:Key="PopupFormView" TargetType="input:FormView">
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="VerticalOptions" Value="Fill"/>
+                <Setter Property="Spacing" Value="10"/>
+            </Style>
+
+            <Style x:Key="ControlGrid" TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="10"/>
+                <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+                <Setter Property="Margin" Value="0,30,0,0"/>
+                <Setter Property="HeightRequest" Value="40"/>
+            </Style>
+            
+        </ResourceDictionary>
+    </mct:Popup.Resources>
+    
+    
+    
+</mct:Popup>

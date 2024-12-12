@@ -9,6 +9,7 @@ namespace FlatMoney.ViewModels
 {
     public partial class MoneyPageViewModel : ObservableObject
     {
+        //Page 1
         [ObservableProperty]
         public ObservableCollection<ServiceModel> myServices = [];
         [ObservableProperty]
@@ -19,20 +20,24 @@ namespace FlatMoney.ViewModels
         [ObservableProperty]
         public ExpenseTypeModel selectedExpenseType;
 
+        //Page 3
+        [ObservableProperty]
+        public double expensesForYear;
+        [ObservableProperty]
+        public double expensesForMonth;
+        [ObservableProperty]
+        public double expensesForDay;
+
+        [ObservableProperty]
+        public DateTime currentExpensesDate;
+        [ObservableProperty]
+        public string currentExpensesMonth;
         [ObservableProperty]
         public ObservableCollection<ExpenseModel> myExpenses = [];
         [ObservableProperty]
         public ExpenseModel selectedExpense;
 
 
-
-        private readonly LocalDBService _localDBService;
-        public MoneyPageViewModel(LocalDBService localDBService, AddServicePage addServicePage, AddExpenseTypePage addExpenseTypePage, AddExpensePage addExpensePage)
-        {
-            _localDBService = localDBService;
-
-            Task.Run(async () => await Load());
-        }
 
         [RelayCommand]
         public async Task AddService()
@@ -100,9 +105,17 @@ namespace FlatMoney.ViewModels
 
         public async Task Load()
         {
-            await LoadMyServices();
-            await LoadMyExpenseTypes();
-            await LoadExpenseHistory();
+            List<Task> tasks =
+            [
+                LoadMyServices(),
+                LoadMyExpenseTypes(),
+                LoadExpensesForYear(),
+                LoadExpensesForMonth(),
+                LoadExpensesForDay(),
+                LoadExpenseHistory()
+            ];
+
+            await Task.WhenAll(tasks);
         }
 
         private async Task LoadMyServices()
@@ -125,14 +138,120 @@ namespace FlatMoney.ViewModels
             }
         }
 
+
+        private async Task LoadExpensesForYear()
+        {
+            var expenses = await _localDBService.GetItems<ExpenseModel>();
+
+            var expensesForYear = expenses.Where(x => x.Date >= DateTime.Today.AddYears(-1));
+
+            double result = 0;
+
+            foreach (var item in expensesForYear)
+            {
+                result += item.Cost;
+            }
+
+            ExpensesForYear = result;
+        }
+
+        private async Task LoadExpensesForMonth()
+        {
+            var expenses = await _localDBService.GetItems<ExpenseModel>();
+
+            var expensesForMonth = expenses.Where(x => x.Date >= DateTime.Today.AddMonths(-1));
+
+            double result = 0;
+
+            foreach (var item in expensesForMonth)
+            {
+                result += item.Cost;
+            }
+
+            ExpensesForMonth = result;
+        }
+
+        private async Task LoadExpensesForDay()
+        {
+            var expenses = await _localDBService.GetItems<ExpenseModel>();
+
+            var expensesForDay = expenses.Where(x => x.Date >= DateTime.Today.AddDays(-1));
+
+            double result = 0;
+
+            foreach (var item in expensesForDay)
+            {
+                result += item.Cost;
+            }
+
+            ExpensesForDay = result;
+        }
+
         private async Task LoadExpenseHistory()
         {
             var expenses = await _localDBService.GetItems<ExpenseModel>();
+            var monthExpenses = expenses.Where(x => x.Date.Month == CurrentExpensesDate.Month && x.Date.Year == CurrentExpensesDate.Year);
+            var result = monthExpenses.OrderByDescending(x => x.Date);
             MyExpenses.Clear();
-            foreach (var item in expenses)
+            foreach (var item in result)
             {
                 MyExpenses.Add(item);
             }
+        }
+
+        [RelayCommand]
+        public async Task PreviousMonth()
+        {
+            CurrentExpensesDate = CurrentExpensesDate.AddMonths(-1);
+
+            CurrentExpensesMonth = GetFormattedDate(CurrentExpensesDate);
+
+            await LoadExpenseHistory();
+        }
+
+        [RelayCommand]
+        public async Task NextMonth()
+        {
+            CurrentExpensesDate = CurrentExpensesDate.AddMonths(1);
+
+            CurrentExpensesMonth = GetFormattedDate(CurrentExpensesDate);
+
+            await LoadExpenseHistory();
+        }
+
+        private string GetFormattedDate(DateTime date)
+        {
+            return $"{Enum.GetName(typeof(Months), date.Month)} {date.Year} г.";
+        }
+
+        enum Months
+        {
+            Январь = 1,
+            Февраль = 2,
+            Март = 3,
+            Апрель = 4,
+            Май = 5,
+            Июнь = 6,
+            Июль = 7,
+            Август = 8,
+            Сентябрь = 9,
+            Октябрь = 10,
+            Ноябрь = 11,
+            Декабрь = 12
+        }
+
+
+
+        private readonly LocalDBService _localDBService;
+        public MoneyPageViewModel(LocalDBService localDBService)
+        {
+            _localDBService = localDBService;
+
+            CurrentExpensesDate = DateTime.Today;
+
+            CurrentExpensesMonth = GetFormattedDate(CurrentExpensesDate);
+
+            Task.Run(async () => await Load());
         }
     }
 }

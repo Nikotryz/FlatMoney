@@ -54,7 +54,7 @@
         </Grid>
 
         <!-- Page 2 -->
-        <Grid Grid.Row="1" RowDefinitions="*,80">
+        <Grid Grid.Row="1" RowDefinitions="*,80" IsVisible="False" Opacity="0">
 
             <Grid.Triggers>
                 <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">

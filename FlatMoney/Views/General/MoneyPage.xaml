@@ -41,10 +41,10 @@
         </Grid>
         
         <!-- Page 1 -->
-        <VerticalStackLayout Grid.Row="1" Margin="10,20" Spacing="10" IsVisible="True">
+        <Grid Grid.Row="1">
 
-            <VerticalStackLayout.Triggers>
-                <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
                     <DataTrigger.EnterActions>
                         <actions:FadeShowTrigger/>
                     </DataTrigger.EnterActions>
@@ -52,68 +52,89 @@
                         <actions:FadeHideTrigger/>
                     </DataTrigger.ExitActions>
                 </DataTrigger>
-            </VerticalStackLayout.Triggers>
+            </Grid.Triggers>
 
-            <ur:ExpanderView>
-                <ur:ExpanderView.Header>
-                    <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Прибыль за период" />
-                </ur:ExpanderView.Header>
-            </ur:ExpanderView>
+            <ScrollView Style="{StaticResource BaseScrollView}">
+                <VerticalStackLayout Spacing="10" Margin="10,20,10,0">
 
-            <ur:ExpanderView>
-                <ur:ExpanderView.Header>
-                    <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Мои услуги" />
-                </ur:ExpanderView.Header>
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Прибыль за период" />
+                        </ur:ExpanderView.Header>
 
-                <VerticalStackLayout Spacing="10">
-                    <Grid HeightRequest="40">
-                        <Button Command="{Binding AddServiceCommand}" Style="{StaticResource ExpanderContentButton}" />
-                        <Image Source="add.png" Style="{StaticResource ButtonAddImage}" />
-                    </Grid>
-                    <CollectionView ItemsSource="{Binding MyServices}" MaximumHeightRequest="200" SelectedItem="{Binding SelectedService}" SelectionChangedCommand="{Binding ServiceTappedCommand}" SelectionMode="Single">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource ExpanderItemBorder}">
-                                    <Grid ColumnDefinitions="*,*">
-                                        <Label Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
-                                        <Label Grid.Column="1" HorizontalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Cost}" />
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                        <Grid RowDefinitions="120,120" ColumnDefinitions="*,*" ColumnSpacing="10" RowSpacing="10" Margin="0,5,0,0">
+                            <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Год" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="20000000" Style="{StaticResource BaseLabel}"/>
+
+                            <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="Месяц" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="20000000" Style="{StaticResource BaseLabel}"/>
+
+                            <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="День" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="20000000" Style="{StaticResource BaseLabel}"/>
+                        </Grid>
+
+                    </ur:ExpanderView>
+
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Мои услуги" />
+                        </ur:ExpanderView.Header>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Grid HeightRequest="40">
+                                <Button Command="{Binding AddServiceCommand}" Style="{StaticResource ExpanderContentButton}" />
+                                <Image Source="add.png" Style="{StaticResource ButtonAddImage}" />
+                            </Grid>
+                            <CollectionView ItemsSource="{Binding MyServices}" SelectedItem="{Binding SelectedService}" SelectionChangedCommand="{Binding ServiceTappedCommand}" SelectionMode="Single">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource ExpanderItemBorder}">
+                                            <Grid ColumnDefinitions="*,*">
+                                                <Label Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
+                                                <Label Grid.Column="1" HorizontalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Cost}" />
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </ur:ExpanderView>
+
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Мои расходы" />
+                        </ur:ExpanderView.Header>
+
+                        <VerticalStackLayout Spacing="10">
+                            <Grid HeightRequest="40">
+                                <Button Command="{Binding AddExpenseTypeCommand}" Style="{StaticResource ExpanderContentButton}" />
+                                <Image Source="add.png" Style="{StaticResource ButtonAddImage}" />
+                            </Grid>
+                            <CollectionView ItemsSource="{Binding MyExpenseTypes}" SelectedItem="{Binding SelectedExpenseType}" SelectionChangedCommand="{Binding ExpenseTypeTappedCommand}" SelectionMode="Single">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource ExpanderItemBorder}">
+                                            <Label HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+                    </ur:ExpanderView>
+
                 </VerticalStackLayout>
-            </ur:ExpanderView>
+            </ScrollView>
 
-            <ur:ExpanderView>
-                <ur:ExpanderView.Header>
-                    <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Мои расходы" />
-                </ur:ExpanderView.Header>
+        </Grid>
 
-                <VerticalStackLayout Spacing="10">
-                    <Grid HeightRequest="40">
-                        <Button Command="{Binding AddExpenseTypeCommand}" Style="{StaticResource ExpanderContentButton}" />
-                        <Image Source="add.png" Style="{StaticResource ButtonAddImage}" />
-                    </Grid>
-                    <CollectionView ItemsSource="{Binding MyExpenseTypes}" MaximumHeightRequest="200" SelectedItem="{Binding SelectedExpenseType}" SelectionChangedCommand="{Binding ExpenseTypeTappedCommand}" SelectionMode="Single">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Border Style="{StaticResource ExpanderItemBorder}">
-                                    <Label HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </ur:ExpanderView>
-
-        </VerticalStackLayout>
-        
         <!-- Page 2 -->
-        <VerticalStackLayout Grid.Row="1" Margin="10,20" Spacing="10" IsVisible="False">
+        <Grid Grid.Row="1" IsVisible="False" Opacity="0">
 
-            <VerticalStackLayout.Triggers>
-                <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
                     <DataTrigger.EnterActions>
                         <actions:FadeShowTrigger/>
                     </DataTrigger.EnterActions>
@@ -121,24 +142,45 @@
                         <actions:FadeHideTrigger/>
                     </DataTrigger.ExitActions>
                 </DataTrigger>
-            </VerticalStackLayout.Triggers>
+            </Grid.Triggers>
 
-            <ur:ExpanderView>
-                <ur:ExpanderView.Header>
-                    <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Доходы за период" />
-                </ur:ExpanderView.Header>
-            </ur:ExpanderView>
+            <ScrollView Style="{StaticResource BaseScrollView}">
+                <VerticalStackLayout Spacing="10" Margin="10,20,10,0">
 
-            <ur:ExpanderView>
-                <ur:ExpanderView.Header>
-                    <Label Style="{StaticResource ExpanderHeaderLabel}" Text="История доходов" />
-                </ur:ExpanderView.Header>
-            </ur:ExpanderView>
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Доходы за период" />
+                        </ur:ExpanderView.Header>
 
-        </VerticalStackLayout>
+                        <Grid RowDefinitions="120,120" ColumnDefinitions="*,*" ColumnSpacing="10" RowSpacing="10" Margin="0,5,0,0">
+                            <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Год" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="20000000" Style="{StaticResource BaseLabel}"/>
+
+                            <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="Месяц" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="20000000" Style="{StaticResource BaseLabel}"/>
+
+                            <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="День" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="20000000" Style="{StaticResource BaseLabel}"/>
+                        </Grid>
+
+                    </ur:ExpanderView>
+
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="История доходов" />
+                        </ur:ExpanderView.Header>
+                    </ur:ExpanderView>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </Grid>
         
         <!-- Page 3 -->
-        <Grid Grid.Row="1" Margin="10,20,10,10" RowDefinitions="*,80" IsVisible="False">
+        <Grid Grid.Row="1" RowDefinitions="*,80" IsVisible="False" Opacity="0">
 
             <Grid.Triggers>
                 <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
@@ -151,47 +193,77 @@
                 </DataTrigger>
             </Grid.Triggers>
 
-            <VerticalStackLayout Grid.Row="0" Spacing="10">
+            <ScrollView Grid.RowSpan="2" Style="{StaticResource BaseScrollView}">
+                <VerticalStackLayout Spacing="10" Margin="10,20,10,0">
 
-                <ur:ExpanderView>
-                    <ur:ExpanderView.Header>
-                        <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Расходы за период" />
-                    </ur:ExpanderView.Header>
-                </ur:ExpanderView>
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Расходы за период" />
+                        </ur:ExpanderView.Header>
 
-                <ur:ExpanderView>
-                    <ur:ExpanderView.Header>
-                        <Label Style="{StaticResource ExpanderHeaderLabel}" Text="История расходов" />
-                    </ur:ExpanderView.Header>
+                        <Grid RowDefinitions="120,120" ColumnDefinitions="*,*" ColumnSpacing="10" RowSpacing="10" Margin="0,5,0,0">
+                            <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Год" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ExpensesForYear}" Style="{StaticResource BaseLabel}"/>
 
-                    <CollectionView ItemsSource="{Binding MyExpenses}" MaximumHeightRequest="640" SelectedItem="{Binding SelectedExpense}" SelectionChangedCommand="{Binding ExpenseTappedCommand}" SelectionMode="Single">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Border HeightRequest="80" Style="{StaticResource ExpanderItemBorder}">
-                                    <Grid ColumnDefinitions="*,*">
-                                        <Grid Grid.Column="0">
-                                            <BoxView HorizontalOptions="Start" Style="{StaticResource BaseVerticalDivider}" />
-                                            <Label Margin="10,0,0,0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding TypeName}" VerticalOptions="Start" />
-                                        </Grid>
-                                        <Grid Grid.Column="1" RowDefinitions="*,*">
-                                            <Grid Grid.Row="0">
-                                                <BoxView Margin="0,3,0,3" HorizontalOptions="Start" Style="{StaticResource BaseVerticalDivider}" />
-                                                <Label Margin="10,0,0,0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Date}" />
+                            <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="Месяц" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding ExpensesForMonth}" Style="{StaticResource BaseLabel}"/>
+
+                            <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="День" Style="{StaticResource StatisticsLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ExpensesForDay}" Style="{StaticResource BaseLabel}"/>
+                        </Grid>
+
+                    </ur:ExpanderView>
+
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="История расходов" />
+                        </ur:ExpanderView.Header>
+
+                        <VerticalStackLayout Spacing="10">
+
+                            <Border Style="{StaticResource BaseBorder}" HeightRequest="40">
+                                <Grid ColumnDefinitions="40,*,40" ColumnSpacing="10">
+                                    <Button Grid.Column="0" Command="{Binding PreviousMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Image Grid.Column="0" Source="arrow.png" Style="{StaticResource BaseImage}"/>
+                                    <Label Grid.Column="1" Text="{Binding CurrentExpensesMonth}" Style="{StaticResource BaseLabel}"/>
+                                    <Button Grid.Column="2" Command="{Binding NextMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Image Grid.Column="2" Source="arrow.png" Rotation="180" Style="{StaticResource BaseImage}"/>
+                                </Grid>
+                            </Border>
+
+                            <CollectionView ItemsSource="{Binding MyExpenses}" SelectedItem="{Binding SelectedExpense}" SelectionChangedCommand="{Binding ExpenseTappedCommand}" SelectionMode="Single">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border HeightRequest="80" Style="{StaticResource ExpanderItemBorder}">
+                                            <Grid ColumnDefinitions="*,*">
+                                                <Grid Grid.Column="0">
+                                                    <BoxView HorizontalOptions="Start" Style="{StaticResource BaseVerticalDivider}" />
+                                                    <Label Margin="10,0,0,0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding TypeName}" VerticalOptions="Start" />
+                                                </Grid>
+                                                <Grid Grid.Column="1" RowDefinitions="*,*">
+                                                    <Grid Grid.Row="0">
+                                                        <BoxView Margin="0,3,0,3" HorizontalOptions="Start" Style="{StaticResource BaseVerticalDivider}" />
+                                                        <Label Margin="10,0,0,0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Date}" />
+                                                    </Grid>
+                                                    <Grid Grid.Row="1">
+                                                        <BoxView Margin="0,3,0,3" HorizontalOptions="Start" Style="{StaticResource BaseVerticalDivider}" />
+                                                        <Label Margin="10,0,0,0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Cost}" />
+                                                    </Grid>
+                                                </Grid>
                                             </Grid>
-                                            <Grid Grid.Row="1">
-                                                <BoxView Margin="0,3,0,3" HorizontalOptions="Start" Style="{StaticResource BaseVerticalDivider}" />
-                                                <Label Margin="10,0,0,0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Cost}" />
-                                            </Grid>
-                                        </Grid>
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
 
-                </ur:ExpanderView>
+                    </ur:ExpanderView>
 
-            </VerticalStackLayout>
+                </VerticalStackLayout>
+            </ScrollView>
 
             <Grid Grid.Row="1" Style="{StaticResource AddExpenseGrid}">
                 <Button Command="{Binding AddExpenseCommand}" Style="{StaticResource AddExpenseButton}" />
@@ -201,10 +273,10 @@
         </Grid>
         
         <!-- Page 4 -->
-        <VerticalStackLayout Grid.Row="1" Margin="10,20" Spacing="10" IsVisible="False">
+        <Grid Grid.Row="1" IsVisible="False" Opacity="0">
 
-            <VerticalStackLayout.Triggers>
-                <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
+            <Grid.Triggers>
+                <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
                     <DataTrigger.EnterActions>
                         <actions:FadeShowTrigger/>
                     </DataTrigger.EnterActions>
@@ -212,21 +284,27 @@
                         <actions:FadeHideTrigger/>
                     </DataTrigger.ExitActions>
                 </DataTrigger>
-            </VerticalStackLayout.Triggers>
+            </Grid.Triggers>
 
-            <ur:ExpanderView>
-                <ur:ExpanderView.Header>
-                    <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Расходы по категориям" />
-                </ur:ExpanderView.Header>
-            </ur:ExpanderView>
+            <ScrollView Style="{StaticResource BaseScrollView}">
+                <VerticalStackLayout Spacing="10" Margin="10,20,10,0">
 
-            <ur:ExpanderView>
-                <ur:ExpanderView.Header>
-                    <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Доходы по квартирам" />
-                </ur:ExpanderView.Header>
-            </ur:ExpanderView>
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Расходы по категориям" />
+                        </ur:ExpanderView.Header>
+                    </ur:ExpanderView>
 
-        </VerticalStackLayout>
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Доходы по квартирам" />
+                        </ur:ExpanderView.Header>
+                    </ur:ExpanderView>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </Grid>
 
     </Grid>
 
@@ -298,6 +376,12 @@
                 <Setter Property="BorderWidth" Value="1" />
             </Style>
 
+            <Style x:Key="StatisticsLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="HorizontalOptions" Value="Start"/>
+                <Setter Property="Margin" Value="5,5,0,0"/>
+            </Style>
+
             <Style x:Key="ButtonAddImage" BasedOn="{StaticResource BaseImage}" TargetType="Image">
                 <Setter Property="Margin" Value="5" />
             </Style>
@@ -306,7 +390,7 @@
                 <Setter Property="HeightRequest" Value="60" />
                 <Setter Property="WidthRequest" Value="60" />
                 <Setter Property="HorizontalOptions" Value="End" />
-                <Setter Property="Margin" Value="10,0" />
+                <Setter Property="Margin" Value="0,0,20,20" />
             </Style>
 
             <Style x:Key="AddExpenseButton" BasedOn="{StaticResource BaseButton}" TargetType="Button">

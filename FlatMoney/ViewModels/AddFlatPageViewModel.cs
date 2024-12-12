@@ -21,56 +21,33 @@ namespace FlatMoney.ViewModels
     public partial class AddFlatPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        private List<string> types = new List<string>() {"Арендная", "Своя"};
-
-
-
-        [ObservableProperty]
         private FlatModel flatInfo;
 
         [ObservableProperty]
         private string nameText;
-
         [ObservableProperty]
         private string typeText;
 
         [ObservableProperty]
         private float rentCostText;
-
         [ObservableProperty]
         private DateTime rentStartDateText;
-
         [ObservableProperty]
         private int rentIntervalText;
-
         [ObservableProperty]
         private bool rentAutopayText;
 
         [ObservableProperty]
         private float internetCostText;
-
         [ObservableProperty]
         private DateTime internetStartDateText;
-
         [ObservableProperty]
         private int internetIntervalText;
-
         [ObservableProperty]
         private bool internetAutopayText;
 
         [ObservableProperty]
         private string addressText;
-
-
-        
-        private readonly LocalDBService _localDBService;
-
-        public AddFlatPageViewModel(LocalDBService localDBService)
-        {
-            _localDBService = localDBService;
-
-            SetDefault();
-        }
 
 
 
@@ -167,6 +144,16 @@ namespace FlatMoney.ViewModels
                 InternetAutopay = InternetAutopayText,
                 Address = AddressText
             });
+        }
+
+
+
+        private readonly LocalDBService _localDBService;
+        public AddFlatPageViewModel(LocalDBService localDBService)
+        {
+            _localDBService = localDBService;
+
+            SetDefault();
         }
     }
 }

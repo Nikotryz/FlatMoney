@@ -71,13 +71,14 @@
                                                         $"service_name VARCHAR(50) NOT NULL DEFAULT 'Услуга', " +
                                                         $"service_cost FLOAT); ";
 
-        public const string CREATE_RESERVATION_SERVICES_STATEMENT = $"CREATE TABLE IF NOT EXISTS {RESERVATION_SERVICES_TABLE_NAME} (" +
-                                                                    $"PK_reservation_service_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                                                                    $"FK_reservation_id INT NOT NULL, " +
-                                                                    $"FK_service_id INT, " +
-                                                                    $"service_cost FLOAT NOT NULL DEFAULT 0, " +
-                                                                    $"FOREIGN KEY (FK_reservation_id) REFERENCES reservations (PK_reservation_id) ON DELETE CASCADE, " +
-                                                                    $"FOREIGN KEY (FK_service_id) REFERENCES services (PK_service_id) ON DELETE SET NULL); ";
+        public const string CREATE_RESERVATION_SERVICES_STATEMENT = 
+            $"CREATE TABLE IF NOT EXISTS {RESERVATION_SERVICES_TABLE_NAME} (" +
+            $"PK_reservation_service_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+            $"FK_reservation_id INT NOT NULL, " +
+            $"service_name VARCHAR(50) NOT NULL, " +
+            $"service_cost FLOAT, " +
+            $"FOREIGN KEY (FK_reservation_id) REFERENCES reservations (PK_reservation_id) ON DELETE CASCADE, " +
+            $"FOREIGN KEY (FK_service_id) REFERENCES services (PK_service_id) ON DELETE SET NULL); ";
 
         public const string CREATE_RESERVATION_CLIENTS_STATEMENT = $"CREATE TABLE IF NOT EXISTS {RESERVATION_CLIENTS_TABLE_NAME} (" +
                                                                    $"PK_reservation_client_id INTEGER PRIMARY KEY AUTOINCREMENT, " +

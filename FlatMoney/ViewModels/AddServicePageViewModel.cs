@@ -12,23 +12,10 @@ namespace FlatMoney.ViewModels
     {
         [ObservableProperty]
         public ServiceModel serviceInfo;
-
         [ObservableProperty]
         public string serviceName;
-
         [ObservableProperty]
         public float serviceCost;
-
-
-
-        private readonly LocalDBService _localDBService;
-
-        public AddServicePageViewModel(LocalDBService localDBService)
-        {
-            _localDBService = localDBService;
-
-            SetDefault();
-        }
 
 
 
@@ -98,6 +85,16 @@ namespace FlatMoney.ViewModels
                 Name = ServiceName,
                 Cost = ServiceCost
             });
+        }
+
+
+
+        private readonly LocalDBService _localDBService;
+        public AddServicePageViewModel(LocalDBService localDBService)
+        {
+            _localDBService = localDBService;
+
+            SetDefault();
         }
     }
 }

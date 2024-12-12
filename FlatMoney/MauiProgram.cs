@@ -3,9 +3,12 @@ using FlatMoney.ViewModels;
 using FlatMoney.Views.Details;
 using FlatMoney.Views.General;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui;
 using DevExpress.Maui;
 using UraniumUI;
 using Plugin.SegmentedControl.Maui;
+using FlatMoney.Views.Popups;
+using FlatMoney.ViewModels.PopupViewModels;
 
 namespace FlatMoney
 {
@@ -17,6 +20,7 @@ namespace FlatMoney
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .UseDevExpress()
                 .UseDevExpressControls()
                 .UseUraniumUI()
@@ -77,6 +81,12 @@ namespace FlatMoney
             builder.Services.AddSingleton<AddReservationPage>(serviceProvider => new AddReservationPage()
             {
                 BindingContext = serviceProvider.GetRequiredService<AddReservationPageViewModel>()
+            });
+
+            builder.Services.AddTransientPopup<AddServicePopup, AddServicePopupViewModel>();
+            builder.Services.AddTransient<AddServicePopup>(serviceProvider => new AddServicePopup()
+            {
+                BindingContext = serviceProvider.GetRequiredService<AddServicePopupViewModel>()
             });
 
 #if DEBUG

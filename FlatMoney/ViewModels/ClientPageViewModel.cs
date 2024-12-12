@@ -7,23 +7,6 @@ namespace FlatMoney.ViewModels
 {
     public partial class ClientPageViewModel : ObservableObject
     {
-        private readonly LocalDBService _localDBService;
-        private AddReservationPage _addReservationPage;
-        public ClientPageViewModel(LocalDBService localDBService, AddReservationPage addReservationPage)
-        {
-            _localDBService = localDBService;
-
-            _addReservationPage = addReservationPage;
-
-            SetPageModal();
-        }
-
-        private void SetPageModal()
-        {
-            Shell.Current.Navigation.PushModalAsync(_addReservationPage);
-            Shell.Current.Navigation.PopModalAsync();
-        }
-
         [RelayCommand]
         public async Task AddShortReservation()
         {
@@ -36,10 +19,32 @@ namespace FlatMoney.ViewModels
             await Shell.Current.GoToAsync(nameof(AddReservationPage), true);
         }
 
+
+
         public async Task Load()
         {
             await Task.Delay(1);
         }
 
+        private void SetPageModal()
+        {
+            Shell.Current.Navigation.PushModalAsync(_addReservationPage);
+            Shell.Current.Navigation.PopModalAsync();
+        }
+
+
+
+        private readonly LocalDBService _localDBService;
+        private AddReservationPage _addReservationPage;
+        public ClientPageViewModel(LocalDBService localDBService, AddReservationPage addReservationPage)
+        {
+            _localDBService = localDBService;
+
+            _addReservationPage = addReservationPage;
+
+            SetPageModal();
+
+            Task.Run(async () => await Load());
+        }
     }
 }

@@ -12,7 +12,7 @@
     <input:FormView Style="{StaticResource UraniumFormView}" SubmitCommand="{Binding SaveCommand}">
 
         <!-- Content -->
-        <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ExpenseTypeName}">
+        <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ExpenseTypeName}" MaxLength="50">
             <validations:RequiredValidation Message="Поле обязательно для ввода" />
         </uranium:TextField>
 

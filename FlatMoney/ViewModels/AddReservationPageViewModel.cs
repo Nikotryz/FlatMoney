@@ -1,7 +1,10 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Core;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FlatMoney.LocalDataBase;
 using FlatMoney.Models;
+using FlatMoney.ViewModels.PopupViewModels;
+using FlatMoney.Views.Popups;
 using System.Collections.ObjectModel;
 
 namespace FlatMoney.ViewModels
@@ -54,7 +57,13 @@ namespace FlatMoney.ViewModels
 
         //Page 3
         [ObservableProperty]
-        public ObservableCollection<string> servicesList = [];
+        public ObservableCollection<ReservationServiceModel> servicesList = [];
+
+        [RelayCommand]
+        public void AddService()
+        {
+            _popupService.ShowPopup<AddServicePopupViewModel>();
+        }
 
 
         //Page 4
@@ -94,13 +103,34 @@ namespace FlatMoney.ViewModels
 
 
 
-        private async Task Load()
+        public async Task Load()
+        {
+            List<Task> tasks =
+            [
+                LoadFlats(),
+                LoadServices()
+            ];
+
+            await Task.WhenAll(tasks);
+        }
+
+        public async Task LoadFlats()
         {
             var items = await _localDBService.GetItems<FlatModel>();
             FlatsList.Clear();
             foreach (var item in items)
             {
                 FlatsList.Add(item.Name);
+            }
+        }
+
+        public async Task LoadServices()
+        {
+            var items = await _localDBService.GetItems<ReservationServiceModel>();
+            ServicesList.Clear();
+            foreach (var item in items)
+            {
+                ServicesList.Add(item);
             }
         }
 
@@ -152,12 +182,14 @@ namespace FlatMoney.ViewModels
 
 
 
+        private readonly IPopupService _popupService;
         private readonly LocalDBService _localDBService;
-        public AddReservationPageViewModel(LocalDBService localDBService)
+        public AddReservationPageViewModel(IPopupService popupService, LocalDBService localDBService)
         {
+            _popupService = popupService;
             _localDBService = localDBService;
             SetDefault();
-            Load();
+            Task.Run(async () => await Load());
         }
     }
 }

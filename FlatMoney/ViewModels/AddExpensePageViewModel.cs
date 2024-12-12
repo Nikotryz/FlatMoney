@@ -25,17 +25,6 @@ namespace FlatMoney.ViewModels
         public float expenseCost;
 
 
-        private readonly LocalDBService _localDBService;
-        public AddExpensePageViewModel(LocalDBService localDBService)
-        {
-            _localDBService = localDBService;
-
-            SetDefault();
-
-            Task.Run(async () => await Load());
-        }
-
-
 
         [RelayCommand]
         private async Task Delete()
@@ -115,6 +104,18 @@ namespace FlatMoney.ViewModels
                 Date = ExpenseDate,
                 Cost = ExpenseCost,
             });
+        }
+
+
+
+        private readonly LocalDBService _localDBService;
+        public AddExpensePageViewModel(LocalDBService localDBService)
+        {
+            _localDBService = localDBService;
+
+            SetDefault();
+
+            Task.Run(async () => await Load());
         }
     }
 }

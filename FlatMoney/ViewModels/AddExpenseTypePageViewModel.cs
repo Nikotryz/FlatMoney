@@ -17,17 +17,6 @@ namespace FlatMoney.ViewModels
 
 
 
-        private readonly LocalDBService _localDBService;
-
-        public AddExpenseTypePageViewModel(LocalDBService localDBService)
-        {
-            _localDBService = localDBService;
-
-            SetDefault();
-        }
-
-
-
         [RelayCommand]
         public async Task Delete()
         {
@@ -91,6 +80,16 @@ namespace FlatMoney.ViewModels
             {
                 Name = ExpenseTypeName,
             });
+        }
+
+
+
+        private readonly LocalDBService _localDBService;
+        public AddExpenseTypePageViewModel(LocalDBService localDBService)
+        {
+            _localDBService = localDBService;
+
+            SetDefault();
         }
     }
 }

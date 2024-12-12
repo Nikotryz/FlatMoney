@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+    xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:sgcontrol="http://plugin.segmentedControl.maui"
     xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
@@ -21,10 +22,15 @@
         <VerticalStackLayout Spacing="30">
 
             <VerticalStackLayout Spacing="5">
-                <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding NameText}">
+                <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding NameText}" MaxLength="50">
                     <validations:RequiredValidation Message="Поле обязательно" />
                 </uranium:TextField>
-                <uranium:PickerField x:Name="typePicker" Title="Тип" ItemsSource="{Binding Types}" SelectedItem="{Binding TypeText}" Style="{StaticResource BaseUraniumPickerField}" />
+                <uranium:PickerField x:Name="typePicker" Title="Тип" SelectedItem="{Binding TypeText}" Style="{StaticResource BaseUraniumPickerField}">
+                    <uranium:PickerField.Items>
+                        <x:String>Арендная</x:String>
+                        <x:String>Своя</x:String>
+                    </uranium:PickerField.Items>
+                </uranium:PickerField>
             </VerticalStackLayout>
 
             <!-- Segmented Control -->
@@ -44,51 +50,53 @@
                 <uranium:CheckBox IsChecked="{Binding RentAutopayText}" Style="{StaticResource BaseUraniumCheckBox}" Margin="0,10,0,0" Text="Автосписание за аренду" />
                 
                 <VerticalStackLayout.Triggers>
-                    
+
                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
                         <DataTrigger.EnterActions>
                             <actions:FadeShowTrigger/>
                         </DataTrigger.EnterActions>
-                    </DataTrigger>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
-                        <DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
                             <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
+                        </DataTrigger.ExitActions>
                     </DataTrigger>
-                    
+
                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference typePicker}, Path=SelectedItem}" Value="Своя">
                         <Setter Property="IsEnabled" Value="False"/>
                     </DataTrigger>
                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference typePicker}, Path=SelectedItem}" Value="Арендная">
                         <Setter Property="IsEnabled" Value="True"/>
                     </DataTrigger>
+                    
                 </VerticalStackLayout.Triggers>
                 
             </VerticalStackLayout>
 
             <!-- Tab 2 -->
-            <VerticalStackLayout Spacing="5">
+            <VerticalStackLayout Spacing="5" IsVisible="False" Opacity="0">
+                
                 <uranium:TextField Title="Сумма за интернет и ТВ" Style="{StaticResource UraniumTextField}" Text="{Binding InternetCostText}" />
                 <uranium:DatePickerField Title="Начиная с" Date="{Binding InternetStartDateText}" Style="{StaticResource BaseUraniumDatePickerField}" />
                 <uranium:TextField Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}" Style="{StaticResource UraniumTextField}" Text="{Binding InternetIntervalText}">
                     <validations:DigitsOnlyValidation Message="Введите целое число" />
                 </uranium:TextField>
                 <uranium:CheckBox IsChecked="{Binding InternetAutopayText}" Style="{StaticResource BaseUraniumCheckBox}" Margin="0,10,0,0" Text="Автосписание за интернет и ТВ" />
+                
                 <VerticalStackLayout.Triggers>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.EnterActions>
-                    </DataTrigger>
+
                     <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
                         <DataTrigger.EnterActions>
                             <actions:FadeShowTrigger/>
                         </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <actions:FadeHideTrigger/>
+                        </DataTrigger.ExitActions>
                     </DataTrigger>
+
                 </VerticalStackLayout.Triggers>
+                
             </VerticalStackLayout>
 
-            <uranium:TextField Title="Адрес" Style="{StaticResource BaseUraniumTextField}" Text="{Binding AddressText}" />
+            <uranium:TextField Title="Адрес" Style="{StaticResource BaseUraniumTextField}" Text="{Binding AddressText}" MaxLength="250"/>
 
         </VerticalStackLayout>
 

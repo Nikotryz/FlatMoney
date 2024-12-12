@@ -54,6 +54,7 @@
 		<MauiImage Include="Resources\Images\moneypage_unselected.svg" />
 
 		<MauiImage Include="Resources\Images\add.svg" />
+		<MauiImage Include="Resources\Images\arrow.svg" />
 		<MauiImage Include="Resources\Images\flat_item.svg" TintColor="#4D4D4D" />
 		<MauiImage Include="Resources\Images\delete.svg" TintColor="#FF3B29" />
 
@@ -66,6 +67,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="CommunityToolkit.Maui" Version="9.1.1" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.3.2" />
 		<PackageReference Include="DevExpress.Maui.Controls" Version="24.1.7" />
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
@@ -109,6 +111,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\General\MoneyPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\AddServicePopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>
