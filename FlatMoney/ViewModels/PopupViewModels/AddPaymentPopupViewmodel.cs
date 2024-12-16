@@ -3,24 +3,26 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FlatMoney.LocalDataBase;
 using FlatMoney.Models;
-using System.Collections.ObjectModel;
 
 namespace FlatMoney.ViewModels.PopupViewModels
 {
-    public partial class AddServicePopupViewModel : ObservableObject
+    public partial class AddPaymentPopupViewModel : ObservableObject
     {
         [ObservableProperty]
         public int reservationId;
 
 
         [ObservableProperty]
-        public ObservableCollection<ServiceModel> services = [];
+        public string? selectedPaymentName;
 
         [ObservableProperty]
-        public ServiceModel? selectedService;
+        public string? selectedPaymentType;
 
         [ObservableProperty]
-        public float? serviceCost;
+        public DateTime selectedPaymentDate; 
+
+        [ObservableProperty]
+        public float? selectedPaymentCost;
 
 
 
@@ -42,48 +44,35 @@ namespace FlatMoney.ViewModels.PopupViewModels
             SetDefault();
         }
 
-        [RelayCommand]
-        public void SelectedServiceChanged()
+        private PaymentModel Create()
         {
-            ServiceCost = SelectedService?.Cost;
-        }
-
-        private ReservationServiceModel Create()
-        {
-            return new ReservationServiceModel
+            return new PaymentModel
             {
                 ReservationId = this.ReservationId,
-                Name = SelectedService?.Name,
-                Cost = ServiceCost
+                Name = SelectedPaymentName,
+                Type = SelectedPaymentType,
+                Date = SelectedPaymentDate,
+                Cost = SelectedPaymentCost
             };
-        }
-
-        public async Task Load()
-        {
-            var services = await _localDBService.GetItems<ServiceModel>();
-            Services.Clear();
-            foreach (var item in services)
-            {
-                Services.Add(item);
-            }
         }
 
         private void SetDefault()
         {
-            SelectedService = null;
-            ServiceCost = null;
+            SelectedPaymentName = "Оплата";
+            SelectedPaymentType = "Безнал";
+            SelectedPaymentDate = DateTime.Today;
+            SelectedPaymentCost = null;
         }
 
 
 
         private readonly LocalDBService _localDBService;
         private readonly IPopupService _popupService;
-        public AddServicePopupViewModel(LocalDBService localDBService, IPopupService popupService)
+        public AddPaymentPopupViewModel(LocalDBService localDBService, IPopupService popupService)
         {
             _localDBService = localDBService;
             _popupService = popupService;
-
-            Task.Run(async () => await Load());
+            SetDefault();
         }
     }
 }

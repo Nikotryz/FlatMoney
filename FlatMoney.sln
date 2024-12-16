@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatMoney", "FlatMoney\FlatMoney.csproj", "{76642B03-8B7A-409A-A5C0-ABEF9B38694F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FlatMoneyUnitTests", "FlatMoneyUnitTests\FlatMoneyUnitTests.csproj", "{31A7BEE1-307B-4E54-BC82-0C4058C83E98}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,6 +19,10 @@ Global
 		{76642B03-8B7A-409A-A5C0-ABEF9B38694F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76642B03-8B7A-409A-A5C0-ABEF9B38694F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{76642B03-8B7A-409A-A5C0-ABEF9B38694F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{31A7BEE1-307B-4E54-BC82-0C4058C83E98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A7BEE1-307B-4E54-BC82-0C4058C83E98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A7BEE1-307B-4E54-BC82-0C4058C83E98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A7BEE1-307B-4E54-BC82-0C4058C83E98}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

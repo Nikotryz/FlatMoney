@@ -9,6 +9,8 @@
     xmlns:sgcontrol="http://plugin.segmentedControl.maui"
     xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
     xmlns:actions="clr-namespace:FlatMoney.TriggerActions"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
     Style="{StaticResource BaseContentPage}">
 
 

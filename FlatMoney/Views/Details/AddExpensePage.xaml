@@ -6,6 +6,8 @@
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarIsVisible="False"
     Style="{StaticResource BaseContentPage}">
 
 

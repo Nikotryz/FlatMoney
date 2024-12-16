@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="FlatMoney.Views.Details.AddClientPage"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+             xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+             xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             Style="{StaticResource BaseContentPage}"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False">
+    
+    
+    
+    <!-- Page Elements -->
+    <input:FormView SubmitCommand="{Binding SaveCommand}" VerticalOptions="Fill" Padding="20" Spacing="5">
+
+        <Label Text="{Binding SelectedClientName}" Style="{StaticResource BaseLabel}" FontSize="24" Margin="0,0,0,20"/>
+
+        <material:TextField Title="ФИО" Text="{Binding SelectedClientName}" Style="{StaticResource BaseUraniumTextField}" MaxLength="150">
+            <validations:RequiredValidation Message="Поле обязательно"/>
+        </material:TextField>
+
+        <material:TextField Title="Телефон" Text="{Binding SelectedClientPhone}" Style="{StaticResource BaseUraniumTextField}" Margin="0,10,0,0" MaxLength="25">
+            <validations:RegexValidation Message="Введите корректный телефон" Pattern="{x:Static input:AdvancedEntry.REGEX_PHONE}"/>
+        </material:TextField>
+
+        <material:TextField Title="Электронная почта" Text="{Binding SelectedClientEmail}" Style="{StaticResource BaseUraniumTextField}" MaxLength="100">
+            <validations:RegexValidation Message="Введите корректный Email" Pattern="{x:Static input:AdvancedEntry.REGEX_EMAIL}"/>
+        </material:TextField>
+
+        <material:TextField Title="Паспорт (серия и номер)" Text="{Binding SelectedClientPassport}" Style="{StaticResource BaseUraniumTextField}" MaxLength="30"/>
+
+        <material:TextField Title="Адрес регистрации" Text="{Binding SelectedClientRegistration}" Style="{StaticResource BaseUraniumTextField}" Margin="0,10,0,0" MaxLength="250"/>
+
+        <Grid ColumnDefinitions="40,*,*" ColumnSpacing="10" VerticalOptions="EndAndExpand">
+            <Button Grid.Column="0" Command="{Binding DeleteCommand}" Style="{StaticResource DeleteButton}"/>
+            <Image Source="delete.png" Style="{StaticResource DeleteImage}"/>
+            <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
+            <Button Grid.Column="2" Style="{StaticResource SaveButton}" input:FormView.IsSubmitButton="True"/>
+        </Grid>
+
+    </input:FormView>
+
+
+
+    <!-- Styles For Elements -->
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            
+            
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    
+    
+</ContentPage>

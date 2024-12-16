@@ -45,6 +45,28 @@
                     </DataTrigger.ExitActions>
                 </DataTrigger>
             </Grid.Triggers>
+
+            <CollectionView Grid.Row="0" Grid.RowSpan="2" IsGrouped="True" ItemsSource="{Binding ShortReservations}" SelectionChangedCommand="{Binding ShortTappedCommand}" SelectedItem="{Binding SelectedShortReservation}" SelectionMode="Single">
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Status}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20" Margin="10"/>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource ListItemBorder}" BackgroundColor="{StaticResource Field}" Margin="10">
+                            <Grid ColumnDefinitions="auto,2*,*" RowDefinitions="auto,*,*" ColumnSpacing="10" RowSpacing="10">
+                                <Image Grid.RowSpan="3" Grid.Column="2" Source="clientpage_unselected.png" Style="{StaticResource BaseImage}"/>
+                                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding FlatName}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20" Margin="0,5"/>
+                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding DaysOrMonthsAmount, StringFormat='{0} суток'}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight" HorizontalOptions="Start"/>
+                                <Label Grid.Column="0" Grid.Row="2" Text="{Binding CostPerAmount, StringFormat='по {0}'}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight" HorizontalOptions="Start"/>
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding CheckInDate, StringFormat='Дата заезда: {0}'}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                <Label Grid.Column="1" Grid.Row="2" Text="{Binding CheckOutDate, StringFormat='Дата выезда: {0}'}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             
             <Grid Grid.Row="1" Style="{StaticResource AddReservationGrid}">
                 <Button Command="{Binding AddShortReservationCommand}" Style="{StaticResource AddReservationButton}"/>
@@ -66,6 +88,28 @@
                     </DataTrigger.ExitActions>
                 </DataTrigger>
             </Grid.Triggers>
+
+            <CollectionView Grid.Row="0" Grid.RowSpan="2" IsGrouped="True" ItemsSource="{Binding LongReservations}" SelectionChangedCommand="{Binding LongTappedCommand}" SelectedItem="{Binding SelectedLongReservation}" SelectionMode="Single">
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <Label Text="{Binding Status}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20" Margin="10"/>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource ListItemBorder}" BackgroundColor="{StaticResource Field}" Margin="10">
+                            <Grid ColumnDefinitions="auto,2*,*" RowDefinitions="auto,*,*" ColumnSpacing="10" RowSpacing="10">
+                                <Image Grid.RowSpan="3" Grid.Column="2" Source="clientpage_unselected.png" Style="{StaticResource BaseImage}"/>
+                                <Label Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Text="{Binding FlatName}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20" Margin="0,5"/>
+                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding DaysOrMonthsAmount, StringFormat='{0} месяцев'}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight" HorizontalOptions="Start"/>
+                                <Label Grid.Column="0" Grid.Row="2" Text="{Binding CostPerAmount, StringFormat='по {0}'}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight" HorizontalOptions="Start"/>
+                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding CheckInDate, StringFormat='Дата заезда: {0}'}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                                <Label Grid.Column="1" Grid.Row="2" Text="{Binding CheckOutDate, StringFormat='Дата выезда: {0}'}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight" HorizontalOptions="Start" HorizontalTextAlignment="Start"/>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
             <Grid Grid.Row="1" Style="{StaticResource AddReservationGrid}">
                 <Button Command="{Binding AddLongReservationCommand}" Style="{StaticResource AddReservationButton}" />
@@ -112,6 +156,28 @@
 
             <Style x:Key="ButtonAddReservationImage" BasedOn="{StaticResource BaseImage}" TargetType="Image">
                 <Setter Property="Margin" Value="5" />
+            </Style>
+
+            <Style x:Key="ListItemBorder" BasedOn="{StaticResource BaseBorder}" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource Field}" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="StrokeShape">
+                    <RoundRectangle CornerRadius="5" />
+                </Setter>
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Item}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
             </Style>
 
         </ResourceDictionary>

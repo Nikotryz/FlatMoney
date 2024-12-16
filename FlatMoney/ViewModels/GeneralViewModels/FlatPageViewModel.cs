@@ -66,6 +66,8 @@ namespace FlatMoney.ViewModels
             SelectedItem = null;
         }
 
+
+
         public async Task Load()
         {
             var flats = await _localDBService.GetItems<FlatModel>();
@@ -92,23 +94,12 @@ namespace FlatMoney.ViewModels
             else MyFlatsCount = $"{count} {wordEnding}";
         }
 
-        private void SetPageModal()
-        {
-            Shell.Current.Navigation.PushModalAsync(_addFlatPage);
-            Shell.Current.Navigation.PopModalAsync();
-        }
 
 
-
-        private AddFlatPage _addFlatPage { get; set; }
         private readonly LocalDBService _localDBService;
-        public FlatPageViewModel(LocalDBService localDBService, AddFlatPage addFlatPage)
+        public FlatPageViewModel(LocalDBService localDBService)
         {
-            _addFlatPage = addFlatPage;
-
             _localDBService = localDBService;
-
-            SetPageModal();
 
             Task.Run(async () => await Load());
         }

@@ -8,217 +8,314 @@
              xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              xmlns:sgcontrol="http://plugin.segmentedControl.maui"
              xmlns:actions="clr-namespace:FlatMoney.TriggerActions"
+             Shell.NavBarIsVisible="False"
+             Shell.TabBarIsVisible="False"
              Style="{StaticResource BaseContentPage}">
     
     
     
     <!-- Page Elements -->
-    <input:FormView>
+    <input:FormView VerticalOptions="FillAndExpand" SubmitCommand="{Binding SaveCommand}">
 
-        <!-- Content -->
-        <Grid RowDefinitions="45,*">
+        <Grid RowDefinitions="*,60" VerticalOptions="FillAndExpand">
+            
+            <!-- Content -->
+            <Grid RowDefinitions="45,*">
 
-            <!-- Segmented Control Of Pages -->
-            <Grid Grid.Row="0" HeightRequest="45" ColumnDefinitions="*,*,*,*" VerticalOptions="Start">
-                <sgcontrol:SegmentedControl x:Name="sgcontrol" Grid.ColumnSpan="4" Style="{StaticResource SgPageControl}">
-                    <sgcontrol:SegmentedControlOption Text="Основное"/>
-                    <sgcontrol:SegmentedControlOption Text="Гости"/>
-                    <sgcontrol:SegmentedControlOption Text="Услуги"/>
-                    <sgcontrol:SegmentedControlOption Text="Счет"/>
-                </sgcontrol:SegmentedControl>
-                <BoxView Style="{StaticResource TabDivider}">
-                    <BoxView.Triggers>
-                        <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
-                            <Setter Property="Grid.Column" Value="0"/>
-                        </DataTrigger>
-                        <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
-                            <Setter Property="Grid.Column" Value="1"/>
-                        </DataTrigger>
-                        <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
-                            <Setter Property="Grid.Column" Value="2"/>
-                        </DataTrigger>
-                        <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
-                            <Setter Property="Grid.Column" Value="3"/>
-                        </DataTrigger>
-                    </BoxView.Triggers>
-                </BoxView>
-            </Grid>
-
-            <!-- Page 1 -->
-            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="5">
-
-                <VerticalStackLayout.Triggers>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeShowTrigger/>
-                        </DataTrigger.EnterActions>
-                        <DataTrigger.ExitActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.ExitActions>
-                    </DataTrigger>
-                </VerticalStackLayout.Triggers>
-
-                <Grid Margin="0,10,0,20" ColumnDefinitions="*,*,*">
-                    <BoxView Grid.ColumnSpan="3" BackgroundColor="{StaticResource Field}" CornerRadius="5"/>
-                    <Border x:Name="sgborder" Grid.Column="0" BackgroundColor="{StaticResource Book}" Style="{StaticResource SgBorder}">
-                        <Border.Triggers>
-                            <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference sgcontroloption}, Path=SelectedSegment}" Value="0">
-                                <Setter Property="Grid.Column" Value="0"/>
-                                <Setter Property="StrokeShape" Value="RoundRectangle 5,0,5,0"/>
-                                <Setter Property="BackgroundColor" Value="{StaticResource Book}"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference sgcontroloption}, Path=SelectedSegment}" Value="1">
-                                <Setter Property="Grid.Column" Value="1"/>
-                                <Setter Property="StrokeShape" Value="RoundRectangle 0"/>
-                                <Setter Property="BackgroundColor" Value="{StaticResource Reside}"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference sgcontroloption}, Path=SelectedSegment}" Value="2">
-                                <Setter Property="Grid.Column" Value="2"/>
-                                <Setter Property="StrokeShape" Value="RoundRectangle 0,5,0,5"/>
-                                <Setter Property="BackgroundColor" Value="{StaticResource Left}"/>
-                            </DataTrigger>
-                        </Border.Triggers>
-                    </Border>
-                    <sgcontrol:SegmentedControl x:Name="sgcontroloption" SelectedSegment="{Binding SelectedSegmentIndex}" Grid.ColumnSpan="3" Style="{StaticResource BaseSegmentedControl}">
-                        <sgcontrol:SegmentedControlOption Text="Бронь" />
-                        <sgcontrol:SegmentedControlOption Text="Заселен" />
-                        <sgcontrol:SegmentedControlOption Text="Выехал" />
+                <!-- Segmented Control Of Pages -->
+                <Grid Grid.Row="0" HeightRequest="45" ColumnDefinitions="*,*,*,*" VerticalOptions="Start">
+                    <sgcontrol:SegmentedControl x:Name="sgcontrol" Grid.ColumnSpan="4" Style="{StaticResource SgPageControl}">
+                        <sgcontrol:SegmentedControlOption Text="Основное"/>
+                        <sgcontrol:SegmentedControlOption Text="Гости"/>
+                        <sgcontrol:SegmentedControlOption Text="Услуги"/>
+                        <sgcontrol:SegmentedControlOption Text="Счет"/>
                     </sgcontrol:SegmentedControl>
+                    <BoxView Style="{StaticResource TabDivider}">
+                        <BoxView.Triggers>
+                            <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
+                                <Setter Property="Grid.Column" Value="0"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
+                                <Setter Property="Grid.Column" Value="1"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
+                                <Setter Property="Grid.Column" Value="2"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="BoxView" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
+                                <Setter Property="Grid.Column" Value="3"/>
+                            </DataTrigger>
+                        </BoxView.Triggers>
+                    </BoxView>
                 </Grid>
 
-                <Label Text="Заказчик" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontFamily="ExtraLight"/>
-                <Label Text="Никита Харламов" Style="{StaticResource BaseLabel}" FontSize="24" HorizontalOptions="Start"/>
-                <HorizontalStackLayout HorizontalOptions="Start" Spacing="5">
-                    <Ellipse Fill="{Binding Source={x:Reference sgborder}, Path=BackgroundColor}" HeightRequest="10" WidthRequest="10"/>
-                    <Label Text="+7 (952) 756-29-10" Style="{StaticResource BaseLabel}" TextColor="{Binding Source={x:Reference sgborder}, Path=BackgroundColor}"/>
-                </HorizontalStackLayout>
+                <!-- Page 1 -->
+                <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="5">
 
-                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,2*,2*" RowSpacing="3" ColumnSpacing="10" Margin="0,30,0,0">
-                    <Label Grid.Row="0" Grid.Column="0" Text="Заезд" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
-                    <uranium:DatePickerField Grid.Row="0" Grid.Column="1" Date="{Binding InDate}" Style="{StaticResource BaseUraniumDatePickerField}" Icon="clientpage_selected.png"/>
-                    <uranium:TimePickerField Grid.Row="0" Grid.Column="2" Time="{Binding InTime}" Style="{StaticResource BaseUraniumTimePickerField}"/>
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="0">
+                            <DataTrigger.EnterActions>
+                                <actions:FadeShowTrigger/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <actions:FadeHideTrigger/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
 
-                    <Label Grid.Row="1" Grid.Column="0" Text="Выезд" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
-                    <uranium:DatePickerField Grid.Row="1" Grid.Column="1" Date="{Binding OutDate}" Style="{StaticResource BaseUraniumDatePickerField}" Icon="clientpage_selected.png"/>
-                    <uranium:TimePickerField Grid.Row="1" Grid.Column="2" Time="{Binding OutTime}" Style="{StaticResource BaseUraniumTimePickerField}"/>
+                    <Grid Margin="0,10,0,20" ColumnDefinitions="*,*,*">
+                        <BoxView Grid.ColumnSpan="3" BackgroundColor="{StaticResource Field}" CornerRadius="5"/>
+                        <Border x:Name="sgborder" Grid.Column="0" BackgroundColor="{StaticResource Book}" Style="{StaticResource SgBorder}">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference sgcontroloption}, Path=SelectedSegment}" Value="0">
+                                    <Setter Property="Grid.Column" Value="0"/>
+                                    <Setter Property="StrokeShape" Value="RoundRectangle 5,0,5,0"/>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Book}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference sgcontroloption}, Path=SelectedSegment}" Value="1">
+                                    <Setter Property="Grid.Column" Value="1"/>
+                                    <Setter Property="StrokeShape" Value="RoundRectangle 0"/>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Reside}"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Border" Binding="{Binding Source={x:Reference sgcontroloption}, Path=SelectedSegment}" Value="2">
+                                    <Setter Property="Grid.Column" Value="2"/>
+                                    <Setter Property="StrokeShape" Value="RoundRectangle 0,5,0,5"/>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Left}"/>
+                                </DataTrigger>
+                            </Border.Triggers>
+                        </Border>
+                        <sgcontrol:SegmentedControl x:Name="sgcontroloption" SelectedSegment="{Binding SelectedSegmentIndex}" Grid.ColumnSpan="3" Style="{StaticResource BaseSegmentedControl}">
+                            <sgcontrol:SegmentedControlOption Text="Бронь" />
+                            <sgcontrol:SegmentedControlOption Text="Заселен" />
+                            <sgcontrol:SegmentedControlOption Text="Выехал" />
+                        </sgcontrol:SegmentedControl>
+                    </Grid>
 
-                    <Label Grid.Row="2" Grid.Column="0" Text="Ночи" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
-                    <uranium:TextField Grid.Row="2" Grid.Column="1" Text="{Binding DaysCount}" MaxLength="4" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+                    <Label Text="Заказчик" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontFamily="ExtraLight"/>
+                    <Label Text="{Binding ClientName, TargetNullValue='Имя не указано'}" Style="{StaticResource BaseLabel}" FontSize="24" HorizontalOptions="Start"/>
+                    <HorizontalStackLayout HorizontalOptions="Start" Spacing="5">
+                        <Ellipse Fill="{Binding Source={x:Reference sgborder}, Path=BackgroundColor}" HeightRequest="10" WidthRequest="10"/>
+                        <Label Text="{Binding ClientPhone, TargetNullValue='Телефон не указан'}" Style="{StaticResource BaseLabel}" TextColor="{Binding Source={x:Reference sgborder}, Path=BackgroundColor}"/>
+                    </HorizontalStackLayout>
+
+                    <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,2*,2*" RowSpacing="3" ColumnSpacing="10" Margin="0,30,0,0">
+                        <Label Grid.Row="0" Grid.Column="0" Text="Заезд" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                        <uranium:DatePickerField Grid.Row="0" Grid.Column="1" Date="{Binding InDate}" Style="{StaticResource BaseUraniumDatePickerField}" Icon="clientpage_selected.png"/>
+                        <uranium:TimePickerField Grid.Row="0" Grid.Column="2" Time="{Binding InTime}" Style="{StaticResource BaseUraniumTimePickerField}">
+                            <uranium:TimePickerField.Triggers>
+                                <DataTrigger TargetType="uranium:TimePickerField" Binding="{Binding ReservationType}" Value="Краткосрочное">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="uranium:TimePickerField" Binding="{Binding ReservationType}" Value="Долгосрочное">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </uranium:TimePickerField.Triggers>
+                        </uranium:TimePickerField>
+
+                        <Label Grid.Row="1" Grid.Column="0" Text="Выезд" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                        <uranium:DatePickerField Grid.Row="1" Grid.Column="1" Date="{Binding OutDate}" Style="{StaticResource BaseUraniumDatePickerField}" Icon="clientpage_selected.png"/>
+                        <uranium:TimePickerField Grid.Row="1" Grid.Column="2" Time="{Binding OutTime}" Style="{StaticResource BaseUraniumTimePickerField}">
+                            <uranium:TimePickerField.Triggers>
+                                <DataTrigger TargetType="uranium:TimePickerField" Binding="{Binding ReservationType}" Value="Краткосрочное">
+                                    <Setter Property="IsVisible" Value="True"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="uranium:TimePickerField" Binding="{Binding ReservationType}" Value="Долгосрочное">
+                                    <Setter Property="IsVisible" Value="False"/>
+                                </DataTrigger>
+                            </uranium:TimePickerField.Triggers>
+                        </uranium:TimePickerField>
+
+                        <Label Grid.Row="2" Grid.Column="0" Text="Ночи" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                        <uranium:TextField Grid.Row="2" Grid.Column="1" Text="{Binding DaysCount}" MaxLength="4" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+                            <validations:RequiredValidation Message="Поле обязательно"/>
+                        </uranium:TextField>
+                        <uranium:TextField Grid.Row="2" Grid.Column="2" Text="{Binding SumPerDay}" MaxLength="10" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+                            <validations:RequiredValidation Message="Поле обязательно"/>
+                        </uranium:TextField>
+
+                        <Label Grid.Row="3" Grid.Column="0" Text="Итого" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="0,5,0,0"/>
+                        <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}" HeightRequest="45" Margin="0,5,0,0">
+                            <Label Text="{Binding TotalSum, StringFormat='{0} ₽'}" Style="{StaticResource BaseLabel}"/>
+                        </Border>
+                    </Grid>
+
+                    <uranium:PickerField Title="Квартира" ItemsSource="{Binding FlatsList}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedFlat}" Style="{StaticResource BaseUraniumPickerField}" Margin="0,30,0,0">
                         <validations:RequiredValidation Message="Поле обязательно"/>
-                    </uranium:TextField>
-                    <uranium:TextField Grid.Row="2" Grid.Column="2" Text="{Binding SumPerDay}" MaxLength="10" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
-                        <validations:RequiredValidation Message="Поле обязательно"/>
-                    </uranium:TextField>
+                    </uranium:PickerField>
 
-                    <Label Grid.Row="3" Grid.Column="0" Text="Итого" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="0,5,0,0"/>
-                    <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}" HeightRequest="45" Margin="0,5,0,0">
-                        <Label Text="{Binding TotalSum, StringFormat='{0} ₽'}" Style="{StaticResource BaseLabel}"/>
-                    </Border>
+                    <ScrollView MaximumHeightRequest="200" Margin="0,10,0,0">
+                        <uranium:EditorField Title="Описание" Text="{Binding Comment}" MaxLength="250" Style="{StaticResource BaseUraniumEditorField}"/>
+                    </ScrollView>
+
+                </VerticalStackLayout>
+
+                <!-- Page 2 -->
+                <Grid Grid.Row="1" RowDefinitions="auto,*" Margin="20" IsVisible="False" Opacity="0">
+
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
+                            <DataTrigger.EnterActions>
+                                <actions:FadeShowTrigger/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <actions:FadeHideTrigger/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Grid.Triggers>
+
+                    <VerticalStackLayout Grid.Row="0">
+                        <Label Text="Количество гостей" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20"/>
+                        <Grid ColumnDefinitions="*,*,1.5*" ColumnSpacing="10" HeightRequest="40">
+                            <uranium:TextField Grid.Column="0" Title="Взрослые" Text="{Binding PeopleAmount}" MaxLength="3" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+                                <validations:RequiredValidation Message="Поле обязательно"/>
+                                <validations:DigitsOnlyValidation Message="Введите целое число"/>
+                            </uranium:TextField>
+                            <uranium:TextField Grid.Column="1" Title="Дети" Text="{Binding ChildAmount}" MaxLength="3" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+                                <validations:DigitsOnlyValidation Message="Введите целое число"/>
+                            </uranium:TextField>
+                        </Grid>
+
+                        <Grid ColumnDefinitions="2*,*" Margin="0,30,0,0" HeightRequest="40">
+                            <Label Text="Данные гостей" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20"/>
+                            <Button Grid.Column="1" Command="{Binding AddClientCommand}" Text="Добавить" Style="{StaticResource BaseButton}" />
+                            <Button Grid.Column="1" Text="Удалить" Command="{Binding DeleteClientsCommand}" BackgroundColor="{StaticResource AccentRed}" Style="{StaticResource BaseButton}" IsVisible="False" Opacity="0">
+                                <Button.Triggers>
+                                    <DataTrigger TargetType="Button" Binding="{Binding SelectedClients.Count}" Value="0">
+                                        <DataTrigger.EnterActions>
+                                            <actions:FadeHideTrigger Duration="150"/>
+                                        </DataTrigger.EnterActions>
+                                        <DataTrigger.ExitActions>
+                                            <actions:FadeShowTrigger Duration="150"/>
+                                        </DataTrigger.ExitActions>
+                                    </DataTrigger>
+                                </Button.Triggers>
+                            </Button>
+                        </Grid>
+                    </VerticalStackLayout>
+
+                    <CollectionView Grid.Row="1" ItemsSource="{Binding ClientsList}" SelectedItems="{Binding SelectedClients, Mode=TwoWay}" SelectionMode="Multiple" Margin="0,10,0,0">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource ListItemBorder}" HeightRequest="60">
+                                    <Label HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
                 </Grid>
 
-                <uranium:PickerField Title="Квартира" ItemsSource="{Binding FlatsList}" Style="{StaticResource BaseUraniumPickerField}" Margin="0,30,0,0"/>
+                <!-- Page 3 -->
+                <VerticalStackLayout Grid.Row="1" Margin="10" Spacing="10" IsVisible="False" Opacity="0">
 
-                <ScrollView MaximumHeightRequest="200" Margin="0,10,0,0">
-                    <uranium:EditorField Title="Описание" MaxLength="250" Style="{StaticResource BaseUraniumEditorField}"/>
-                </ScrollView>
+                    <VerticalStackLayout.Triggers>
+                        <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
+                            <DataTrigger.EnterActions>
+                                <actions:FadeShowTrigger/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <actions:FadeHideTrigger/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </VerticalStackLayout.Triggers>
 
-            </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" HeightRequest="40">
+                        <Border Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}"/>
+                        <Label Grid.Column="0" Text="Услуги" Style="{StaticResource BaseLabel}" FontSize="20" FontFamily="ExtraLight"/>
+                        <Label Grid.Column="1" Text="{Binding ServicesSum}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight"/>
+                        <Button Grid.Column="2" Text="Добавить" Command="{Binding AddServiceCommand}" Style="{StaticResource PaSButton}"/>
 
-            <!-- Page 2 -->
-            <VerticalStackLayout Grid.Row="1" Margin="20" Spacing="10" IsVisible="False" Opacity="0">
+                        <Button Grid.Column="2" Text="Удалить" Command="{Binding DeleteServicesCommand}" BackgroundColor="{StaticResource AccentRed}" Style="{StaticResource PaSButton}" IsVisible="False" Opacity="0">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedServices.Count}" Value="0">
+                                    <DataTrigger.EnterActions>
+                                        <actions:FadeHideTrigger Duration="150"/>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <actions:FadeShowTrigger Duration="150"/>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </Grid>
 
-                <VerticalStackLayout.Triggers>
-                    <DataTrigger TargetType="VerticalStackLayout" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="1">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeShowTrigger/>
-                        </DataTrigger.EnterActions>
-                        <DataTrigger.ExitActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.ExitActions>
-                    </DataTrigger>
-                </VerticalStackLayout.Triggers>
+                    <CollectionView ItemsSource="{Binding ServicesList}" SelectedItems="{Binding SelectedServices, Mode=TwoWay}" SelectionMode="Multiple">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource ListItemBorder}">
+                                    <Grid ColumnDefinitions="*,*">
+                                        <Label Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
+                                        <Label Grid.Column="1" HorizontalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Cost}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
 
-                <Label Text="Количество гостей" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20"/>
-                <Grid ColumnDefinitions="*,*,1.5*" ColumnSpacing="10" HeightRequest="40">
-                    <uranium:TextField Grid.Column="0" Title="Взрослые" Text="{Binding PeopleAmount}" MaxLength="3" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
-                        <validations:RequiredValidation Message="Поле обязательно"/>
-                        <validations:DigitsOnlyValidation Message="Введите целое число"/>
-                    </uranium:TextField>
-                    <uranium:TextField Grid.Column="1" Title="Дети" Text="{Binding ChildAmount}" MaxLength="3" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
-                        <validations:DigitsOnlyValidation Message="Введите целое число"/>
-                    </uranium:TextField>
+                </VerticalStackLayout>
+
+                <!-- Page 4 -->
+                <Grid Grid.Row="1" RowDefinitions="40,*" RowSpacing="10" Margin="10" IsVisible="False" Opacity="0">
+
+                    <Grid.Triggers>
+                        <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
+                            <DataTrigger.EnterActions>
+                                <actions:FadeShowTrigger/>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <actions:FadeHideTrigger/>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                    </Grid.Triggers>
+
+                    <Grid Grid.Row="0" ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                        <Border Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}"/>
+                        <Label Grid.Column="0" Text="Платежи" Style="{StaticResource BaseLabel}" FontSize="20" FontFamily="ExtraLight"/>
+                        <Label Grid.Column="1" Text="{Binding PaymentsSum}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight"/>
+                        <Button Grid.Column="2" Text="Добавить" Command="{Binding AddPaymentCommand}" Style="{StaticResource PaSButton}"/>
+
+                        <Button Grid.Column="2" Text="Удалить" Command="{Binding DeletePaymentsCommand}" BackgroundColor="{StaticResource AccentRed}" Style="{StaticResource PaSButton}" IsVisible="False" Opacity="0">
+                            <Button.Triggers>
+                                <DataTrigger TargetType="Button" Binding="{Binding SelectedPayments.Count}" Value="0">
+                                    <DataTrigger.EnterActions>
+                                        <actions:FadeHideTrigger Duration="150"/>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <actions:FadeShowTrigger Duration="150"/>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </Button.Triggers>
+                        </Button>
+                    </Grid>
+
+                    <CollectionView Grid.Row="1" ItemsSource="{Binding PaymentsList}" SelectedItems="{Binding SelectedPayments, Mode=TwoWay}" SelectionMode="Multiple">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource ListItemBorder}" HeightRequest="80">
+                                    <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+                                        <Label Grid.Row="0" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
+                                        <Label Grid.Row="0" Grid.Column="1" HorizontalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Type}" />
+                                        <Label Grid.Row="1" Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Date}" />
+                                        <Label Grid.Row="1" Grid.Column="1" HorizontalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Cost}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+
                 </Grid>
-                <Grid ColumnDefinitions="2*,*" Margin="0,30,0,0" HeightRequest="40">
-                    <Label Text="Данные гостей" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" FontSize="20"/>
-                    <Button Grid.Column="1" Text="Добавить" Style="{StaticResource BaseButton}" />
-                </Grid>
-            </VerticalStackLayout>
-
-            <!-- Page 3 -->
-            <Grid Grid.Row="1" RowDefinitions="40,*" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10" IsVisible="False" Opacity="0">
-
-                <Grid.Triggers>
-                    <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="2">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeShowTrigger/>
-                        </DataTrigger.EnterActions>
-                        <DataTrigger.ExitActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.ExitActions>
-                    </DataTrigger>
-                </Grid.Triggers>
-
-                <Border Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}"/>
-                <Label Grid.Column="0" Text="Услуги" Style="{StaticResource BaseLabel}" FontSize="20" FontFamily="ExtraLight"/>
-                <Label Grid.Column="1" Text="{Binding PaymentsSum}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight"/>
-                <Button Grid.Column="2" Text="Добавить" Command="{Binding AddServiceCommand}" Style="{StaticResource PaSButton}"/>
-
-                <CollectionView Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding ServicesList}" SelectionMode="Single" SelectedItem="{Binding SelectedReservationService}">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Border BackgroundColor="{StaticResource Field}" HeightRequest="40">
-                                <Grid ColumnDefinitions="*,*">
-                                    <Label Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
-                                    <Label Grid.Column="1" HorizontalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Cost}" />
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
 
             </Grid>
 
-            <!-- Page 4 -->
-            <Grid Grid.Row="1" ColumnDefinitions="*,*,*" Margin="10,20" HeightRequest="40" ColumnSpacing="10" IsVisible="False" Opacity="0">
-
-                <Grid.Triggers>
-                    <DataTrigger TargetType="Grid" Binding="{Binding Source={x:Reference sgcontrol}, Path=SelectedSegment}" Value="3">
-                        <DataTrigger.EnterActions>
-                            <actions:FadeShowTrigger/>
-                        </DataTrigger.EnterActions>
-                        <DataTrigger.ExitActions>
-                            <actions:FadeHideTrigger/>
-                        </DataTrigger.ExitActions>
-                    </DataTrigger>
-                </Grid.Triggers>
-
-                <Border Grid.Column="0" Grid.ColumnSpan="3" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}"/>
-                <Label Grid.Column="0" Text="Платежи" Style="{StaticResource BaseLabel}" FontSize="20" FontFamily="ExtraLight"/>
-                <Label Grid.Column="1" Text="{Binding PaymentsSum}" Style="{StaticResource BaseLabel}" FontFamily="ExtraLight"/>
-                <Button Grid.Column="2" Text="Добавить" Command="{Binding AddPaymentCommand}" Style="{StaticResource PaSButton}"/>
-
+            <!-- Control Buttons -->
+            <Grid Grid.Row="1" ColumnDefinitions="40,*,*" ColumnSpacing="10" Margin="20,0,20,20">
+                <Button Grid.Column="0" Command="{Binding DeleteCommand}" Style="{StaticResource DeleteButton}" />
+                <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}" />
+                <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
+                <Button Grid.Column="2" input:FormView.IsSubmitButton="True" Style="{StaticResource SaveButton}" />
             </Grid>
-
+            
         </Grid>
 
-        <!-- Control Buttons -->
-        <Grid ColumnDefinitions="*,3.75*,3.75*" ColumnSpacing="10" VerticalOptions="EndAndExpand" Margin="20,0,20,20">
-            <Button Grid.Column="0" Command="{Binding DeleteCommand}" Style="{StaticResource DeleteButton}" />
-            <Image Grid.Column="0" Source="delete.png" Style="{StaticResource DeleteImage}" />
-            <Button Grid.Column="1" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
-            <Button Grid.Column="2" input:FormView.IsSubmitButton="True" Style="{StaticResource SaveButton}" />
-        </Grid>
-        
     </input:FormView>
 
 
@@ -250,6 +347,29 @@
             <Style x:Key="SgBorder" TargetType="Border">
                 <Setter Property="StrokeThickness" Value="0"/>
                 <Setter Property="StrokeShape" Value="RoundRectangle 5"/>
+            </Style>
+
+            <Style x:Key="ListItemBorder" BasedOn="{StaticResource BaseBorder}" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource Field}" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="StrokeShape">
+                    <RoundRectangle CornerRadius="5" />
+                </Setter>
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Item}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
             </Style>
 
         </ResourceDictionary>

@@ -2,7 +2,7 @@
 <mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
            xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
-           x:Class="FlatMoney.Views.Popups.AddServicePopup"
+           x:Class="FlatMoney.Views.Popups.AddPaymentPopup"
            xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
            xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
            xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
@@ -13,19 +13,32 @@
     <!-- Popup Elements -->
     <Border Style="{StaticResource PopupBorder}">
         <input:FormView Style="{StaticResource PopupFormView}" SubmitCommand="{Binding SaveCommand}">
-            
-            <material:PickerField Title="Услуга" ItemsSource="{Binding Services}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedService}" SelectedValueChangedCommand="{Binding SelectedServiceChangedCommand}" Style="{StaticResource BaseUraniumPickerField}">
-                <validations:RequiredValidation Message="Поле обязательно"/>
+
+            <material:PickerField Title="Тип платежа" Style="{StaticResource BaseUraniumPickerField}" SelectedItem="{Binding SelectedPaymentName}">
+                <material:PickerField.Items>
+                    <x:String>Оплата</x:String>
+                    <x:String>Предоплата</x:String>
+                    <x:String>Аванс</x:String>
+                </material:PickerField.Items>
             </material:PickerField>
-            
-            <material:TextField Title="Стоимость" Text="{Binding ServiceCost}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+
+            <material:PickerField Title="Способ платежа" Style="{StaticResource BaseUraniumPickerField}" SelectedItem="{Binding SelectedPaymentType}">
+                <material:PickerField.Items>
+                    <x:String>Безнал</x:String>
+                    <x:String>Наличными</x:String>
+                </material:PickerField.Items>
+            </material:PickerField>
+
+            <material:DatePickerField Title="Дата платежа" Style="{StaticResource BaseUraniumDatePickerField}" Date="{Binding SelectedPaymentDate}"/>
+
+            <material:TextField Title="Сумма платежа" Text="{Binding SelectedPaymentCost}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
                 <validations:RequiredValidation Message="Поле обязательно"/>
                 <validations:NumericValidation Message="Введите число"/>
             </material:TextField>
 
             <Grid ColumnDefinitions="*,*" Style="{StaticResource ControlGrid}">
                 <Button Grid.Column="0" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}" />
-                <Button Grid.Column="1" input:FormView.IsSubmitButton="True" Style="{StaticResource SaveButton}" />
+                <Button Grid.Column="1" Style="{StaticResource SaveButton}" input:FormView.IsSubmitButton="True"/>
             </Grid>
             
         </input:FormView>

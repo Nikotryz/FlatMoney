@@ -111,15 +111,6 @@
 
 
 
-    <Style x:Key="BasePicker" TargetType="Picker">
-        <Setter Property="TitleColor" Value="{StaticResource AccentBlue}"/>
-        <Setter Property="BackgroundColor" Value="{StaticResource Field}"/>
-        <Setter Property="Background" Value="{StaticResource Field}"/>
-        <Setter Property="MinimumHeightRequest" Value="40"/>
-    </Style>
-
-
-
     <Style x:Key="BaseUraniumTextField" TargetType="uranium:TextField">
         <Setter Property="MinimumHeightRequest" Value="40"/>
         <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />
@@ -128,6 +119,24 @@
         <Setter Property="BorderColor" Value="{StaticResource Field}" />
         <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TitleFontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Light"/>
+        <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
+        <Setter Property="AllowClear" Value="True" />
+    </Style>
+
+    <Style x:Key="BaseAutoCompleteTextField" TargetType="uranium:AutoCompleteTextField">
+        <Setter Property="MinimumHeightRequest" Value="40"/>
+        <Setter Property="InputBackgroundColor" Value="{StaticResource Field}" />
+        <Setter Property="CornerRadius" Value="5" />
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="BorderColor" Value="{StaticResource Field}" />
+        <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
+        <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TitleFontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Light"/>
         <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
         <Setter Property="AllowClear" Value="True" />
     </Style>
@@ -140,6 +149,9 @@
         <Setter Property="BorderColor" Value="{StaticResource Field}" />
         <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TitleFontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Light"/>
         <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
     </Style>
 
@@ -153,6 +165,9 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TitleFontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Light"/>
         <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
         <Setter Property="AllowClear" Value="False" />
     </Style>
@@ -165,6 +180,9 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TitleFontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Light"/>
         <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
         <Setter Property="AllowClear" Value="False" />
         <Setter Property="Format" Value="dd.MM.yyyy"/>
@@ -178,6 +196,9 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TitleColor" Value="{StaticResource Gray400}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="TitleFontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Light"/>
         <Setter Property="AccentColor" Value="{StaticResource AccentBlue}" />
         <Setter Property="AllowClear" Value="False" />
         <Setter Property="Format" Value=""/>
@@ -189,6 +210,8 @@
         <Setter Property="BorderColor" Value="{StaticResource Item}" />
         <Setter Property="Color" Value="{StaticResource AccentBlue}" />
         <Setter Property="TextColor" Value="{StaticResource Text}" />
+        <Setter Property="TextFontSize" Value="14"/>
+        <Setter Property="FontFamily" Value="Light"/>
         <Setter Property="CornerRadius" Value="5" />
     </Style>
 

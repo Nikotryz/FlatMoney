@@ -7,7 +7,7 @@ namespace FlatMoney.LocalDataBase
 {
     public class LocalDBService
     {
-        private const string DB_NAME = "DataBase6.db";
+        private const string DB_NAME = "DataBase12.db";
         private readonly string _dbPath = Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
         private SQLiteAsyncConnection _connection;
 
@@ -67,6 +67,11 @@ namespace FlatMoney.LocalDataBase
         public async Task<List<T>> GetItems<T>() where T : BaseTable, new()
         {
             return await _connection.Table<T>().ToListAsync();
+        }
+
+        public async Task<T> GetItem<T>(int? id) where T : BaseTable, new()
+        {
+            return await _connection.GetAsync<T>(id);
         }
 
         public async Task<int> GetCountOfItems<T>() where T : BaseTable, new()

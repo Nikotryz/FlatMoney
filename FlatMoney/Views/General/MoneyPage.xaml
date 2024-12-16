@@ -65,15 +65,15 @@
                         <Grid RowDefinitions="120,120" ColumnDefinitions="*,*" ColumnSpacing="10" RowSpacing="10" Margin="0,5,0,0">
                             <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Field}"/>
                             <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Год" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="20000000" Style="{StaticResource BaseLabel}"/>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ProfitForYear}" Style="{StaticResource BaseLabel}"/>
 
                             <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Field}"/>
                             <Label Grid.Row="1" Grid.Column="0" Text="Месяц" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="1" Grid.Column="0" Text="20000000" Style="{StaticResource BaseLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding ProfitForMonth}" Style="{StaticResource BaseLabel}"/>
 
                             <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource Field}"/>
                             <Label Grid.Row="1" Grid.Column="1" Text="День" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="1" Grid.Column="1" Text="20000000" Style="{StaticResource BaseLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ProfitForDay}" Style="{StaticResource BaseLabel}"/>
                         </Grid>
 
                     </ur:ExpanderView>
@@ -125,6 +125,36 @@
                         </VerticalStackLayout>
                     </ur:ExpanderView>
 
+                    <ur:ExpanderView>
+                        <ur:ExpanderView.Header>
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Мои клиенты" />
+                        </ur:ExpanderView.Header>
+
+                        <VerticalStackLayout Spacing="10">
+                            
+                            <uranium:AutoCompleteTextField Text="{Binding SearchText}" ItemsSource="{Binding ClientNames}" Title="Поиск" Icon="search.png" InputBackgroundColor="Transparent" BorderThickness="2" Style="{StaticResource BaseAutoCompleteTextField}">
+                                <uranium:AutoCompleteTextField.Attachments>
+                                    <Button Command="{Binding AddClientCommand}" ImageSource="add.png" WidthRequest="100" Style="{StaticResource BaseButton}"/>
+                                </uranium:AutoCompleteTextField.Attachments>
+                            </uranium:AutoCompleteTextField>
+
+                            <CollectionView ItemsSource="{Binding MyClientsView}" SelectedItem="{Binding SelectedClient}" SelectionChangedCommand="{Binding ClientTappedCommand}" SelectionMode="Single">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border Style="{StaticResource ExpanderItemBorder}" HeightRequest="80" Padding="10,5,5,5">
+                                            <Grid ColumnDefinitions="4*,*" RowDefinitions="*,*" RowSpacing="10">
+                                                <Label Grid.Row="0" HorizontalOptions="Start" VerticalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
+                                                <Label Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Phone, TargetNullValue='Телефон не указан'}" />
+                                                <Image Grid.Column="1" Grid.RowSpan="2" Source="client.png" Style="{StaticResource BaseImage}"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                            
+                        </VerticalStackLayout>
+                    </ur:ExpanderView>
+
                 </VerticalStackLayout>
             </ScrollView>
 
@@ -155,15 +185,15 @@
                         <Grid RowDefinitions="120,120" ColumnDefinitions="*,*" ColumnSpacing="10" RowSpacing="10" Margin="0,5,0,0">
                             <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Field}"/>
                             <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Год" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="20000000" Style="{StaticResource BaseLabel}"/>
+                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding IncomesForYear}" Style="{StaticResource BaseLabel}"/>
 
                             <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Field}"/>
                             <Label Grid.Row="1" Grid.Column="0" Text="Месяц" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="1" Grid.Column="0" Text="20000000" Style="{StaticResource BaseLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding IncomesForMonth}" Style="{StaticResource BaseLabel}"/>
 
                             <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource Field}"/>
                             <Label Grid.Row="1" Grid.Column="1" Text="День" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="1" Grid.Column="1" Text="20000000" Style="{StaticResource BaseLabel}"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding IncomesForDay}" Style="{StaticResource BaseLabel}"/>
                         </Grid>
 
                     </ur:ExpanderView>
@@ -172,6 +202,35 @@
                         <ur:ExpanderView.Header>
                             <Label Style="{StaticResource ExpanderHeaderLabel}" Text="История доходов" />
                         </ur:ExpanderView.Header>
+
+                        <VerticalStackLayout Spacing="10">
+
+                            <Border Style="{StaticResource BaseBorder}" HeightRequest="40">
+                                <Grid ColumnDefinitions="40,*,40" ColumnSpacing="10">
+                                    <Button Grid.Column="0" Command="{Binding IncomesPreviousMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Image Grid.Column="0" Source="arrow.png" Style="{StaticResource BaseImage}"/>
+                                    <Label Grid.Column="1" Text="{Binding CurrentIncomesMonth}" Style="{StaticResource BaseLabel}"/>
+                                    <Button Grid.Column="2" Command="{Binding IncomesNextMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Image Grid.Column="2" Source="arrow.png" Rotation="180" Style="{StaticResource BaseImage}"/>
+                                </Grid>
+                            </Border>
+
+                            <CollectionView ItemsSource="{Binding MyIncomes}">
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Border HeightRequest="70" Style="{StaticResource ExpanderItemBorder}">
+                                            <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+                                                <Label Grid.Column="0" Grid.Row="0" Text="{Binding Name}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                                                <Label Grid.Column="1" Grid.Row="0" Text="{Binding Date}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                                                <Label Grid.Column="0" Grid.Row="1" Text="{Binding Type}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                                                <Label Grid.Column="1" Grid.Row="1" Text="{Binding Cost}" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
+                                            </Grid>
+                                        </Border>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+                        </VerticalStackLayout>
+
                     </ur:ExpanderView>
 
                 </VerticalStackLayout>

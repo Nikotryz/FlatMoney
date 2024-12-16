@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mct:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+           xmlns:mct="clr-namespace:CommunityToolkit.Maui.Views;assembly=CommunityToolkit.Maui"
+           x:Class="FlatMoney.Views.Popups.AddClientPopup"
+           xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+           xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
+           xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
+           xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+           Color="Transparent">
+    
+    
+    <!-- Popup Elements -->
+    <Grid>
+        <Border Style="{StaticResource PopupBorder}" Padding="10">
+            <VerticalStackLayout Spacing="10">
+
+                <material:AutoCompleteTextField Text="{Binding SearchText}" ItemsSource="{Binding ClientNames}" Title="Поиск" Icon="search.png" InputBackgroundColor="Transparent" BorderThickness="2" Style="{StaticResource BaseAutoCompleteTextField}">
+                    <material:AutoCompleteTextField.Attachments>
+                        <Button Command="{Binding CreateClientCommand}" ImageSource="add.png" WidthRequest="100" Style="{StaticResource BaseButton}"/>
+                    </material:AutoCompleteTextField.Attachments>
+                </material:AutoCompleteTextField>
+
+                <CollectionView ItemsSource="{Binding ClientsView}" SelectedItems="{Binding SelectedClients}" SelectionMode="Multiple" MaximumHeightRequest="300" Margin="0,10,0,0">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource ListItemBorder}">
+                                <Grid ColumnDefinitions="2*,*">
+                                    <Label Grid.Column="0" HorizontalOptions="Start" Style="{StaticResource BaseLabel}" Text="{Binding Name}" />
+                                    <Label Grid.Column="1" HorizontalOptions="End" Style="{StaticResource BaseLabel}" Text="{Binding Phone, TargetNullValue='Телефон не указан'}" />
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <Grid ColumnDefinitions="*,*" Style="{StaticResource ControlGrid}">
+                    <Button Grid.Column="0" Command="{Binding CancelCommand}" Style="{StaticResource CancelButton}"/>
+                    <Button Grid.Column="1" Command="{Binding SaveCommand}" Style="{StaticResource SaveButton}"/>
+                </Grid>
+
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+
+
+
+    <!-- Styles For Elements -->
+    <mct:Popup.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="PopupBorder" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource BackGround}"/>
+                <Setter Property="StrokeThickness" Value="0"/>
+                <Setter Property="Margin" Value="20,0"/>
+                <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+                <Setter Property="StrokeShape" Value="RoundRectangle 10"/>
+                <Setter Property="MinimumWidthRequest" Value="1000"/>
+            </Style>
+
+            <Style x:Key="ControlGrid" TargetType="Grid">
+                <Setter Property="ColumnSpacing" Value="10"/>
+                <Setter Property="VerticalOptions" Value="EndAndExpand"/>
+                <Setter Property="Margin" Value="0,30,0,0"/>
+                <Setter Property="HeightRequest" Value="40"/>
+            </Style>
+
+            <Style x:Key="ListItemBorder" BasedOn="{StaticResource BaseBorder}" TargetType="Border">
+                <Setter Property="BackgroundColor" Value="{StaticResource Field}" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="StrokeShape">
+                    <RoundRectangle CornerRadius="5" />
+                </Setter>
+                <Setter Property="HeightRequest" Value="40" />
+                <Setter Property="Margin" Value="0,0,0,10" />
+                <Setter Property="Padding" Value="10,0"/>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal" />
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter Property="BackgroundColor" Value="{StaticResource Item}" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+        </ResourceDictionary>
+    </mct:Popup.Resources>
+    
+    
+    
+</mct:Popup>

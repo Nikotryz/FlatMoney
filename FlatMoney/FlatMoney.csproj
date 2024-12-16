@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks>net8.0;net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
 		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
@@ -13,7 +13,7 @@
 		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
 		<!-- For example: <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
 
-		<OutputType>Exe</OutputType>
+		<OutputType Condition="'$(TargetFramework)' != 'net8.0'">Exe</OutputType>
 		<RootNamespace>FlatMoney</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
@@ -47,14 +47,16 @@
 
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\clientpage_selected.svg" TintColor="#2879FE" />
-		<MauiImage Include="Resources\Images\clientpage_unselected.svg" />
+		<MauiImage Include="Resources\Images\clientpage_unselected.svg" TintColor="#4D4D4D"/>
 		<MauiImage Include="Resources\Images\flatpage_selected.svg" />
 		<MauiImage Include="Resources\Images\flatpage_unselected.svg" />
 		<MauiImage Include="Resources\Images\moneypage_selected.svg" />
-		<MauiImage Include="Resources\Images\moneypage_unselected.svg" />
+		<MauiImage Include="Resources\Images\moneypage_unselected.svg"/>
 
 		<MauiImage Include="Resources\Images\add.svg" />
 		<MauiImage Include="Resources\Images\arrow.svg" />
+		<MauiImage Include="Resources\Images\search.svg" />
+		<MauiImage Include="Resources\Images\client.svg" TintColor="#4D4D4D" />
 		<MauiImage Include="Resources\Images\flat_item.svg" TintColor="#4D4D4D" />
 		<MauiImage Include="Resources\Images\delete.svg" TintColor="#FF3B29" />
 
@@ -83,10 +85,19 @@
 	  <Compile Update="Views\Details\AddReservationPage.xaml.cs">
 	    <DependentUpon>AddReservationPage.xaml</DependentUpon>
 	  </Compile>
+	  <Compile Update="Views\Popups\AddClientPopup.xaml.cs">
+	    <DependentUpon>AddClientPopup.xaml</DependentUpon>
+	  </Compile>
+	  <Compile Update="Views\Popups\AddPaymentPopup.xaml.cs">
+	    <DependentUpon>AddPaymentPopup.xaml</DependentUpon>
+	  </Compile>
 	</ItemGroup>
 
 	<ItemGroup>
 	  <MauiXaml Update="Resources\Styles\BaseStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Details\AddClientPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Details\AddExpensePage.xaml">
@@ -111,6 +122,12 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\General\MoneyPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\AddClientPopup.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Views\Popups\AddPaymentPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Views\Popups\AddServicePopup.xaml">

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FlatMoney.LocalDataBase;
 using FlatMoney.Models;
@@ -68,6 +69,7 @@ namespace FlatMoney.ViewModels
                 await _localDBService.DeleteItem(FlatInfo);
                 await Shell.Current.GoToAsync("..", true);
                 SetDefault();
+                await Toast.Make("Квартира удалена").Show();
             }
         }
 
