@@ -43,14 +43,6 @@ namespace FlatMoney.Models
         [SQLite.NotNull]
         public float CostPerAmount { get; set; }
 
-        [SQLite.Column("deposit_cost")]
-        [SQLite.NotNull]
-        public float? DepositCost { get; set; }
-
-        [SQLite.Column("deposit_status")]
-        [SQLite.NotNull]
-        public string? DepositStatus { get; set; }
-
         [SQLite.Column("reservation_status")]
         [SQLite.NotNull]
         public string? ReservationStatus { get; set; }

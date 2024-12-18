@@ -165,7 +165,7 @@ namespace FlatMoney.ViewModels
         public ExpenseModel selectedExpense;
 
         [RelayCommand]
-        public async Task PreviousMonth()
+        public async Task ExpensesPreviousMonth()
         {
             CurrentExpensesDate = CurrentExpensesDate.AddMonths(-1);
 
@@ -175,7 +175,7 @@ namespace FlatMoney.ViewModels
         }
 
         [RelayCommand]
-        public async Task NextMonth()
+        public async Task ExpensesNextMonth()
         {
             CurrentExpensesDate = CurrentExpensesDate.AddMonths(1);
 
@@ -193,12 +193,9 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         public async Task ExpenseTapped()
         {
-            Dictionary<string, object> parameters = new()
+            Dictionary<string, object?> parameters = new()
             {
-                {"info", SelectedExpense },
-                {"type", SelectedExpense.TypeName },
-                {"date", SelectedExpense.Date },
-                {"cost", SelectedExpense.Cost }
+                {"info", SelectedExpense }
             };
 
             await Shell.Current.GoToAsync(nameof(AddExpensePage), true, parameters);

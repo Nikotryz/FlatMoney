@@ -6,6 +6,7 @@
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+    xmlns:myvalid="clr-namespace:FlatMoney.MyValidations"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False"
     Style="{StaticResource BaseContentPage}">
@@ -17,11 +18,13 @@
 
         <!-- Content -->
         <VerticalStackLayout Spacing="10">
-            <uranium:PickerField Title="Категория расходов" ItemsSource="{Binding ExpenseTypes}" SelectedItem="{Binding SelectedType}" Style="{StaticResource BaseUraniumPickerField}" />
+            <uranium:PickerField Title="Категория расходов" ItemsSource="{Binding ExpenseTypes}" SelectedItem="{Binding SelectedType}" Style="{StaticResource BaseUraniumPickerField}">
+                <validations:RequiredValidation Message="Поле обязательно"/>
+            </uranium:PickerField>
             <uranium:DatePickerField Title="Дата расхода" Date="{Binding ExpenseDate}" Style="{StaticResource BaseUraniumDatePickerField}" />
-            <uranium:TextField Title="Сумма расхода" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ExpenseCost}">
-                <validations:NumericValidation Message="Введите число" />
+            <uranium:TextField Title="Сумма расхода" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ExpenseCost}" Keyboard="Numeric" MaxLength="9">
                 <validations:RequiredValidation Message="Поле обязательно" />
+                <myvalid:NonNegativeValidation/>
             </uranium:TextField>
         </VerticalStackLayout>
 

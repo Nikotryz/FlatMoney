@@ -6,6 +6,7 @@ using FlatMoney.Models;
 using FlatMoney.Views.Details;
 using Microsoft.VisualBasic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using UraniumUI.Material.Controls;
 
 namespace FlatMoney.ViewModels
@@ -53,6 +54,17 @@ namespace FlatMoney.ViewModels
         {
             var flats = await _localDBService.GetItems<FlatModel>();
 
+            int flatId;
+
+            if (SelectedShortReservation?.FlatId is null)
+            {
+                flatId = 0;
+            }
+            else
+            {
+                flatId = flats.Where(x => x.Id == (SelectedShortReservation.FlatId)).First().Id;
+            }
+
             TimeSpan? inTime = TimeSpan.Parse($"{TimeOnly.FromDateTime(SelectedShortReservation!.CheckInDate)}");
             TimeSpan? outTime = TimeSpan.Parse($"{TimeOnly.FromDateTime(SelectedShortReservation!.CheckOutDate)}");
 
@@ -61,7 +73,7 @@ namespace FlatMoney.ViewModels
                 {"info", SelectedShortReservation},
                 {"id", SelectedShortReservation.Id},
                 {"type", "Краткосрочное" },
-                {"flatid", flats.Where(x => x.Id == SelectedShortReservation?.FlatId).First().Id},
+                {"flatid", flatId},
                 {"indate", SelectedShortReservation?.CheckInDate},
                 {"outdate", SelectedShortReservation?.CheckOutDate},
                 {"people", SelectedShortReservation?.PeopleAmount},

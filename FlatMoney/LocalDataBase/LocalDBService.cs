@@ -7,20 +7,24 @@ namespace FlatMoney.LocalDataBase
 {
     public class LocalDBService
     {
-        private const string DB_NAME = "DataBase12.db";
+        private static string DB_NAME = "FlatMoneyDB.db";
         private readonly string _dbPath = Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
         private SQLiteAsyncConnection _connection;
 
 
 
-        public LocalDBService()
+        public LocalDBService(string dbName = "", string dbPath = "", bool isTest = false)
         {
+            if (isTest)
+            {
+                DB_NAME = dbName;
+                _dbPath = dbPath;
+            }
+            
             Task.Run(async () => await Initialization());
         }
 
-
-
-        private async Task Initialization()
+        public async Task Initialization()
         {
             if (_connection != null) return;
 
@@ -39,7 +43,7 @@ namespace FlatMoney.LocalDataBase
             }
         }
 
-        private async Task CreateTables()
+        public async Task CreateTables()
         {
             var createTableStatements = new List<string>()
             {

@@ -8,9 +8,6 @@ using System.Collections.ObjectModel;
 namespace FlatMoney.ViewModels
 {
     [QueryProperty(nameof(ExpenseInfo), "info")]
-    [QueryProperty(nameof(SelectedType), "type")]
-    [QueryProperty(nameof(ExpenseDate), "date")]
-    [QueryProperty(nameof(ExpenseCost), "cost")]
     public partial class AddExpensePageViewModel : ObservableObject
     {
         [ObservableProperty]
@@ -32,8 +29,7 @@ namespace FlatMoney.ViewModels
         {
             if (ExpenseInfo is null)
             {
-                await Shell.Current.GoToAsync("..", true);
-                SetDefault();
+                await Shell.Current.GoToAsync("..", animate: true);
                 return;
             }
 
@@ -42,8 +38,7 @@ namespace FlatMoney.ViewModels
             if (confirm)
             {
                 await _localDBService.DeleteItem(ExpenseInfo);
-                await Shell.Current.GoToAsync("..", true);
-                SetDefault();
+                await Shell.Current.GoToAsync("..", animate: true);
                 await Toast.Make("Расход удален").Show();
             }
         }
@@ -51,20 +46,22 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         private async Task Cancel()
         {
-            await Shell.Current.GoToAsync("..", true);
-
-            SetDefault();
+            await Shell.Current.GoToAsync("..", animate: true);
         }
 
         [RelayCommand]
         private async Task Save()
         {
-            if (ExpenseInfo != null) await Update();
-            else await Create();
+            if (ExpenseInfo is null)
+            {
+                await Create();
+            }
+            else
+            {
+                await Update();
+            }
 
-            await Shell.Current.GoToAsync("..", true);
-
-            SetDefault();
+            await Shell.Current.GoToAsync("..", animate: true);
         }
 
 
@@ -77,24 +74,25 @@ namespace FlatMoney.ViewModels
             {
                 ExpenseTypes.Add(item.Name);
             }
+            LoadInfo();
         }
 
-        private void SetDefault()
+        private void LoadInfo()
         {
-            ExpenseDate = DateTime.Now;
-            ExpenseCost = 0;
-        }
-
-        private void UpdateInfo()
-        {
-            ExpenseInfo.TypeName = SelectedType;
-            ExpenseInfo.Date = ExpenseDate;
-            ExpenseInfo.Cost = ExpenseCost;
+            if (ExpenseInfo is not null)
+            {
+                SelectedType = ExpenseInfo.TypeName;
+                ExpenseDate = ExpenseInfo.Date;
+                ExpenseCost = ExpenseInfo.Cost;
+            }
         }
 
         private async Task Update()
         {
-            UpdateInfo();
+            ExpenseInfo.TypeName = SelectedType;
+            ExpenseInfo.Date = ExpenseDate;
+            ExpenseInfo.Cost = ExpenseCost;
+
             await _localDBService.UpdateItem<ExpenseModel>(ExpenseInfo);
         }
 
@@ -118,6 +116,11 @@ namespace FlatMoney.ViewModels
             SetDefault();
 
             Task.Run(async () => await Load());
+        }
+
+        private void SetDefault()
+        {
+            ExpenseDate = DateTime.Now;
         }
     }
 }

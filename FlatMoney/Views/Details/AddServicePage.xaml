@@ -6,6 +6,7 @@
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+    xmlns:myvalid="clr-namespace:FlatMoney.MyValidations"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False"
     Style="{StaticResource BaseContentPage}">
@@ -20,9 +21,9 @@
             <uranium:TextField Title="Название" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ServiceName}" MaxLength="50">
                 <validations:RequiredValidation Message="Поле обязательно" />
             </uranium:TextField>
-            <uranium:TextField Title="Стоимость" Keyboard="Numeric" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ServiceCost}">
+            <uranium:TextField Title="Стоимость" Keyboard="Numeric" Style="{StaticResource BaseUraniumTextField}" Text="{Binding ServiceCost}" MaxLength="9">
                 <validations:RequiredValidation Message="Поле обязательно" />
-                <validations:NumericValidation Message="Введите число" />
+                <myvalid:NonNegativeValidation/>
             </uranium:TextField>
         </VerticalStackLayout>
 

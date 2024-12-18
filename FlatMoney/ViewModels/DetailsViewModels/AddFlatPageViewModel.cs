@@ -3,6 +3,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using FlatMoney.LocalDataBase;
 using FlatMoney.Models;
+using System.Collections.ObjectModel;
 
 namespace FlatMoney.ViewModels
 {
@@ -57,8 +58,7 @@ namespace FlatMoney.ViewModels
         {
             if (FlatInfo is null)
             {
-                await Shell.Current.GoToAsync("..", true);
-                SetDefault();
+                await Shell.Current.GoToAsync("..", animate: true);
                 return;
             }
 
@@ -67,8 +67,7 @@ namespace FlatMoney.ViewModels
             if (confirm)
             {
                 await _localDBService.DeleteItem(FlatInfo);
-                await Shell.Current.GoToAsync("..", true);
-                SetDefault();
+                await Shell.Current.GoToAsync("..", animate: true);
                 await Toast.Make("Квартира удалена").Show();
             }
         }
@@ -76,40 +75,59 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         private async Task Cancel()
         {
-            await Shell.Current.GoToAsync("..");
-
-            SetDefault();
+            await Shell.Current.GoToAsync("..", animate: true);
         }
 
         [RelayCommand]
         private async Task Save()
         {
-            if (FlatInfo is not null) await Update();
-            else await Create();
-
-            await Shell.Current.GoToAsync("..");
-
-            SetDefault();
+            if (Validate())
+            {
+                if (FlatInfo is null)
+                {
+                    await Create();
+                }
+                else
+                {
+                    await Update();
+                }
+                await Shell.Current.GoToAsync("..", animate: true);
+            }
+            else
+            {
+                await Shell.Current.DisplayAlert("Ошибка", "Квартира с таким названием уже существует", "ОК");
+            }
         }
 
 
 
-        private void SetDefault()
+        [ObservableProperty]
+        private ObservableCollection<FlatModel> flats = [];
+        private bool Validate()
         {
-            NameText = string.Empty;
-            TypeText = "Арендная";
-            RentCostText = 0;
-            RentStartDateText = DateTime.Today;
-            RentIntervalText = 30;
-            RentAutopayText = false;
-            InternetCostText = 0;
-            InternetStartDateText = DateTime.Today;
-            InternetIntervalText = 30;
-            InternetAutopayText = false;
-            AddressText = string.Empty;
+            foreach (var flat in Flats)
+            {
+                if (NameText == flat.Name && NameText is not null && FlatInfo?.Id != flat.Id)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        
+        private async Task LoadFlats()
+        {
+            var items = await _localDBService.GetItems<FlatModel>();
+            Flats.Clear();
+            foreach (var item in items)
+            {
+                Flats.Add(item);
+            }
         }
 
-        private void UpdateInfo()
+
+
+        private async Task Update()
         {
             FlatInfo.Name = NameText;
             FlatInfo.Type = TypeText;
@@ -122,11 +140,7 @@ namespace FlatMoney.ViewModels
             FlatInfo.InternetInterval = InternetIntervalText;
             FlatInfo.InternetAutopay = InternetAutopayText;
             FlatInfo.Address = AddressText;
-        }
 
-        private async Task Update()
-        {
-            UpdateInfo();
             await _localDBService.UpdateItem<FlatModel>(FlatInfo);
         }
 
@@ -156,6 +170,19 @@ namespace FlatMoney.ViewModels
             _localDBService = localDBService;
 
             SetDefault();
+
+            Task.Run(async () => await LoadFlats());
+        }
+
+        private void SetDefault()
+        {
+            TypeText = "Арендная";
+            RentCostText = 20000.00f;
+            RentStartDateText = DateTime.Today;
+            RentIntervalText = 30;
+            InternetCostText = 500.00f;
+            InternetStartDateText = DateTime.Today;
+            InternetIntervalText = 30;
         }
     }
 }

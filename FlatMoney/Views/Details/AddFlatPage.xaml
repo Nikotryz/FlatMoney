@@ -8,6 +8,7 @@
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:sgcontrol="http://plugin.segmentedControl.maui"
     xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+    xmlns:myvalid="clr-namespace:FlatMoney.MyValidations"
     xmlns:actions="clr-namespace:FlatMoney.TriggerActions"
     Shell.NavBarIsVisible="False"
     Shell.TabBarIsVisible="False"
@@ -43,11 +44,14 @@
 
             <!-- Tab 1 -->
             <VerticalStackLayout Spacing="5">
-                
-                <uranium:TextField Title="Сумма за аренду" Style="{StaticResource UraniumTextField}" Text="{Binding RentCostText}" />
+
+                <uranium:TextField Title="Сумма за аренду" Style="{StaticResource UraniumTextField}" Text="{Binding RentCostText}" MaxLength="9">
+                    <myvalid:NonNegativeValidation/>
+                </uranium:TextField>
                 <uranium:DatePickerField Title="Начиная с" Date="{Binding RentStartDateText}" Style="{StaticResource BaseUraniumDatePickerField}" />
-                <uranium:TextField Title="{Binding RentIntervalText, StringFormat='Списывать каждые {0} дней'}" Style="{StaticResource UraniumTextField}" Text="{Binding RentIntervalText}">
+                <uranium:TextField Title="{Binding RentIntervalText, StringFormat='Списывать каждые {0} дней'}" Style="{StaticResource UraniumTextField}" Text="{Binding RentIntervalText}" MaxLength="3">
                     <validations:DigitsOnlyValidation Message="Введите целое число" />
+                    <myvalid:NonNegativeValidation/>
                 </uranium:TextField>
                 <uranium:CheckBox IsChecked="{Binding RentAutopayText}" Style="{StaticResource BaseUraniumCheckBox}" Margin="0,10,0,0" Text="Автосписание за аренду" />
                 
@@ -75,11 +79,14 @@
 
             <!-- Tab 2 -->
             <VerticalStackLayout Spacing="5" IsVisible="False" Opacity="0">
-                
-                <uranium:TextField Title="Сумма за интернет и ТВ" Style="{StaticResource UraniumTextField}" Text="{Binding InternetCostText}" />
+
+                <uranium:TextField Title="Сумма за интернет и ТВ" Style="{StaticResource UraniumTextField}" Text="{Binding InternetCostText}" MaxLength="9">
+                    <myvalid:NonNegativeValidation/>
+                </uranium:TextField>
                 <uranium:DatePickerField Title="Начиная с" Date="{Binding InternetStartDateText}" Style="{StaticResource BaseUraniumDatePickerField}" />
-                <uranium:TextField Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}" Style="{StaticResource UraniumTextField}" Text="{Binding InternetIntervalText}">
+                <uranium:TextField Title="{Binding InternetIntervalText, StringFormat='Списывать каждые {0} дней'}" Style="{StaticResource UraniumTextField}" Text="{Binding InternetIntervalText}" MaxLength="3">
                     <validations:DigitsOnlyValidation Message="Введите целое число" />
+                    <myvalid:NonNegativeValidation/>
                 </uranium:TextField>
                 <uranium:CheckBox IsChecked="{Binding InternetAutopayText}" Style="{StaticResource BaseUraniumCheckBox}" Margin="0,10,0,0" Text="Автосписание за интернет и ТВ" />
                 

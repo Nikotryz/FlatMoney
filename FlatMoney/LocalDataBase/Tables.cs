@@ -28,94 +28,128 @@
 
 
         public const string CREATE_FLATS_STATEMENT = 
-            $"CREATE TABLE IF NOT EXISTS {FLATS_TABLE_NAME} (                         "+
-            $"PK_flat_id        INTEGER PRIMARY KEY AUTOINCREMENT,                    "+
-            $"flat_name         VARCHAR(50) NOT NULL,                                 "+
-            $"flat_type         VARCHAR(8) NOT NULL DEFAULT '{FlatType1}',            "+
-            $"rent_cost         FLOAT,                                                "+
-            $"rent_date         TEXT,                                                 "+
-            $"rent_interval     INTEGER,                                              "+
-            $"rent_autopay      BOOLEAN,                                              "+
-            $"internet_cost     FLOAT,                                                "+
-            $"internet_date     TEXT,                                                 "+
-            $"internet_interval INTEGER,                                              "+
-            $"internet_autopay  BOOLEAN,                                              "+
-            $"address           VARCHAR(250),                                         "+
-            $"CHECK ( (flat_type = '{FlatType1}') OR (flat_type = '{FlatType2}') ) ); ";
+            $@"
+            CREATE TABLE IF NOT EXISTS {FLATS_TABLE_NAME} 
+            (                         
+                PK_flat_id           INTEGER PRIMARY KEY AUTOINCREMENT,                    
+                flat_name            VARCHAR(50) NOT NULL UNIQUE,                          
+                flat_type            VARCHAR(8) NOT NULL DEFAULT '{FlatType1}',            
+                rent_cost            FLOAT,                                                
+                rent_date            TEXT,                                                 
+                rent_interval        INTEGER,                                              
+                rent_autopay         BOOLEAN,                                              
+                internet_cost        FLOAT,                                                
+                internet_date        TEXT,                                                 
+                internet_interval    INTEGER,                                              
+                internet_autopay     BOOLEAN,                                              
+                address              VARCHAR(250),                                         
+                CHECK ( (flat_type = '{FlatType1}') OR (flat_type = '{FlatType2}') ) 
+            );
+            ";
 
         public const string CREATE_CLIENTS_STATEMENT = 
-            $"CREATE TABLE IF NOT EXISTS {CLIENTS_TABLE_NAME} (       "+
-            $"PK_client_id         INTEGER PRIMARY KEY AUTOINCREMENT, "+
-            $"client_name          VARCHAR(150) NOT NULL,             "+
-            $"phone                VARCHAR(25) UNIQUE,                "+
-            $"email                VARCHAR(100) UNIQUE,               "+
-            $"passport             VARCHAR(30) UNIQUE,                "+
-            $"registration         VARCHAR(250)               );      ";
+            $@"
+                CREATE TABLE IF NOT EXISTS {CLIENTS_TABLE_NAME} 
+                (       
+                    PK_client_id    INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    client_name     VARCHAR(150) NOT NULL,             
+                    phone           VARCHAR(25) UNIQUE,                
+                    email           VARCHAR(100) UNIQUE,               
+                    passport        VARCHAR(30) UNIQUE,                
+                    registration    VARCHAR(250)               
+                );
+            ";
 
         public const string CREATE_RESERVATIONS_STATEMENT = 
-            $"CREATE TABLE IF NOT EXISTS {RESERVATIONS_TABLE_NAME} (                                                     "+
-            $"PK_reservation_id   INTEGER PRIMARY KEY AUTOINCREMENT,                                                     "+
-            $"FK_flat_id          INT,                                                                                   "+
-            $"flat_name           VARCHAR(50),                                                                           "+
-            $"reservation_type    VARCHAR(20) NOT NULL DEFAULT 'Краткосрочное',                                          "+
-            $"checkin_date        TEXT NOT NULL,                                                                         "+
-            $"checkout_date       TEXT NOT NULL,                                                                         "+
-            $"guest_amount        INT NOT NULL DEFAULT 1,                                                                "+
-            $"kid_amount          INT,                                                                                   "+
-            $"dm_amount           INT NOT NULL DEFAULT 1,                                                                "+
-            $"cost_per_amount     FLOAT NOT NULL DEFAULT 0,                                                              "+
-            $"deposit_cost        FLOAT,                                                                                 "+
-            $"deposit_status      VARCHAR(30),                                                                           "+
-            $"reservation_status  VARCHAR(10) NOT NULL DEFAULT 'Бронь',                                                  "+
-            $"reservation_comment VARCHAR(250),                                                                          "+
-            $"FOREIGN KEY (FK_flat_id) REFERENCES {FLATS_TABLE_NAME} (PK_flat_id) ON DELETE SET NULL,                    "+
-            $"CHECK ( (reservation_type = '{ReservationShortType}') OR (reservation_type = '{ReservationLongType}') ) ); ";
+            $@"
+                CREATE TABLE IF NOT EXISTS {RESERVATIONS_TABLE_NAME} 
+                (                                                     
+                    PK_reservation_id      INTEGER PRIMARY KEY AUTOINCREMENT,                                                     
+                    FK_flat_id             INT,                                                                                   
+                    flat_name              VARCHAR(50),                                                                           
+                    reservation_type       VARCHAR(20) NOT NULL DEFAULT 'Краткосрочное',                                          
+                    checkin_date           TEXT NOT NULL,                                                                         
+                    checkout_date          TEXT NOT NULL,                                                                         
+                    guest_amount           INT NOT NULL DEFAULT 1,                                                                
+                    kid_amount             INT,                                                                                   
+                    dm_amount              INT NOT NULL DEFAULT 1,                                                                
+                    cost_per_amount        FLOAT NOT NULL DEFAULT 0,                                                                       
+                    reservation_status     VARCHAR(10) NOT NULL DEFAULT 'Бронь',                                                  
+                    reservation_comment    VARCHAR(250),                                                                          
+                    FOREIGN KEY (FK_flat_id) REFERENCES {FLATS_TABLE_NAME} (PK_flat_id) ON DELETE SET NULL,                    
+                    CHECK ( (reservation_type = '{ReservationShortType}') OR (reservation_type = '{ReservationLongType}') ) 
+                ); 
+            ";
 
         public const string CREATE_SERVICES_STATEMENT = 
-            $"CREATE TABLE IF NOT EXISTS {SERVICES_TABLE_NAME} (   "+
-            $"PK_service_id INTEGER PRIMARY KEY AUTOINCREMENT,     "+
-            $"service_name  VARCHAR(50) NOT NULL DEFAULT 'Услуга', "+
-            $"service_cost  FLOAT);                                ";
+            $@"
+                CREATE TABLE IF NOT EXISTS {SERVICES_TABLE_NAME} 
+                (   
+                    PK_service_id    INTEGER PRIMARY KEY AUTOINCREMENT,     
+                    service_name     VARCHAR(50) NOT NULL DEFAULT 'Услуга', 
+                    service_cost     FLOAT
+                );                                
+            ";
 
         public const string CREATE_RESERVATION_SERVICES_STATEMENT =
-            $"CREATE TABLE IF NOT EXISTS {RESERVATION_SERVICES_TABLE_NAME} (                                   "+
-            $"PK_reservation_service_id INTEGER PRIMARY KEY AUTOINCREMENT,                                     "+
-            $"FK_reservation_id         INT NOT NULL,                                                          "+
-            $"service_name              VARCHAR(50) NOT NULL,                                                  "+
-            $"service_cost              FLOAT,                                                                 "+
-            $"FOREIGN KEY (FK_reservation_id) REFERENCES reservations (PK_reservation_id) ON DELETE CASCADE ); ";
+            $@"
+                CREATE TABLE IF NOT EXISTS {RESERVATION_SERVICES_TABLE_NAME} 
+                (                                   
+                    PK_reservation_service_id    INTEGER PRIMARY KEY AUTOINCREMENT,                                     
+                    FK_reservation_id            INT NOT NULL,                                                          
+                    service_name                 VARCHAR(50) NOT NULL,                                                  
+                    service_cost                 FLOAT,                                                                 
+                    FOREIGN KEY (FK_reservation_id) REFERENCES reservations (PK_reservation_id) ON DELETE CASCADE 
+                ); 
+            ";
 
         public const string CREATE_RESERVATION_CLIENTS_STATEMENT = 
-            $"CREATE TABLE IF NOT EXISTS {RESERVATION_CLIENTS_TABLE_NAME} (                                  "+
-            $"PK_reservation_client_id INTEGER PRIMARY KEY AUTOINCREMENT,                                    "+
-            $"FK_reservation_id INT NOT NULL,                                                                "+
-            $"FK_client_id INT,                                                                              "+
-            $"client_name VARCHAR(50) NOT NULL DEFAULT 'Имя не установлено',                                 "+
-            $"FOREIGN KEY (FK_reservation_id) REFERENCES reservations (PK_reservation_id) ON DELETE CASCADE, "+
-            $"FOREIGN KEY (FK_client_id) REFERENCES clients (PK_client_id) ON DELETE SET NULL);              ";
+            $@"
+                CREATE TABLE IF NOT EXISTS {RESERVATION_CLIENTS_TABLE_NAME} 
+                (                                  
+                    PK_reservation_client_id    INTEGER PRIMARY KEY AUTOINCREMENT,                                    
+                    FK_reservation_id           INT NOT NULL,                                                                
+                    FK_client_id                INT,                                                                              
+                    client_name                 VARCHAR(50) NOT NULL DEFAULT 'Имя не установлено',                                 
+                    FOREIGN KEY (FK_reservation_id) REFERENCES reservations (PK_reservation_id) ON DELETE CASCADE, 
+                    FOREIGN KEY (FK_client_id) REFERENCES clients (PK_client_id) ON DELETE SET NULL
+                );              
+            ";
 
         public const string CREATE_PAYMENTS_STATEMENT = 
-            $"CREATE TABLE IF NOT EXISTS {PAYMENTS_TABLE_NAME} (                                                                     "+
-            $"PK_payment_id     INTEGER PRIMARY KEY AUTOINCREMENT,                                                                   "+
-            $"FK_reservation_id INT,                                                                                                 "+
-            $"payment_name      VARCHAR(50) NOT NULL DEFAULT 'Оплата за проживание',                                                 "+
-            $"payment_type      VARCHAR(20) NOT NULL DEFAULT 'Безнал',                                                               "+
-            $"payment_date      TEXT NOT NULL,                                                                                       "+
-            $"payment_cost      FLOAT NOT NULL DEFAULT 0,                                                                            "+
-            $"FOREIGN KEY (FK_reservation_id) REFERENCES reservations (PK_reservation_id) ON DELETE SET NULL,                        "+
-            $"CHECK ( (payment_name = '{PaymentName1}') OR (payment_name = '{PaymentName2}') OR (payment_name = '{PaymentName3}') ), "+
-            $"CHECK ( (payment_type = '{PaymentType1}') OR (payment_type = '{PaymentType2}') ) );                                    ";
+            $@"
+                CREATE TABLE IF NOT EXISTS {PAYMENTS_TABLE_NAME} 
+                (                                                                     
+                    PK_payment_id        INTEGER PRIMARY KEY AUTOINCREMENT,                                                                   
+                    FK_reservation_id    INT,                                                                                                 
+                    payment_name         VARCHAR(50) NOT NULL DEFAULT 'Оплата за проживание',                                                 
+                    payment_type         VARCHAR(20) NOT NULL DEFAULT 'Безнал',                                                               
+                    payment_date         TEXT NOT NULL,                                                                                       
+                    payment_cost         FLOAT NOT NULL DEFAULT 0,                                                                            
+                    FOREIGN KEY (FK_reservation_id) REFERENCES reservations (PK_reservation_id) ON DELETE SET NULL,                        
+                    CHECK ( (payment_name = '{PaymentName1}') OR (payment_name = '{PaymentName2}') OR (payment_name = '{PaymentName3}') ), 
+                    CHECK ( (payment_type = '{PaymentType1}') OR (payment_type = '{PaymentType2}') ) 
+                );                                    
+            ";
 
         public const string CREATE_EXPENSE_TYPES_STATEMENT = 
-            $"CREATE TABLE IF NOT EXISTS {EXPENSE_TYPES_TABLE_NAME} ( "+
-            $"PK_expense_type_id INTEGER PRIMARY KEY AUTOINCREMENT,   "+
-            $"expense_type_name  VARCHAR(50) NOT NULL UNIQUE );       ";
+            $@"
+                CREATE TABLE IF NOT EXISTS {EXPENSE_TYPES_TABLE_NAME} 
+                ( 
+                    PK_expense_type_id    INTEGER PRIMARY KEY AUTOINCREMENT,   
+                    expense_type_name     VARCHAR(50) NOT NULL UNIQUE 
+                );       
+            ";
 
         public const string CREATE_EXPENSES_STATEMENT = 
-            $"CREATE TABLE IF NOT EXISTS {EXPENSES_TABLE_NAME} (    "+
-            $"PK_expense_id      INTEGER PRIMARY KEY AUTOINCREMENT, "+
-            $"expense_type_name  VARCHAR(50),                       "+
-            $"expense_date TEXT  NOT NULL,                          "+
-            $"expense_cost FLOAT NOT NULL DEFAULT 0 );              ";
+            $@"
+                CREATE TABLE IF NOT EXISTS {EXPENSES_TABLE_NAME} 
+                (    
+                    PK_expense_id         INTEGER PRIMARY KEY AUTOINCREMENT, 
+                    expense_type_name     VARCHAR(50),                       
+                    expense_date          TEXT NOT NULL,                          
+                    expense_cost          FLOAT NOT NULL DEFAULT 0 
+                );              
+            ";
     }
 }

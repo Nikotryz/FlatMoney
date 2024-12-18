@@ -6,6 +6,7 @@
              xmlns:ur="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:myvalid="clr-namespace:FlatMoney.MyValidations"
              xmlns:sgcontrol="http://plugin.segmentedControl.maui"
              xmlns:actions="clr-namespace:FlatMoney.TriggerActions"
              Shell.NavBarIsVisible="False"
@@ -127,14 +128,17 @@
                         <Label Grid.Row="2" Grid.Column="0" Text="Ночи" Style="{StaticResource BaseLabel}" HorizontalOptions="Start"/>
                         <uranium:TextField Grid.Row="2" Grid.Column="1" Text="{Binding DaysCount}" MaxLength="4" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
                             <validations:RequiredValidation Message="Поле обязательно"/>
+                            <validations:DigitsOnlyValidation Message="Введите целое число"/>
+                            <myvalid:NonNegativeValidation/>
                         </uranium:TextField>
-                        <uranium:TextField Grid.Row="2" Grid.Column="2" Text="{Binding SumPerDay}" MaxLength="10" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+                        <uranium:TextField Grid.Row="2" Grid.Column="2" Text="{Binding SumPerDay}" MaxLength="9" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
                             <validations:RequiredValidation Message="Поле обязательно"/>
+                            <myvalid:NonNegativeValidation/>
                         </uranium:TextField>
 
                         <Label Grid.Row="3" Grid.Column="0" Text="Итого" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="0,5,0,0"/>
                         <Border Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource BaseBorder}" BackgroundColor="{StaticResource Field}" HeightRequest="45" Margin="0,5,0,0">
-                            <Label Text="{Binding TotalSum, StringFormat='{0} ₽'}" Style="{StaticResource BaseLabel}"/>
+                            <Label Text="{Binding TotalSum}" Style="{StaticResource BaseLabel}"/>
                         </Border>
                     </Grid>
 
@@ -168,9 +172,11 @@
                             <uranium:TextField Grid.Column="0" Title="Взрослые" Text="{Binding PeopleAmount}" MaxLength="3" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
                                 <validations:RequiredValidation Message="Поле обязательно"/>
                                 <validations:DigitsOnlyValidation Message="Введите целое число"/>
+                                <myvalid:NonNegativeValidation/>
                             </uranium:TextField>
                             <uranium:TextField Grid.Column="1" Title="Дети" Text="{Binding ChildAmount}" MaxLength="3" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
                                 <validations:DigitsOnlyValidation Message="Введите целое число"/>
+                                <myvalid:NonNegativeValidation/>
                             </uranium:TextField>
                         </Grid>
 

@@ -6,6 +6,7 @@
              xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
              xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
              xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+             xmlns:myvalid="clr-namespace:FlatMoney.MyValidations"
              Style="{StaticResource BaseContentPage}"
              Shell.NavBarIsVisible="False"
              Shell.TabBarIsVisible="False">
@@ -22,7 +23,7 @@
         </material:TextField>
 
         <material:TextField Title="Телефон" Text="{Binding SelectedClientPhone}" Style="{StaticResource BaseUraniumTextField}" Margin="0,10,0,0" MaxLength="25">
-            <validations:RegexValidation Message="Введите корректный телефон" Pattern="{x:Static input:AdvancedEntry.REGEX_PHONE}"/>
+            <myvalid:PhoneValidation/>
         </material:TextField>
 
         <material:TextField Title="Электронная почта" Text="{Binding SelectedClientEmail}" Style="{StaticResource BaseUraniumTextField}" MaxLength="100">

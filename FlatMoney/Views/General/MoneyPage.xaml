@@ -105,7 +105,7 @@
 
                     <ur:ExpanderView>
                         <ur:ExpanderView.Header>
-                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Мои расходы" />
+                            <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Мои категории расходов" />
                         </ur:ExpanderView.Header>
 
                         <VerticalStackLayout Spacing="10">
@@ -138,7 +138,7 @@
                                 </uranium:AutoCompleteTextField.Attachments>
                             </uranium:AutoCompleteTextField>
 
-                            <CollectionView ItemsSource="{Binding MyClientsView}" SelectedItem="{Binding SelectedClient}" SelectionChangedCommand="{Binding ClientTappedCommand}" SelectionMode="Single">
+                            <CollectionView ItemsSource="{Binding MyClientsView}" SelectedItem="{Binding SelectedClient}" SelectionChangedCommand="{Binding ClientTappedCommand}" SelectionMode="Single" Margin="0,0,0,300">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <Border Style="{StaticResource ExpanderItemBorder}" HeightRequest="80" Padding="10,5,5,5">
@@ -215,7 +215,7 @@
                                 </Grid>
                             </Border>
 
-                            <CollectionView ItemsSource="{Binding MyIncomes}">
+                            <CollectionView ItemsSource="{Binding MyIncomes}" Margin="0,0,0,300">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <Border HeightRequest="70" Style="{StaticResource ExpanderItemBorder}">
@@ -285,15 +285,15 @@
 
                             <Border Style="{StaticResource BaseBorder}" HeightRequest="40">
                                 <Grid ColumnDefinitions="40,*,40" ColumnSpacing="10">
-                                    <Button Grid.Column="0" Command="{Binding PreviousMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Button Grid.Column="0" Command="{Binding ExpensesPreviousMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
                                     <Image Grid.Column="0" Source="arrow.png" Style="{StaticResource BaseImage}"/>
                                     <Label Grid.Column="1" Text="{Binding CurrentExpensesMonth}" Style="{StaticResource BaseLabel}"/>
-                                    <Button Grid.Column="2" Command="{Binding NextMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Button Grid.Column="2" Command="{Binding ExpensesNextMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
                                     <Image Grid.Column="2" Source="arrow.png" Rotation="180" Style="{StaticResource BaseImage}"/>
                                 </Grid>
                             </Border>
 
-                            <CollectionView ItemsSource="{Binding MyExpenses}" SelectedItem="{Binding SelectedExpense}" SelectionChangedCommand="{Binding ExpenseTappedCommand}" SelectionMode="Single">
+                            <CollectionView ItemsSource="{Binding MyExpenses}" SelectedItem="{Binding SelectedExpense}" SelectionChangedCommand="{Binding ExpenseTappedCommand}" SelectionMode="Single" Margin="0,0,0,300">
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate>
                                         <Border HeightRequest="80" Style="{StaticResource ExpanderItemBorder}">

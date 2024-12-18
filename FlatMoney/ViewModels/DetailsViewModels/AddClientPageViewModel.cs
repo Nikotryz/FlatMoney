@@ -16,12 +16,7 @@ namespace FlatMoney.ViewModels
     public partial class AddClientPageViewModel : ObservableObject
     {
         [ObservableProperty]
-        public ObservableCollection<ClientModel> clients = [];
-
-
-
-        [ObservableProperty]
-        public ClientModel? clientInfo;
+        public ClientModel clientInfo;
 
         [ObservableProperty]
         public string? selectedClientName;
@@ -45,7 +40,7 @@ namespace FlatMoney.ViewModels
         {
             if (ClientInfo is null)
             {
-                await Shell.Current.GoToAsync("..", true);
+                await Shell.Current.GoToAsync("..", animate: true);
                 return;
             }
 
@@ -54,7 +49,7 @@ namespace FlatMoney.ViewModels
             if (confirm)
             {
                 await _localDBService.DeleteItem(ClientInfo);
-                await Shell.Current.GoToAsync("..", true);
+                await Shell.Current.GoToAsync("..", animate: true);
                 await Toast.Make("Клиент удален").Show();
             }
         }
@@ -62,7 +57,7 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         public async Task Cancel()
         {
-            await Shell.Current.GoToAsync("..", true);
+            await Shell.Current.GoToAsync("..", animate: true);
         }
 
         [RelayCommand]
@@ -79,7 +74,7 @@ namespace FlatMoney.ViewModels
                 {
                     await Update();
                 }
-                await Shell.Current.GoToAsync("..", true);
+                await Shell.Current.GoToAsync("..", animate: true);
             }
             else
             {
@@ -89,6 +84,8 @@ namespace FlatMoney.ViewModels
 
 
 
+        [ObservableProperty]
+        private ObservableCollection<ClientModel> clients = [];
         private bool Validate(ref string message)
         {
             foreach (var client in Clients)
@@ -142,22 +139,10 @@ namespace FlatMoney.ViewModels
         {
             _localDBService = localDBService;
 
-            SetDefault();
-
-            Task.Run(async () => await Load());
+            LoadClients();
         }
 
-        private void SetDefault()
-        {
-            ClientInfo = null;
-            SelectedClientName = null;
-            SelectedClientPhone = null;
-            SelectedClientEmail = null;
-            SelectedClientPassport = null;
-            SelectedClientRegistration = null;
-        }
-
-        private async Task Load()
+        private async Task LoadClients()
         {
             var items = await _localDBService.GetItems<ClientModel>();
             Clients?.Clear();

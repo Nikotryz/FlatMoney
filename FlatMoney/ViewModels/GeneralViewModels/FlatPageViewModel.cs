@@ -23,29 +23,13 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         private async Task Add()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
-            {
-                {"info", SelectedItem },
-                {"name", string.Empty },
-                {"type", "Арендная" },
-                {"rentCost", 0 },
-                {"rentStartDate", DateTime.Today },
-                {"rentInterval", 30 },
-                {"rentAutopay", false },
-                {"internetCost", 0 },
-                {"internetStartDate", DateTime.Today },
-                {"internetInterval", 30 },
-                {"internetAutopay", false },
-                {"address", string.Empty }
-            };
-
-            await Shell.Current.GoToAsync(nameof(AddFlatPage), true, parameters);
+            await Shell.Current.GoToAsync(nameof(AddFlatPage), animate: true);
         }
 
         [RelayCommand]
         private async Task SelectionChanged()
         {
-            Dictionary<string, object> parameters = new Dictionary<string, object>()
+            Dictionary<string, object?> parameters = new()
             {
                 {"info", SelectedItem },
                 {"name", SelectedItem.Name },
@@ -61,7 +45,7 @@ namespace FlatMoney.ViewModels
                 {"address", SelectedItem.Address }
             };
 
-            await Shell.Current.GoToAsync(nameof(AddFlatPage), true, parameters);
+            await Shell.Current.GoToAsync(nameof(AddFlatPage), animate: true, parameters);
 
             SelectedItem = null;
         }

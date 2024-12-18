@@ -7,6 +7,7 @@
            xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui"
            xmlns:material="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
            xmlns:validations="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
+           xmlns:myvalid="clr-namespace:FlatMoney.MyValidations"
            Color="Transparent">
     
     
@@ -17,10 +18,10 @@
             <material:PickerField Title="Услуга" ItemsSource="{Binding Services}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding SelectedService}" SelectedValueChangedCommand="{Binding SelectedServiceChangedCommand}" Style="{StaticResource BaseUraniumPickerField}">
                 <validations:RequiredValidation Message="Поле обязательно"/>
             </material:PickerField>
-            
-            <material:TextField Title="Стоимость" Text="{Binding ServiceCost}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric">
+
+            <material:TextField Title="Стоимость" Text="{Binding ServiceCost}" Style="{StaticResource BaseUraniumTextField}" Keyboard="Numeric" MaxLength="9">
                 <validations:RequiredValidation Message="Поле обязательно"/>
-                <validations:NumericValidation Message="Введите число"/>
+                <myvalid:NonNegativeValidation/>
             </material:TextField>
 
             <Grid ColumnDefinitions="*,*" Style="{StaticResource ControlGrid}">

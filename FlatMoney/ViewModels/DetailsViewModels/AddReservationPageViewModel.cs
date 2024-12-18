@@ -5,9 +5,7 @@ using CommunityToolkit.Mvvm.Input;
 using FlatMoney.LocalDataBase;
 using FlatMoney.Models;
 using FlatMoney.ViewModels.PopupViewModels;
-using Microsoft.VisualBasic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace FlatMoney.ViewModels
 {
@@ -286,8 +284,6 @@ namespace FlatMoney.ViewModels
                 ChildAmount = this.ChildAmount,
                 DaysOrMonthsAmount = this.DaysCount,
                 CostPerAmount = this.SumPerDay,
-                DepositCost = null,
-                DepositStatus = null,
                 ReservationStatus = GetStatus(this.SelectedSegmentIndex),
                 Comment = this.Comment
             });
@@ -304,8 +300,6 @@ namespace FlatMoney.ViewModels
             ReservationInfo.ChildAmount = this.ChildAmount;
             ReservationInfo.DaysOrMonthsAmount = this.DaysCount;
             ReservationInfo.CostPerAmount = this.SumPerDay;
-            ReservationInfo.DepositCost = null;
-            ReservationInfo.DepositStatus = null;
             ReservationInfo.ReservationStatus = GetStatus(this.SelectedSegmentIndex);
             ReservationInfo.Comment = this.Comment;
 
@@ -399,7 +393,7 @@ namespace FlatMoney.ViewModels
             }
             if (SelectedFlatId != 0)
             {
-                SelectedFlat = FlatsList.Where(x => x.Id == SelectedFlatId).First();
+                SelectedFlat = FlatsList.Where(x => x.Id == SelectedFlatId).FirstOrDefault(defaultValue: null);
             }
         }
 
@@ -423,9 +417,10 @@ namespace FlatMoney.ViewModels
                 ClientPhone = null;
                 return;
             }
-            var client = await _localDBService.GetItem<ClientModel>(ClientsList.First().ClientId);
-            ClientName = client.Name;
-            ClientPhone = client.Phone;
+            var clients = await _localDBService.GetItems<ClientModel>();
+            var client = clients.Where(x => x.Id == ClientsList.First().ClientId).FirstOrDefault();
+            ClientName = ClientsList.FirstOrDefault()?.Name;
+            ClientPhone = client?.Phone;
         }
 
         private async Task LoadServices()
@@ -437,6 +432,7 @@ namespace FlatMoney.ViewModels
             {
                 ServicesList.Add(item);
             }
+            LoadServicesSum();
         }
 
         private async Task LoadPayments()
@@ -448,6 +444,7 @@ namespace FlatMoney.ViewModels
             {
                 PaymentsList.Add(item);
             }
+            LoadPaymentsSum();
         }
 
         private async Task<int> GetReservationId()
@@ -457,7 +454,18 @@ namespace FlatMoney.ViewModels
                 var items = await _localDBService.GetItems<ReservationModel>();
                 if (items.Count == 0)
                 {
-                    return 1;
+                    await _localDBService.InsertItem<ReservationModel>(new ReservationModel
+                    {
+                        Type = "Краткосрочное",
+                        CheckInDate = DateTime.Today,
+                        CheckOutDate = DateTime.Today.AddDays(1),
+                        ReservationStatus = "Бронь"
+                    });
+                    var newItems = await _localDBService.GetItems<ReservationModel>();
+                    int needId = newItems.Max(x => x.Id);
+                    var needItem = newItems.Where(x => x.Id == needId).First();
+                    await _localDBService.DeleteItem<ReservationModel>(needItem);
+                    return needId + 1;
                 }
                 else
                 {
