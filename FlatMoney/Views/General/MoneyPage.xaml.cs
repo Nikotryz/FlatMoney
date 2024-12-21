@@ -14,6 +14,6 @@ public partial class MoneyPage : ContentPage
         base.OnAppearing();
 
         var vm = BindingContext as MoneyPageViewModel;
-        await vm!.Load();
+        await vm!.LoadData();
     }
 }

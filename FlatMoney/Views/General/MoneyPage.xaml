@@ -7,6 +7,7 @@
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:sgcontrol="http://plugin.segmentedControl.maui"
     xmlns:actions="clr-namespace:FlatMoney.TriggerActions"
+    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     Style="{StaticResource BaseContentPage}">
 
 
@@ -85,7 +86,7 @@
 
                         <VerticalStackLayout Spacing="10">
                             <Grid HeightRequest="40">
-                                <Button Command="{Binding AddServiceCommand}" Style="{StaticResource ExpanderContentButton}" />
+                                <Button Command="{Binding AddItemCommand}" CommandParameter="AddServicePage" Style="{StaticResource ExpanderContentButton}" />
                                 <Image Source="add.png" Style="{StaticResource ButtonAddImage}" />
                             </Grid>
                             <CollectionView ItemsSource="{Binding MyServices}" SelectedItem="{Binding SelectedService}" SelectionChangedCommand="{Binding ServiceTappedCommand}" SelectionMode="Single">
@@ -110,7 +111,7 @@
 
                         <VerticalStackLayout Spacing="10">
                             <Grid HeightRequest="40">
-                                <Button Command="{Binding AddExpenseTypeCommand}" Style="{StaticResource ExpanderContentButton}" />
+                                <Button Command="{Binding AddItemCommand}" CommandParameter="AddExpenseTypePage" Style="{StaticResource ExpanderContentButton}" />
                                 <Image Source="add.png" Style="{StaticResource ButtonAddImage}" />
                             </Grid>
                             <CollectionView ItemsSource="{Binding MyExpenseTypes}" SelectedItem="{Binding SelectedExpenseType}" SelectionChangedCommand="{Binding ExpenseTypeTappedCommand}" SelectionMode="Single">
@@ -134,7 +135,7 @@
                             
                             <uranium:AutoCompleteTextField Text="{Binding SearchText}" ItemsSource="{Binding ClientNames}" Title="Поиск" Icon="search.png" InputBackgroundColor="Transparent" BorderThickness="2" Style="{StaticResource BaseAutoCompleteTextField}">
                                 <uranium:AutoCompleteTextField.Attachments>
-                                    <Button Command="{Binding AddClientCommand}" ImageSource="add.png" WidthRequest="100" Style="{StaticResource BaseButton}"/>
+                                    <Button Command="{Binding AddItemCommand}" CommandParameter="AddClientPage" ImageSource="add.png" WidthRequest="100" Style="{StaticResource BaseButton}"/>
                                 </uranium:AutoCompleteTextField.Attachments>
                             </uranium:AutoCompleteTextField>
 
@@ -207,10 +208,10 @@
 
                             <Border Style="{StaticResource BaseBorder}" HeightRequest="40">
                                 <Grid ColumnDefinitions="40,*,40" ColumnSpacing="10">
-                                    <Button Grid.Column="0" Command="{Binding IncomesPreviousMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Button Grid.Column="0" Command="{Binding NavigateIncomesMonthCommand}" CommandParameter="{x:Boolean False}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
                                     <Image Grid.Column="0" Source="arrow.png" Style="{StaticResource BaseImage}"/>
                                     <Label Grid.Column="1" Text="{Binding CurrentIncomesMonth}" Style="{StaticResource BaseLabel}"/>
-                                    <Button Grid.Column="2" Command="{Binding IncomesNextMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Button Grid.Column="2" Command="{Binding NavigateIncomesMonthCommand}" CommandParameter="{x:Boolean True}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
                                     <Image Grid.Column="2" Source="arrow.png" Rotation="180" Style="{StaticResource BaseImage}"/>
                                 </Grid>
                             </Border>
@@ -285,10 +286,10 @@
 
                             <Border Style="{StaticResource BaseBorder}" HeightRequest="40">
                                 <Grid ColumnDefinitions="40,*,40" ColumnSpacing="10">
-                                    <Button Grid.Column="0" Command="{Binding ExpensesPreviousMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Button Grid.Column="0" Command="{Binding NavigateExpensesMonthCommand}" CommandParameter="{x:Boolean False}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
                                     <Image Grid.Column="0" Source="arrow.png" Style="{StaticResource BaseImage}"/>
                                     <Label Grid.Column="1" Text="{Binding CurrentExpensesMonth}" Style="{StaticResource BaseLabel}"/>
-                                    <Button Grid.Column="2" Command="{Binding ExpensesNextMonthCommand}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
+                                    <Button Grid.Column="2" Command="{Binding NavigateExpensesMonthCommand}" CommandParameter="{x:Boolean True}" Style="{StaticResource BaseButton}" BackgroundColor="{StaticResource Item}"/>
                                     <Image Grid.Column="2" Source="arrow.png" Rotation="180" Style="{StaticResource BaseImage}"/>
                                 </Grid>
                             </Border>
@@ -325,7 +326,7 @@
             </ScrollView>
 
             <Grid Grid.Row="1" Style="{StaticResource AddExpenseGrid}">
-                <Button Command="{Binding AddExpenseCommand}" Style="{StaticResource AddExpenseButton}" />
+                <Button Command="{Binding AddItemCommand}" CommandParameter="AddExpensePage" Style="{StaticResource AddExpenseButton}" />
                 <Image Source="add.png" Style="{StaticResource ButtonAddExpenseImage}" />
             </Grid>
 
