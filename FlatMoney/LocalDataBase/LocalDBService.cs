@@ -1,26 +1,18 @@
 ﻿using SQLite;
 using FlatMoney.Models;
 using System.Diagnostics;
-using System.Collections.ObjectModel;
-
 namespace FlatMoney.LocalDataBase
 {
     public class LocalDBService
     {
-        private static string DB_NAME = "FlatMoneyDB.db";
+        private const string DB_NAME = "FlatMoneyDB.db";
         private readonly string _dbPath = Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
         private SQLiteAsyncConnection _connection;
 
 
 
-        public LocalDBService(string dbName = "", string dbPath = "", bool isTest = false)
+        public LocalDBService()
         {
-            if (isTest)
-            {
-                DB_NAME = dbName;
-                _dbPath = dbPath;
-            }
-            
             Task.Run(async () => await Initialization());
         }
 
