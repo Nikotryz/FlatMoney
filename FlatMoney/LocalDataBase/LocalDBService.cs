@@ -6,19 +6,13 @@ namespace FlatMoney.LocalDataBase
     public class LocalDBService
     {
         private const string DB_NAME = "FlatMoneyDB.db";
-        private readonly string _dbPath = Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
-        private SQLiteAsyncConnection _connection;
+        private readonly static string _dbPath = Path.Combine(FileSystem.AppDataDirectory, DB_NAME);
+        private SQLiteAsyncConnection _connection = new SQLiteAsyncConnection(_dbPath);
+        private bool _isInitialized = false;
 
-
-
-        public LocalDBService()
+        private async Task Init()
         {
-            Task.Run(async () => await Initialization());
-        }
-
-        public async Task Initialization()
-        {
-            if (_connection != null) return;
+            if (_isInitialized) return;
 
             try
             {
@@ -28,14 +22,16 @@ namespace FlatMoney.LocalDataBase
                 _connection.Trace = true;
 
                 await CreateTables();
+                _isInitialized = true;
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex);
+                Debug.WriteLine($"Initialization error: {ex}");
+                throw;
             }
         }
 
-        public async Task CreateTables()
+        private async Task CreateTables()
         {
             var createTableStatements = new List<string>()
             {
@@ -62,36 +58,50 @@ namespace FlatMoney.LocalDataBase
 
         public async Task<List<T>> GetItems<T>() where T : BaseTable, new()
         {
+            await Init();
+
             return await _connection.Table<T>().ToListAsync();
         }
 
         public async Task<T> GetItem<T>(int? id) where T : BaseTable, new()
         {
+            await Init();
+
             return await _connection.GetAsync<T>(id);
         }
 
         public async Task<int> GetCountOfItems<T>() where T : BaseTable, new()
         {
+            await Init();
+
             return await _connection.Table<T>().CountAsync();
         }
 
         public async Task InsertItem<T>(T item)
         {
+            await Init();
+
             await _connection.InsertAsync(item);
         }
 
         public async Task UpdateItem<T>(T item)
         {
+            await Init();
+
             await _connection.UpdateAsync(item);
         }
 
         public async Task DeleteItem<T>(T item)
         {
+            await Init();
+
             await _connection.DeleteAsync(item);
         }
 
         public async Task DeleteAllItems<T>()
         {
+            await Init();
+
             await _connection.DeleteAllAsync<T>();
         }
     }

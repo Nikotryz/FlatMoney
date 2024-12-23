@@ -7,7 +7,6 @@
     xmlns:uranium="http://schemas.enisn-projects.io/dotnet/maui/uraniumui/material"
     xmlns:sgcontrol="http://plugin.segmentedControl.maui"
     xmlns:actions="clr-namespace:FlatMoney.TriggerActions"
-    xmlns:system="clr-namespace:System;assembly=System.Runtime"
     Style="{StaticResource BaseContentPage}">
 
 
@@ -63,18 +62,18 @@
                             <Label Style="{StaticResource ExpanderHeaderLabel}" Text="Прибыль за период" />
                         </ur:ExpanderView.Header>
 
-                        <Grid RowDefinitions="120,120" ColumnDefinitions="*,*" ColumnSpacing="10" RowSpacing="10" Margin="0,5,0,0">
+                        <Grid RowDefinitions="40,40,40,40" ColumnDefinitions="*,*" ColumnSpacing="20" RowSpacing="10" Margin="0,5,0,0">
                             <BoxView Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Field}"/>
-                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="Год" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding ProfitForYear}" Style="{StaticResource BaseLabel}"/>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Год" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="5,0"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding ProfitForYear}" Style="{StaticResource BaseLabel}" HorizontalOptions="End" Margin="5,0"/>
 
-                            <BoxView Grid.Row="1" Grid.Column="0" BackgroundColor="{StaticResource Field}"/>
-                            <Label Grid.Row="1" Grid.Column="0" Text="Месяц" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="1" Grid.Column="0" Text="{Binding ProfitForMonth}" Style="{StaticResource BaseLabel}"/>
+                            <BoxView Grid.Row="1" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="1" Grid.Column="0" Text="Месяц" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="5,0"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ProfitForMonth}" Style="{StaticResource BaseLabel}" HorizontalOptions="End" Margin="5,0"/>
 
-                            <BoxView Grid.Row="1" Grid.Column="1" BackgroundColor="{StaticResource Field}"/>
-                            <Label Grid.Row="1" Grid.Column="1" Text="День" Style="{StaticResource StatisticsLabel}"/>
-                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding ProfitForDay}" Style="{StaticResource BaseLabel}"/>
+                            <BoxView Grid.Row="2" Grid.ColumnSpan="2" BackgroundColor="{StaticResource Field}"/>
+                            <Label Grid.Row="2" Grid.Column="0" Text="День" Style="{StaticResource BaseLabel}" HorizontalOptions="Start" Margin="5,0"/>
+                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding ProfitForDay}" Style="{StaticResource BaseLabel}" HorizontalOptions="End" Margin="5,0"/>
                         </Grid>
 
                     </ur:ExpanderView>

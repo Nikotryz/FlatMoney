@@ -10,21 +10,15 @@ namespace FlatMoney.ViewModels
     [QueryProperty(nameof(ExpenseTypeName), "name")]
     public partial class AddExpenseTypePageViewModel : ObservableObject
     {
-        [ObservableProperty]
-        public ExpenseTypeModel expenseTypeInfo;
-
-        [ObservableProperty]
-        public string expenseTypeName;
-
-
+        [ObservableProperty] public ExpenseTypeModel expenseTypeInfo;
+        [ObservableProperty] public string expenseTypeName;
 
         [RelayCommand]
         public async Task Delete()
         {
             if (ExpenseTypeInfo is null)
             {
-                await Shell.Current.GoToAsync("..", true);
-                SetDefault();
+                await Shell.Current.GoToAsync("..", animate: true);
                 return;
             }
 
@@ -33,8 +27,7 @@ namespace FlatMoney.ViewModels
             if (confirm)
             {
                 await _localDBService.DeleteItem(ExpenseTypeInfo);
-                await Shell.Current.GoToAsync("..", true);
-                SetDefault();
+                await Shell.Current.GoToAsync("..", animate: true);
                 await Toast.Make("Категория удалена").Show();
             }
         }
@@ -42,38 +35,22 @@ namespace FlatMoney.ViewModels
         [RelayCommand]
         public async Task Cancel()
         {
-            await Shell.Current.GoToAsync("..");
-
-            SetDefault();
+            await Shell.Current.GoToAsync("..", animate: true);
         }
 
         [RelayCommand]
         public async Task Save()
         {
-            if (ExpenseTypeInfo != null) await Update();
-            else await Create();
+            if (ExpenseTypeInfo is null)
+            {
+                await Create();
+            }
+            else
+            {
+                await Update();
+            }
 
-            await Shell.Current.GoToAsync("..");
-
-            SetDefault();
-        }
-
-
-
-        private void SetDefault()
-        {
-            ExpenseTypeName = string.Empty;
-        }
-
-        private void UpdateInfo()
-        {
-            ExpenseTypeInfo.Name = ExpenseTypeName;
-        }
-
-        private async Task Update()
-        {
-            UpdateInfo();
-            await _localDBService.UpdateItem<ExpenseTypeModel>(ExpenseTypeInfo);
+            await Shell.Current.GoToAsync("..", animate: true);
         }
 
         private async Task Create()
@@ -84,14 +61,19 @@ namespace FlatMoney.ViewModels
             });
         }
 
+        private async Task Update()
+        {
+            ExpenseTypeInfo.Name = ExpenseTypeName;
+
+            await _localDBService.UpdateItem<ExpenseTypeModel>(ExpenseTypeInfo);
+        }
+
 
 
         private readonly LocalDBService _localDBService;
         public AddExpenseTypePageViewModel(LocalDBService localDBService)
         {
             _localDBService = localDBService;
-
-            SetDefault();
         }
     }
 }

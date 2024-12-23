@@ -43,49 +43,8 @@ namespace FlatMoney.ViewModels
         [ObservableProperty] public DateTime currentExpensesDate;
         [ObservableProperty] public string currentExpensesMonth;
         [ObservableProperty] public ObservableCollection<ExpenseModel> myExpenses = new();
-        [ObservableProperty] public ExpenseModel selectedExpense;
+        [ObservableProperty] public ExpenseModel? selectedExpense;
 
-        // Constructor
-        private readonly LocalDBService _localDBService;
-        public MoneyPageViewModel(LocalDBService localDBService)
-        {
-            _localDBService = localDBService;
-            SetDefault();
-            Task.Run(async () => await LoadData());
-        }
-
-        // Default settings for current date
-        private void SetDefault()
-        {
-            CurrentExpensesDate = DateTime.Today;
-            CurrentExpensesMonth = GetFormattedDate(CurrentExpensesDate);
-            CurrentIncomesDate = DateTime.Today;
-            CurrentIncomesMonth = GetFormattedDate(CurrentExpensesDate);
-        }
-
-        // Get formatted date
-        private string GetFormattedDate(DateTime date)
-        {
-            return $"{Enum.GetName(typeof(Months), date.Month)} {date.Year} г.";
-        }
-
-        enum Months
-        {
-            Январь = 1,
-            Февраль = 2,
-            Март = 3,
-            Апрель = 4,
-            Май = 5,
-            Июнь = 6,
-            Июль = 7,
-            Август = 8,
-            Сентябрь = 9,
-            Октябрь = 10,
-            Ноябрь = 11,
-            Декабрь = 12
-        }
-
-        // Load all data
         public async Task LoadData()
         {
             var tasks = new List<Task>
@@ -99,7 +58,6 @@ namespace FlatMoney.ViewModels
             await Task.WhenAll(tasks);
         }
 
-        // Load collection of items (generic method)
         private async Task LoadItems<T>(ObservableCollection<T> collection) where T : BaseTable, new()
         {
             var items = await _localDBService.GetItems<T>();
@@ -110,7 +68,6 @@ namespace FlatMoney.ViewModels
             }
         }
 
-        // Load clients and update both model and view
         private async Task LoadClients()
         {
             var clients = await _localDBService.GetItems<ClientModel>();
@@ -124,7 +81,6 @@ namespace FlatMoney.ViewModels
             FilterClients();
         }
 
-        // Filter clients based on search text
         private void FilterClients()
         {
             if (SearchText is null)
@@ -151,7 +107,6 @@ namespace FlatMoney.ViewModels
             FilterClients();
         }
 
-        // Update financial data
         private async Task LoadFinancialData()
         {
             await Task.WhenAll
@@ -164,7 +119,6 @@ namespace FlatMoney.ViewModels
             LoadProfit();
         }
 
-        // Load profit
         private void LoadProfit()
         {
             ProfitForYear = IncomesForYear - ExpensesForYear;
@@ -172,7 +126,6 @@ namespace FlatMoney.ViewModels
             ProfitForDay = IncomesForDay - ExpensesForDay;
         }
 
-        // Load expenses for year, month, and day
         private async Task LoadExpensesData()
         {
             ExpensesForYear = await LoadFinancialSum<ExpenseModel>(x => x.Date >= DateTime.Today.AddYears(-1));
@@ -180,7 +133,6 @@ namespace FlatMoney.ViewModels
             ExpensesForDay = await LoadFinancialSum<ExpenseModel>(x => x.Date >= DateTime.Today.AddDays(-1));
         }
 
-        // Load incomes for year, month, and day
         private async Task LoadIncomesData()
         {
             IncomesForYear = await LoadFinancialSum<PaymentModel>(x => x.Date >= DateTime.Today.AddYears(-1));
@@ -188,14 +140,12 @@ namespace FlatMoney.ViewModels
             IncomesForDay = await LoadFinancialSum<PaymentModel>(x => x.Date >= DateTime.Today.AddDays(-1));
         }
 
-        // Generic method to load financial sums (expenses or incomes)
         private async Task<float?> LoadFinancialSum<T>(Func<T, bool> predicate) where T : BaseTable, new()
         {
             var items = await _localDBService.GetItems<T>();
             return items.Where(predicate).Sum(x => Convert.ToSingle(typeof(T).GetProperty("Cost")?.GetValue(x)));
         }
 
-        // Load history for expenses or incomes
         private async Task LoadHistory<T>(DateTime date, ObservableCollection<T> collection) where T : BaseTable, new()
         {
             var items = await _localDBService.GetItems<T>();
@@ -208,7 +158,6 @@ namespace FlatMoney.ViewModels
             }
         }
 
-        // Navigate to Add Page
         [RelayCommand]
         public async Task AddItem(string pageName)
         {
@@ -263,7 +212,19 @@ namespace FlatMoney.ViewModels
             SelectedClient = null;
         }
 
-        // Commands for navigating between months
+        [RelayCommand]
+        public async Task ExpenseTapped()
+        {
+            Dictionary<string, object?> parameters = new()
+            {
+                {"info", SelectedExpense }
+            };
+
+            await Shell.Current.GoToAsync(nameof(AddExpensePage), true, parameters);
+
+            SelectedExpense = null;
+        }
+
         [RelayCommand]
         public async Task NavigateIncomesMonth(bool isNext)
         {
@@ -296,6 +257,43 @@ namespace FlatMoney.ViewModels
             CurrentExpensesMonth = GetFormattedDate(CurrentExpensesDate);
 
             await LoadHistory<ExpenseModel>(CurrentExpensesDate, MyExpenses);
+        }
+
+        private readonly LocalDBService _localDBService;
+        public MoneyPageViewModel(LocalDBService localDBService)
+        {
+            _localDBService = localDBService;
+            SetDefault();
+            Task.Run(async () => await LoadData());
+        }
+
+        private void SetDefault()
+        {
+            CurrentExpensesDate = DateTime.Today;
+            CurrentExpensesMonth = GetFormattedDate(CurrentExpensesDate);
+            CurrentIncomesDate = DateTime.Today;
+            CurrentIncomesMonth = GetFormattedDate(CurrentExpensesDate);
+        }
+
+        private string GetFormattedDate(DateTime date)
+        {
+            return $"{Enum.GetName(typeof(Months), date.Month)} {date.Year} г.";
+        }
+
+        enum Months
+        {
+            Январь = 1,
+            Февраль = 2,
+            Март = 3,
+            Апрель = 4,
+            Май = 5,
+            Июнь = 6,
+            Июль = 7,
+            Август = 8,
+            Сентябрь = 9,
+            Октябрь = 10,
+            Ноябрь = 11,
+            Декабрь = 12
         }
     }
 }
